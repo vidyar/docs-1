@@ -22,7 +22,7 @@ We need the yml file to analyze the project details. Add the shippable.yml file 
 
 **script :** Execute the sample code using script tag. 
 
-Here is the complete yml file for neo4j-buildsample
+Here is the complete yml file for cassandra-buildsample
 
 .. code-block:: bash
    
