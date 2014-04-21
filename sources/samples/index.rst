@@ -1,6 +1,6 @@
 :title: Samples
 :description: supported languages on Shippable
-:keywords: languages, questions, documentation, shippable, ruby, node, java, python, scala
+:keywords: languages, questions, documentation, shippable, ruby, node, java, python, scala, neo4j
 
 .. _samplesref :
 
@@ -17,5 +17,8 @@ We support the following languages
    python
    java
    scala
+   neo4j
+   cassandra
+   php
 
 This list keeps growing and if you need something that you dont see here, open a Github issue in our `support repository <https://github.com/Shippable/support>`_.
