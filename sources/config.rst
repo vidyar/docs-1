@@ -53,6 +53,7 @@ A set of common tools are available on all minions. The following is a list of a
   - Node
   - Python 
   - OpenJDK
+  - PHP
 
 - Services
   
@@ -63,6 +64,8 @@ A set of common tools are available on all minions. The following is a list of a
   - Redis
   - ElasticSearch
   - Selenium Server
+  - Neo4j
+  - Cassandra
 
 - Headless browser testing tools
 
@@ -197,7 +200,7 @@ If you would like to turn submodules off completely -
 environment variables
 .....................
 
-We believe this is one of the powerful features Shippable offers. You can test your projects with multiple different settings for every push into your repo. Every statement of this command will trigger a seperate build with that specific version of the environment variables. 
+We believe this is one of the powerful features Shippable offers. You can test your projects with multiple different settings for every push into your repo. Every statement of this command will trigger a separate build with that specific version of the environment variables. 
 
 .. code-block:: python
         
@@ -247,7 +250,7 @@ You can build specific branches or exclude them if needed.
 build matrix
 ............
 
-This is another powerful feature that Shippable has to offer. You can trigger multiple different test passes for a single code push. You might want to test agaisnt different versions of ruby, or different aspect ratios for your Selenium tests or best yet, just different jdk versions. You can do it all with Shippable's matrix build mechanism.
+This is another powerful feature that Shippable has to offer. You can trigger multiple different test passes for a single code push. You might want to test against different versions of ruby, or different aspect ratios for your Selenium tests or best yet, just different jdk versions. You can do it all with Shippable's matrix build mechanism.
 
 .. code-block:: python
 
@@ -297,7 +300,7 @@ MySQL
 
 .. code-block:: bash
   
-  # MySQL binds to 127.0.0.1 by default and is started. default username is shippable with no password
+  # MySQL binds to 127.0.0.1 by default and is started on boot. Default username is shippable with no password
   # Create a DB as part of before script to use it
 
   before_script:
@@ -311,13 +314,13 @@ PostgreSQL
 
 .. code-block:: bash
 
-  # Postgre binds to 127.0.0.1 by default and is started. default username is "postgres" with no password
+  # Postgre binds to 127.0.0.1 by default and is started on boot. Default username is "postgres" with no password
   # Create a DB as part of before script to use it
 
   before_script:
     - psql -c 'create database myapp_test;' -U postgres
 
-Sample Python code using `PostgreSQL <https://github.com/Shippable/postgresql-buildsample>`_.
+Sample python code using `PostgreSQL <https://github.com/Shippable/postgresql-buildsample>`_.
 
 
 SQLite3
@@ -325,7 +328,7 @@ SQLite3
 
 SQLite is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine. So you can use SQLite, if you do not want to test your code behaviour with other databases.
 
-Sample Python code using `SQLite <https://github.com/Shippable/sqlite-buildsample>`_.
+Sample python code using `SQLite <https://github.com/Shippable/sqlite-buildsample>`_.
 
 
 Elastic Search
@@ -337,7 +340,7 @@ Elastic Search
   services:
       - elasticsearch
 
-Sample Python code using `Elastic Search <https://github.com/Shippable/Elasticsearch-buildsample>`_.
+Sample python code using `Elastic Search <https://github.com/Shippable/Elasticsearch-buildsample>`_.
 
 Memcache
 ........
@@ -348,7 +351,7 @@ Memcache
   services:
       - memcached
 
-Sample Python code using `Memcache <https://github.com/Shippable/Memcache-buildsample>`_.
+Sample python code using `Memcache <https://github.com/Shippable/Memcache-buildsample>`_.
 
 
 Redis
@@ -361,7 +364,31 @@ Redis
       - redis
 
 
-Sample Python code using `Redis <https://github.com/Shippable/Redis-buildsample>`_.
+Sample python code using `Redis <https://github.com/Shippable/Redis-buildsample>`_.
+
+
+Neo4j
+.....
+
+.. code-block:: bash
+ 
+ #neo4j runs on default port 7474
+ services:
+  - neo4j
+
+Sample ruby code using `neo4j <https://github.com/Shippable/neo4j-buildsample>`_.
+
+
+Cassandra
+..........
+
+.. code-block:: bash
+ 
+ #cassandra binds to the default localhost 127.0.0.1 and is not started on boot. 
+ services:
+   - cassandra
+
+Sample ruby code using `cassandra <https://github.com/Shippable/cassandra-buildsample>`_.
 
 ----------
 
