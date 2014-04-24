@@ -23,12 +23,12 @@ We currently support the following languages -
 * Node.js
 * Java
 * Scala 
+* PHP 
 
 Your Minions can test your repos on -
 
 * Ubuntu 12.04 LTS
 * Ubuntu 13.10 
-
 
 We support the following services natively -
 
@@ -38,6 +38,8 @@ We support the following services natively -
 * Redis 
 * MongoDB
 * RabbitMQ
+* Neo4j
+* Cassandra
 
 
 
