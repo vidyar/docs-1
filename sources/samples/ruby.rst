@@ -32,8 +32,15 @@ Here is the complete yml file for the Ruby-buildsample:
     env:
       - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
     notifications:
-    email:
-      - exampleone@org.com
+      email:
+        - exampleone@org.com
+    # ensure the test output and coverage dirs are created
+    before_script:
+      - mkdir -p shippable/testresults   
+    # write the rspec tests to the output dir
+    script:
+      - rspec -f JUnit -o shippable/testresults/results.xml  
+
 
 
 
