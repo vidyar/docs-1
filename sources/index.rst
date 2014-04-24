@@ -22,7 +22,7 @@ We currently support the following languages -
 * Python
 * Node.js
 * Java
-* Scala 
+* Scala
 * PHP 
 
 Your Minions can test your repos on -
