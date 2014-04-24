@@ -86,6 +86,7 @@ body {
 }
 .sidebar {
   float: left;
+  z-index: 1;
 }
 .main-content {
   padding: 16px 18px inherit;
