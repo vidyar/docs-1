@@ -19,5 +19,5 @@ We support the following languages
    scala
    php
 
-This list keeps growing and if you need something that you dont see here, drop us a line at 
+This list keeps growing and if you need something that you dont see here, drop us a line at support @ shippable.com
 
