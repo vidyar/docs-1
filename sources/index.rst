@@ -1,5 +1,5 @@
-:title: Shippable Documentation
-:description: An overview of the Shippable Documentation
+:title: Learn About What Makes Shippable Great
+:description: Code examples, FAQs, language & platform support
 :keywords: containers, lxc, docker, Continuous Integration, Continuous Deployment, CI/CD, testing, automation
 
 Overview
