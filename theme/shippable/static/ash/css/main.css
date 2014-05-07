@@ -300,6 +300,7 @@ dt:hover > a.headerlink {
   border: 3px solid black;
   padding: 10px;
   margin: 5px auto 10px;
+  overflow: auto;
 }
 .admonition .admonition-title {
   font-size: larger;
@@ -317,6 +318,12 @@ dt:hover > a.headerlink {
 .admonition.seealso {
   border-color: #23cb1f;
 }
+
+/* Prevents Overlapping of Notes with Sidebar */
+.highlight {
+  overflow: auto;
+}
+
 /* Add styles for other types of comments */
 .versionchanged,
 .versionadded,
