@@ -24,6 +24,8 @@ We currently support the following languages -
 * Java
 * Scala
 * PHP 
+* Go
+* Clojure
 
 Your Minions can test your repos on -
 
