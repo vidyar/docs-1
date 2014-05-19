@@ -54,6 +54,8 @@ A set of common tools are available on all minions. The following is a list of a
   - Python 
   - OpenJDK
   - PHP
+  - Go
+  - Clojure
 
 - Services
   
