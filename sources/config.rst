@@ -72,7 +72,7 @@ A set of common tools are available on all minions. The following is a list of a
 - Headless browser testing tools
 
   - xfvb
-  - PhontomJS
+  - PhantomJS
 
 - Libraries
 
