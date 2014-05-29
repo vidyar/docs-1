@@ -198,11 +198,41 @@ If you would like to turn submodules off completely -
   git:
    submodules: false
 
-
-environment variables
+common environment variables
 .....................
 
-We believe this is one of the powerful features Shippable offers. You can test your projects with multiple different settings for every push into your repo. Every statement of this command will trigger a separate build with that specific version of the environment variables. 
+You will have the following environment variables available to you for every build. You can use these in your scripts if required -
+
+- BRANCH : Name of branch being built
+
+- BUILD_NUMBER : Build number for current build 
+
+- COMMIT : Commit id that is being built and tested
+
+- DEBIAN_FRONTEND : noninteractive
+
+- JOB_ID : id of job in Shippable
+
+- JRUBY_OPTS : --server -Dcext.enabled=false -Xcompile.invokedynamic=false
+
+- LANG : en_US.UTF-8
+
+- LC_ALL : en_US.UTF-8
+
+- MERB_ENV : test
+
+- PULL_REQUEST : Pull request id if the job is a pull request. If not, this will be set to 'none'
+
+- RACK_ENV : test
+
+- RAILS_ENV : test
+
+- USER : shippable
+
+user specified environment variables
+.....................
+
+You can set your own environment variables in the yml. Every statement of this command will trigger a separate build with that specific version of the environment variables. 
 
 .. code-block:: python
         
