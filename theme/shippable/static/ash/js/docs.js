@@ -81,6 +81,9 @@ $(function(){
                 current.parent().children('ul').slideDown(200);
             }, 100);
         }
+
+        window.location(this.href);
+        
         return false;
     });
 
