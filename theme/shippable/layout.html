@@ -132,6 +132,9 @@
         <section class="mt15">
             <div class="container">
                 <div class="col-sm-4 sidebar bs-docs-sidebar">
+                    <div id="search-bar">
+                        <gcse:searchbox></gcse:searchbox>
+                    </div>
                     {{ toctree(collapse=False, maxdepth=3) }}
                 </div>
 
@@ -140,6 +143,9 @@
 
                     <!-- Main section
                     ================================================== -->
+                    <div id="search-results">
+                        <gcse:searchresults></gcse:searchresults>
+                    </div>
                     <section id="global" class="containerblock">
                         {% block body %}{% endblock %}
                     </section>

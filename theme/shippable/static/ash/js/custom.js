@@ -82,6 +82,23 @@ $(document).ready(function() {
    });
 });
 
+/*
+|--------------------------------------------------------------------------
+|  Google Custom Site Search Bar JS
+|--------------------------------------------------------------------------
+*/
+
+(function() {
+    var cx = '007409915751552019562:jf_agwdcypc';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+})();
+
 /*************** COLORS TO BE ERASED WHEN INSTALLING THE THEME ***********/
 
 /*************** GOOGLE ANALYTICS ***********/
@@ -1366,12 +1383,3 @@ $(window).on("resize",function(e){
             }
     
 });
-
-         
-
-
-
-
-
-
-
