@@ -82,7 +82,9 @@ $(function(){
             }, 100);
         }
 
-        window.location(this.href);
+        if (!$(this).parent().hasClass('open')) {
+            window.location(this.href);
+        }
         
         return false;
     });
