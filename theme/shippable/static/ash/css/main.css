@@ -341,3 +341,49 @@ dt:hover > a.headerlink {
 .deprecated {
   color: orangered;
 }
+
+/* =====================================
+  Google Custom Site Search Button
+====================================== */
+
+#search-bar {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+#gsc-iw-id1 {
+  height: 28px;
+}
+
+input#gsc-i-id1, input#gsc-i-id1:hover, input#gsc-i-id1:focus {
+  color: #777 !important;
+}
+
+input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
+  background-image: inherit;
+  box-sizing: content-box;
+}
+
+td.gsc-search-button {
+  padding-top: 3px;
+}
+
+.gsc-thumbnail-inside {
+  padding-left: 0px !important;
+}
+
+.gsc-url-top {
+  padding-left: 0px !important;
+}
+
+.gsc-selected-option-container {
+  padding-right: 62px !important;
+}
+
+.gcsc-branding {
+  display: none !important;
+}
+
+.gsc-result-info {
+  padding-left: 0px !important;
+}
