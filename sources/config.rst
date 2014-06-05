@@ -68,6 +68,8 @@ A set of common tools are available on all minions. The following is a list of a
   - Selenium Server
   - Neo4j
   - Cassandra
+  - Couchdb
+  - Rethinkdb
 
 - Headless browser testing tools
 
@@ -103,6 +105,12 @@ A set of common tools are available on all minions. The following is a list of a
 
   - Bundler
   - Rake
+ 
+- Addons
+  
+  - Firefox
+  - Custom hostname
+  - PostgreSQL
 
 ----------
 
@@ -199,7 +207,7 @@ If you would like to turn submodules off completely -
    submodules: false
 
 common environment variables
-.....................
+.............................
 
 You will have the following environment variables available to you for every build. You can use these in your scripts if required -
 
@@ -230,7 +238,7 @@ You will have the following environment variables available to you for every bui
 - USER : shippable
 
 user specified environment variables
-.....................
+.....................................
 
 You can set your own environment variables in the yml. Every statement of this command will trigger a separate build with that specific version of the environment variables. 
 
@@ -304,6 +312,42 @@ This is another powerful feature that Shippable has to offer. You can trigger mu
     - ISOLATED=false
 
 The above example will fire 36 different builds for each push. Whoa! Need more minions?
+ 
+
+**exclude**
+
+It is also possible to exclude a specific version using exclude tag. Configure your yml file as shown below to exclude a specific version.
+
+.. code-block:: python
+
+   matrix:
+     exclude:
+       - rvm: 1.9.2
+        
+
+
+**include**
+
+You can also configure your yml file to include entries into the matrix with include tag.
+
+.. code-block:: python
+
+   matrix:
+     include:
+       - rvm: 2.0.0
+         gemfile: gemfiles/Gemfile.rails-3.0.x
+         env: ISOLATED=false
+
+
+**allow-failures**
+
+Allowed failures are items in your build matrix that are allowed to fail without causing the entire build to be shown as failed. You can define allowed failures in the build matrix as follows:
+
+.. code-block:: python
+
+  matrix:
+    allow_failures:
+      - rvm: 1.9.3
 
 
 
@@ -339,20 +383,6 @@ MySQL
       - mysql -e 'create database myapp_test;'
                                  
 Sample Python code using `MySQL <https://github.com/Shippable/mysql-buildsample>`_.
-
-
-PostgreSQL
-..........
-
-.. code-block:: bash
-
-  # Postgre binds to 127.0.0.1 by default and is started on boot. Default username is "postgres" with no password
-  # Create a DB as part of before script to use it
-
-  before_script:
-    - psql -c 'create database myapp_test;' -U postgres
-
-Sample python code using `PostgreSQL <https://github.com/Shippable/postgresql-buildsample>`_.
 
 
 SQLite3
@@ -421,6 +451,55 @@ Cassandra
    - cassandra
 
 Sample ruby code using `cassandra <https://github.com/Shippable/cassandra-buildsample>`_.
+
+--------
+
+**Addons**
+----------
+
+firefox
+..........
+
+By default our minion comes with the firefox version 29.0. To select a different firefox version, add the following to your shippable.yml file.
+
+.. code-block:: python
+
+	addons:
+  	   firefox: "21.0"
+
+custom host name
+..................
+
+You can also set up custom hostnames using the **hosts** addons. To set up the hostnames in /etc/hosts file, add the following to your shippable.yml file.
+   
+.. code-block:: python
+
+        addons:
+           hosts: 
+    	    - google.com
+            - asdf.com
+
+PostgreSQL
+...........
+
+.. code-block:: bash
+
+  # Postgre binds to 127.0.0.1 by default and is started on boot. Default username is "postgres" with no password
+  # Create a DB as part of before script to use it
+
+  before_script:
+    - psql -c 'create database myapp_test;' -U postgres
+
+Sample python code using `PostgreSQL <https://github.com/Shippable/postgresql-buildsample>`_.
+
+We support PostgreSQL 9.1, 9.2 and 9.3 versions and by default, version 9.2 is installed on our minions. Configure your yml file using **PostgreSQL** addons to select different versions. Add the following to your yml file to select the version 9.3.
+
+
+.. code-block:: python
+
+          addons:
+           postgresql : "9.3"
+  
 
 ----------
 
