@@ -7,10 +7,14 @@
 Python-buildsample
 ==================== 
 
-The goal of this code sample is to show you how to set up and run your repo in shippable.
+The goal of this code samples is to show you how to set up and build your repo on shippable. These projects use
+`nose <https://pypi.python.org/pypi/nose>`_ and `coverage 3.7  <https://pypi.python.org/pypi/coverage/>`_ .
 
-A sample repository `Python-buildsample <https://github.com/Shippable/Python-buildsample>`_ has been created using `nose <https://pypi.python.org/pypi/nose>`_ and `coverage 3.7  <https://pypi.python.org/pypi/coverage/>`_  .
-
+`Python Sample with MySQL <https://github.com/Shippable/sample_python_mysql>`_
+`Python Sample with Postgres <https://github.com/Shippable/sample_python_postgresl>`_
+`Python Sample with MongoDB <https://github.com/Shippable/sample_python_mongodb>`_
+`Python Sample with Neo4j <https://github.com/Shippable/sample_python_neo4j>`_
+`Python Sample with Coveralls <https://github.com/Shippable/sample_python_coveralls>`_
 
 Keep the output generated for test and code coverage in the special folder Shippable/testresults and Shippable/codecoverage to get parsed reports parsed and to get a visualization of the reports.The test results must be generated in Junit format.
 
