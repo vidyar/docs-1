@@ -8,9 +8,14 @@
 Java-buildsample 
 ===================
 
-The goal of this code sample is to show how to set up and run your repo in Shippable.
+The goal of this code samples is to show you how to set up and build your repo on shippable. These projects use
+`cobertura <http://cobertura.github.io/cobertura/>`_ and `Junit <http://junit.org/>`_ .
 
-A sample repository `Java-buildsample  <https://github.com/Shippable/Java-buildsample>`_ has been created using `cobertura <http://cobertura.github.io/cobertura/>`_ and `Junit <http://junit.org/>`_ . 
+`Java Sample with MySQL <https://github.com/Shippable/sample_java_mysql>`_
+
+`Java Sample with Postgres <https://github.com/Shippable/sample_java_postgres>`_
+
+`Java Sample with MongoDB <https://github.com/Shippable/sample_java_mongo>`_
 
 Keep the test and code coverage output in the special folders Shippable/testresults and Shippable/codecoverage to get parsed reports. Test results must be in Junit format.
 
