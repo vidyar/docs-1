@@ -4,8 +4,8 @@
 
 .. _neo4j:
 
-Neo4j-buildsample
-=================
+neo4j-samples
+=============
 
 These samples will help you get started with Shippable.
 

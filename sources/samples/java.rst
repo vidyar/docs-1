@@ -5,8 +5,8 @@
 
 .. _java :
 
-Java-buildsample 
-===================
+java-samples
+============
 
 The goal of this code samples is to show you how to set up and build your repo on shippable. These projects use
 `cobertura <http://cobertura.github.io/cobertura/>`_ and `Junit <http://junit.org/>`_ .
