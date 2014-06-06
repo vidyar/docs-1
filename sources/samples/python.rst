@@ -20,7 +20,13 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `Python Sample with Coveralls <https://github.com/Shippable/sample_python_coveralls>`_
 
-`Python Sample with Coveralls <https://github.com/Shippable/sample_python_elasticsearch>`_
+`Python Sample with Elasticsearch <https://github.com/Shippable/sample_python_elasticsearch>`_
+
+`Python Sample with Memcache <https://github.com/Shippable/sample_python_memcache>`_
+
+`Python Sample with Redis <https://github.com/Shippable/sample_python_redis>`_
+
+`Python Sample with SQLlite <https://github.com/Shippable/sample_python_sqllite>`_
 
 Keep the output generated for test and code coverage in the special folder Shippable/testresults and Shippable/codecoverage to get parsed reports parsed and to get a visualization of the reports.The test results must be generated in Junit format.
 
