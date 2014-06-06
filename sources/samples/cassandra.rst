@@ -7,12 +7,11 @@
 Cassandra-buildsample
 =====================
 
-The goal of this code sample is to show you how to set up and run your repo in shippable.
+The goal of this code samples is to show you how to set up and build your repo on shippable.
 
-A sample repository `cassandra-buildsample <https://github.com/Shippable/cassandra-buildsample>`_ has been created using ruby.  
+`Ruby Sample with Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_
 
 We need the yml file to analyze the project details. Add the shippable.yml file to the root of your repo by specifying:
-
 
 **language :** Specify the language used to create the project. Ruby is used in this sample project.
 
