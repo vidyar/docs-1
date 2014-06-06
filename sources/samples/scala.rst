@@ -7,9 +7,12 @@
 Scala-buildsample
 ===================
  
-The goal of this code sample is to show you how to set up and run your repo in Shippable.
- 
-A sample repository `Scala-buildsample  <https://github.com/Shippable/Scala-buildsample>`_  has been created using the testing framework `ScalaTest <http://scalatest.org/>`_ . 
+These samples will help you get started with Shippable. Test and Coverage tools used here are
+`ScalaTest <http://scalatest.org/>`_ .
+
+`Scala Sample <https://github.com/Shippable/sample_scala>`_
+
+A sample repository `Scala-buildsample  <https://github.com/Shippable/Scala-buildsample>`_  has been created using the testing framework
 
 Keep the test and code coverage output in the special folders Shippable/testresults and Shippable/codecoverage to get the reports parsed. The test report must be in Junit format.
 
@@ -31,5 +34,3 @@ Here is the complete yml file for Scala-buildsample
     	    - 2.10.2
 
 Enable the repo Scala-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
-
-
