@@ -12,9 +12,13 @@ The goal of this code samples is to show you how to set up and build your repo o
 `istanbul  <https://npmjs.org/package/istanbul>`_  and `mocha  <https://npmjs.org/package/mocha>`_ .
 
 `Node Sample with MySQL <https://github.com/Shippable/sample_node_mysql>`_
+
 `Node Sample with Postgres <https://github.com/Shippable/sample_node_postgres>`_
+
 `Node Sample with MongoDB <https://github.com/Shippable/sample_node_mongo>`_
+
 `Node Sample with Neo4j <https://github.com/Shippable/sample_node_neo4j>`_
+
 `Node Sample with Selenium <https://github.com/Shippable/sample_node_selenium>`_
 
 A sample repository `Node.js-buildsample <https://github.com/Shippable/Node.js-buildsample>`_  has been created using the coverage tool  the
