@@ -12,6 +12,9 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `Ruby Sample <https://github.com/Shippable/sample_ruby>`_
 
+`Ruby Sample with Neo4j <https://github.com/Shippable/sample_ruby_neo4j>`_
+
+
 We need the yml file to analyze the project details. So add the shippable.yml file to the root of your repo by specifying the following details:
 
 **language :** Specify the language used to create the project. Ruby is used in this sample code.
