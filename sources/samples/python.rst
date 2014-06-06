@@ -7,7 +7,7 @@
 Python-buildsample
 ==================== 
 
-The goal of this code samples is to show you how to set up and build your repo on shippable. These projects use
+These samples will help you get started with Shippable. Test and Coverage tools used here are
 `nose <https://pypi.python.org/pypi/nose>`_ and `coverage 3.7  <https://pypi.python.org/pypi/coverage/>`_ .
 
 `Python Sample with MySQL <https://github.com/Shippable/sample_python_mysql>`_

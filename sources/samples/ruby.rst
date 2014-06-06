@@ -7,9 +7,10 @@
 Ruby-buildsample
 ==================
 
-The goal of this code sample is to show you how to set up and run your repo in Shippable.
+These samples will help you get started with Shippable. Test and Coverage tools used here are
+`simplecov <http://rubydoc.info/gems/simplecov/>`_  and `RSpec <http://rspec.info/>`_  .
 
-A sample repository `Ruby-buildsample <https://github.com/Shippable/Ruby-buildsample>`_  has been created using `simplecov <http://rubydoc.info/gems/simplecov/>`_  and `RSpec <http://rspec.info/>`_  .
+`Ruby Sample <https://github.com/Shippable/sample_ruby>`_
 
 We need the yml file to analyze the project details. So add the shippable.yml file to the root of your repo by specifying the following details:
 

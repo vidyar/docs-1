@@ -8,7 +8,7 @@
 Node.js-buildsample
 ======================
 
-The goal of this code samples is to show you how to set up and build your repo on shippable. These projects use
+These samples will help you get started with Shippable. Test and Coverage tools used here are
 `istanbul  <https://npmjs.org/package/istanbul>`_  and `mocha  <https://npmjs.org/package/mocha>`_ .
 
 `Node Sample with MySQL <https://github.com/Shippable/sample_node_mysql>`_
