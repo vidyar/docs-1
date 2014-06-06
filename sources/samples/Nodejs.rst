@@ -8,9 +8,16 @@
 Node.js-buildsample
 ======================
 
-The goal of this code sample is to show you how to set up and run your repo in Shippable.
+The goal of this code samples is to show you how to set up and build your repo on shippable. These projects use
+`istanbul  <https://npmjs.org/package/istanbul>`_  and `mocha  <https://npmjs.org/package/mocha>`_ .
 
-A sample repository `Node.js-buildsample <https://github.com/Shippable/Node.js-buildsample>`_  has been created using the coverage tool `istanbul  <https://npmjs.org/package/istanbul>`_  and the testing tool `mocha  <https://npmjs.org/package/mocha>`_ .
+`Node Sample with MySQL <https://github.com/Shippable/sample_node_mysql>`_
+`Node Sample with Postgres <https://github.com/Shippable/sample_node_postgres>`_
+`Node Sample with MongoDB <https://github.com/Shippable/sample_node_mongo>`_
+`Node Sample with Neo4j <https://github.com/Shippable/sample_node_neo4j>`_
+`Node Sample with Selenium <https://github.com/Shippable/sample_node_selenium>`_
+
+A sample repository `Node.js-buildsample <https://github.com/Shippable/Node.js-buildsample>`_  has been created using the coverage tool  the
 
 Keep the test and code coverage output in the special folders Shippable/testresults and Shippable/codecoverage to get your reports parsed.
 
