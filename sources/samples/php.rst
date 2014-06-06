@@ -8,10 +8,14 @@
 PHP-buildsample 
 ===================
 
-The goal of this code sample is to show how to set up and run your repo in Shippable.
+The goal of this code samples is to show you how to set up and build your repo on shippable. These projects use
+`phpunit <http://phpunit.de/>`_.
 
-A sample repository `php-buildsample  <https://github.com/Shippable/php-buildsample>`_ has been created using the `phpunit <http://phpunit.de/>`_ testing framework . 
- 
+`PHP Sample <https://github.com/Shippable/sample_php>`_
+
+`PHP Sample with MySQL <https://github.com/Shippable/sample_php_mysql>`_
+
+`PHP Sample with MongoDB <https://github.com/Shippable/sample_php_mongo>`_
 
 We need the yml file to analyze the project details. So add the shippable.yml file to the root of your repo by specifying:
 
