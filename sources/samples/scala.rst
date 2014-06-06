@@ -4,8 +4,8 @@
 
 .. _scala:
 
-Scala-buildsample
-===================
+scala-samples
+=============
  
 These samples will help you get started with Shippable. Test and Coverage tools used here are
 `ScalaTest <http://scalatest.org/>`_ .

@@ -5,8 +5,8 @@
 
 .. _php:
 
-PHP-buildsample 
-===================
+php-samples
+===========
 
 These samples will help you get started with Shippable. Test and Coverage tools used here are
 `phpunit <http://phpunit.de/>`_.

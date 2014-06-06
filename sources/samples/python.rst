@@ -4,8 +4,8 @@
 
 .. _python :
 
-Python-buildsample
-==================== 
+python-samples
+==============
 
 These samples will help you get started with Shippable. Test and Coverage tools used here are
 `nose <https://pypi.python.org/pypi/nose>`_ and `coverage 3.7  <https://pypi.python.org/pypi/coverage/>`_ .

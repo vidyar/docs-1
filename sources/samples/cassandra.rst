@@ -4,8 +4,8 @@
 
 .. _cassandra:
 
-Cassandra-buildsample
-=====================
+cassandra-samples
+=================
 
 The goal of this code samples is to show you how to set up and build your repo on shippable.
 

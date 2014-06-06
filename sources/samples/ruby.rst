@@ -4,8 +4,8 @@
 
 .. _ruby:
 
-Ruby-buildsample
-==================
+ruby-samples
+============
 
 These samples will help you get started with Shippable. Test and Coverage tools used here are
 `simplecov <http://rubydoc.info/gems/simplecov/>`_  and `RSpec <http://rspec.info/>`_  .
