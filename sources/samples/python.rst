@@ -20,6 +20,8 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `Python Sample with Coveralls <https://github.com/Shippable/sample_python_coveralls>`_
 
+`Python Sample with Coveralls <https://github.com/Shippable/sample_python_elasticsearch>`_
+
 Keep the output generated for test and code coverage in the special folder Shippable/testresults and Shippable/codecoverage to get parsed reports parsed and to get a visualization of the reports.The test results must be generated in Junit format.
 
 We need the yml file to analyze the project details. Add the shippable.yml file to the root of your repo by specifying:

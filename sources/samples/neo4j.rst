@@ -7,9 +7,13 @@
 Neo4j-buildsample
 =================
 
-The goal of this code sample is to show you how to set up and run your repo in shippable.
+These samples will help you get started with Shippable.
 
-A sample repository `neo4j-buildsample <https://github.com/Shippable/neo4j-buildsample>`_ has been created using ruby.  
+`Ruby Sample with Neo4j <https://github.com/Shippable/sample_ruby_neo4j>`_
+
+`Node Sample with Neo4j <https://github.com/Shippable/sample_node_neo4j>`_
+
+`Python Sample with Neo4j <https://github.com/Shippable/sample_python_neo4j>`_
 
 We need the yml file to analyze the project details. Add the shippable.yml file to the root of your repo by specifying:
 
