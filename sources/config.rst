@@ -205,7 +205,9 @@ You will have the following environment variables available to you for every bui
 
 - BRANCH : Name of branch being built
 
-- BUILD_NUMBER : Build number for current build 
+- BUILD_NUMBER : Build number for current build
+
+- BUILD_URL : Direct URL link to the Build Output
 
 - COMMIT : Commit id that is being built and tested
 
