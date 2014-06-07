@@ -1014,6 +1014,55 @@ body#comingSoon{padding-top:0; background: #4B4A4A}
 #defaultCountdown {text-align: center;}
 .logoImg {height:200px; width:200px; border:2px solid #eee;}
 
+/** modals **/
+
+#signupModal .modal-content{
+    font-size: 16px;
+	background: #3E6D92;
+	color: #fff;
+}
+
+#signupModal .close{
+	color:#fff;
+	opacity:0.8;
+}
+
+#signupModal .modal-header, #signupModal .modal-footer{
+	border: 0;
+}
+
+#signupModal h3{
+	font-size: 2em;
+	font-weight: lighter;
+	color:rgba(255,255,255,0.8);
+}
+
+.signup-cta {
+	background:rgba(255,255,255,0.3);
+	border: 0;
+	padding: 0.3em;
+	border-radius: 0.2em;
+	color:#fff;
+	display:block;
+	margin-top:1rem;
+	width:100%;
+	text-align: center;
+}
+
+.signup-cta:hover{
+	background:rgba(255,255,255,1);
+	text-decoration: none;
+	color: #3E6D92;
+}
+
+.signup-cta i{
+	margin-right:0.5em;
+}
+
+.modal-open{
+	overflow: hidden !important;
+}
+
 /*** MEDIA QUERIES ***/
 
 @media(max-width:767px){}
