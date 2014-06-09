@@ -12,7 +12,7 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `Python Sample with MySQL <https://github.com/Shippable/sample_python_mysql>`_
 
-`Python Sample with Postgres <https://github.com/Shippable/sample_python_postgresl>`_
+`Python Sample with Postgresql <https://github.com/Shippable/sample_python_postgres>`_
 
 `Python Sample with MongoDB <https://github.com/Shippable/sample_python_mongodb>`_
 
