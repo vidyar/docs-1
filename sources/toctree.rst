@@ -16,3 +16,4 @@ This documentation has the following resources:
    languages/index
    samples/index
    glossary
+   faq
