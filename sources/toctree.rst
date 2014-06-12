@@ -15,6 +15,6 @@ This documentation has the following resources:
    config
    languages/index
    samples/index
-   faq
    glossary
-   
+   faq
+
