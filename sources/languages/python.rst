@@ -32,7 +32,7 @@ This section helps you to configure the yml file for your python project.
              - "3.3"
 	     - "pypy"	
 
-- We support different versions of python like 2.6, 2.7, 3.2, 3.3 and pypy.
+- We support different versions of python like 2.6, 2.7, 3.2, 3.3, 3.4 and pypy.
  
 - Install dependencies for your project using the **install** key.
 	.. code-block:: python
