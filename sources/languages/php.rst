@@ -21,10 +21,11 @@ This section helps you to create a shippable.yml file for your php project.
               language: php
         	# php tag
 	      php:
-	       - 5.2
 	       - 5.3
 	       - 5.4
                - 5.5
+	       - 5.6
+	       - hhvm
 
 **Test scripts**
 
