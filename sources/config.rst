@@ -651,5 +651,5 @@ Build engineer can run or manage projects that are already setup. They have full
 -----------------------
 
 
-If your script or test suite hangs for a long time or there hasn't been any log output in 10 minutes, then Shippable will forcefully terminate the build and add a message to the console log.
+If your script or test suite hangs for a long time or there hasn't been any log output in 20 minutes, then Shippable will forcefully terminate the build and add a message to the console log.
 
