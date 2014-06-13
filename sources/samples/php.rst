@@ -23,7 +23,7 @@ We need the yml file to analyze the project details. So add the shippable.yml fi
 
 **php :** Specify the runtime against which your build needs to run using **php** tag. The sample project uses “5.4".
 
-**script :** Specify the command to run the test using script key and export the generated junit test output to shippable/testresults folder to get the visualization of test reports. 
+**script :** Specify the command to run the test and coverage using script key and export the generated junit test output to shippable/testresults folder and xml coverage output to shippable/codecoverage foldet to get the visualization of reports.  
 
 
 **notification alerts:** Email notifications are disabled in this sample project.
@@ -37,15 +37,16 @@ This is the complete yml file for php-buildsample:
 	php: 
   	  - 5.4
 
-        before_script: 
+        before_script:
+          - mkdir -p shippable/codecoverage 
           - mkdir -p shippable/testresults
 
         script:
-          - phpunit  --log-junit shippable/testresults/junit.xml tests/calculator_test.php
+         - phpunit --log-junit shippable/testresults/junit.xml --coverage-xml shippable/codecoverage tests/calculator_test.php
           
         notifications:
           email: false
 
 
-Create a project by enabling the repo php-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output and test results on the respective build’s tab.
+Create a project by enabling the repo php-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and code coverage output on the respective build’s tab.
 
