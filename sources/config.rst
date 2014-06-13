@@ -370,7 +370,7 @@ MongoDB
   services:
    - mongodb
 
-Sample PHP code using `mongodb <https://github.com/Shippable/sample_php_mongo>`
+Sample PHP code using `mongodb <https://github.com/Shippable/sample_php_mongo>`_ .
 
 
 MySQL
