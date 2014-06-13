@@ -42,7 +42,9 @@ We support the following services natively -
 * RabbitMQ
 * Neo4j
 * Cassandra
-
+* RethinkDB
+* CouchDB
+* Selenium
 
 
 Enough reading! :ref:`Get Started! <getstarted>`
