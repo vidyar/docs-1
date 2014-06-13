@@ -638,7 +638,7 @@ Shippable will automatically add your github collaborators when you create a pro
 There are two types of roles that users can have -
 
 **Owner :** 
-Owner is the highest role. This role permits users to create, run and delete a project. Owners can also manage permissions and create other co-owners.
+Owner is the highest role. This role permits users to create, run and delete a project. 
 
 
 **Build engineer :** 
