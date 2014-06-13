@@ -370,7 +370,7 @@ MongoDB
   services:
    - mongodb
 
-Sample Python code using `MongoDB <https://github.com/Shippable/mongodb-buildsample>`_.
+Sample PHP code using `mongodb <https://github.com/Shippable/sample_php_mongo>`
 
 
 MySQL
@@ -384,7 +384,7 @@ MySQL
   before_script:
       - mysql -e 'create database myapp_test;'
                                  
-Sample Python code using `MySQL <https://github.com/Shippable/mysql-buildsample>`_.
+Sample javascript code using `mysql <https://github.com/Shippable/sample_node_mysql>`_.
 
 
 SQLite3
@@ -392,7 +392,7 @@ SQLite3
 
 SQLite is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine. So you can use SQLite, if you do not want to test your code behaviour with other databases.
 
-Sample python code using `SQLite <https://github.com/Shippable/sqlite-buildsample>`_.
+Sample python code using `SQLite <https://github.com/Shippable/sample_python_sqllite>`_.
 
 
 Elastic Search
@@ -404,10 +404,10 @@ Elastic Search
   services:
       - elasticsearch
 
-Sample python code using `Elastic Search <https://github.com/Shippable/Elasticsearch-buildsample>`_.
+Sample python code using `Elastic Search <https://github.com/Shippable/sample_python_elasticsearch>`_.
 
-Memcache
-........
+Memcached
+..........
 
 .. code-block:: bash
 
@@ -415,7 +415,7 @@ Memcache
   services:
       - memcached
 
-Sample python code using `Memcache <https://github.com/Shippable/Memcache-buildsample>`_.
+Sample python code using `Memcached <https://github.com/Shippable/sample_python_memcache>`_ .
 
 
 Redis
@@ -428,7 +428,7 @@ Redis
       - redis
 
 
-Sample python code using `Redis <https://github.com/Shippable/Redis-buildsample>`_.
+Sample python code using `Redis <https://github.com/Shippable/sample_python_redis>`_.
 
 
 Neo4j
@@ -440,8 +440,7 @@ Neo4j
  services:
   - neo4j
 
-Sample ruby code using `neo4j <https://github.com/Shippable/neo4j-buildsample>`_.
-
+Sample javascript code using `Neo4j <https://github.com/Shippable/sample_node_neo4j>`_ .
 
 Cassandra
 ..........
@@ -452,7 +451,7 @@ Cassandra
  services:
    - cassandra
 
-Sample ruby code using `cassandra <https://github.com/Shippable/cassandra-buildsample>`_.
+Sample ruby code using `Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_.
 
 --------
 
@@ -492,7 +491,7 @@ PostgreSQL
   before_script:
     - psql -c 'create database myapp_test;' -U postgres
 
-Sample python code using `PostgreSQL <https://github.com/Shippable/postgresql-buildsample>`_.
+Sample java code using `PostgreSQL <https://github.com/Shippable/sample_java_postgres>`_.
 
 We support PostgreSQL 9.1, 9.2 and 9.3 versions and by default, version 9.2 is installed on our minions. Configure your yml file using **PostgreSQL** addons to select different versions. Add the following to your yml file to select the version 9.3.
 
