@@ -12,7 +12,13 @@ Getting Started
 **Step 1** : Sign Up
 --------------------
 
-Shippable uses Github as an auth provider, so you need a Github account to use us. Clicking on the 'Sign in' or 'Sign up' buttons will take you to the standard Github app authorization page and requests you to give Shippable Read permission to your public data. After authorization, you will be redirected to Shippable site.
+To sign up with shippable, you should have either Github or Bitbucket account. Go to `Shippable.com <https://www.shippable.com>`_  and click on the 'Login' button on the top menu which will give you an option to sign in with either Github or Bitbucket credentials.
+
+
+**Sign up with Github**
+
+Selecting Github from the modal dialog window will take you to Github sign in page. Login with the Github credentials and give Read access to Shippable from the standard Github app authorization page. After authorization, you will be redirected to Shippable site.
+
 
 Choose the public or private repositories that you would like to build by clicking on the enable button from settings page and it will take you to the Github authorization page to give Shippable Read/Write permissions to your repos.      
 
@@ -21,9 +27,17 @@ Choose the public or private repositories that you would like to build by clicki
 
 After authorization, you will be authenticated by Github and redirected back to Shippable. An Ubuntu 12.04LTS Minion will be automatically provisioned for you. You are now ready to set up CI! 
 
+**Sign up with Bitbucket**
+
+Choosing Bitbucket from the modal dialog window will take you to the Bitbucket sign in page. Register with the bitbucket credentials and grant read/write access to Shippable from the standard bitbucket authorization page.
+
+
+After authorization, you will be redirected back to Shippable. An Ubuntu 12.04LTS Minion will be automatically provisioned for you. You are now ready to set up CI!
+
+
 -------
 
-**Step 2** : Enable CI for Github repos
+**Step 2** : Enable CI for repos
 ---------------------------------------
 
 You can now go to your repositories page by clicking on Settings in the top menu. You will see a list of repositories for your personal accounts and any organizational accounts you have access to. Enable the repo that you wish to do build.
@@ -94,8 +108,9 @@ Webhooks are user-defined HTTP callbacks. They are usually triggered by some eve
 
 **Manual Builds** 
 
-- Select Builds from the top menu and then select the project from the list in the sidebar to the left. 
-- Click on the Run button. Immediately, the console log from your build minion starts to stream to your browser through sockets. If your build does not start or get queued, make sure you have enough minions to run the build by going to the minions page.
+- Go to dashboard and select the project from the Repos configured list . 
+- Click on the Run button. Immediately, the console log from your build minion starts to stream to your browser through sockets. By default, this will trigger build for master branch. If your build does not start or get queued, make sure you have enough minions to run the build by going to the minions page. 
+- If you want to build your project manually for non master branch, then go to Settings -> Repositories -> click on the project name -> go to Manual builds tab and choose the branch from the dropdrown list. Then follow the above two steps to trigger the build.
 
 .. note::
 
