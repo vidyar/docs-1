@@ -7,12 +7,11 @@
 scala-samples
 =============
  
-These samples will help you get started with Shippable. Test and Coverage tools used here are
+This sample will help you get started with Shippable. Testing framework used here is
 `ScalaTest <http://scalatest.org/>`_ .
 
 `Scala Sample <https://github.com/Shippable/sample_scala>`_
 
-A sample repository `Scala-buildsample  <https://github.com/Shippable/Scala-buildsample>`_  has been created using the testing framework
 
 Keep the test and code coverage output in the special folders Shippable/testresults and Shippable/codecoverage to get the reports parsed. The test report must be in Junit format.
 
