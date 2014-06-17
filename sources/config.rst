@@ -553,7 +553,7 @@ We support PostgreSQL 9.1, 9.2 and 9.3 versions and by default, version 9.2 is i
            postgresql : "9.3"
   
 
-PostGIS 2.1 packages are pre-installed in our minions along with the PostgreSQL versions 9.1, 9.2 and 9.3.
+
 
 ----------
 
