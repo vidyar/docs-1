@@ -68,8 +68,8 @@ A set of common tools are available on all minions. The following is a list of a
   - Selenium Server
   - Neo4j
   - Cassandra
-  - Couchdb
-  - Rethinkdb
+  - CouchDB
+  - RethinkDB
 
 - Headless browser testing tools
 
@@ -260,13 +260,64 @@ In this setting **4 builds** are triggered
 
 .. code-block:: python
         
-  # nPn builds
+  # npm builds
   node_js:
     - 0.10.24
     - 0.8.14
   env:
     - FOO=foo BAR=bar
     - FOO=bar BAR=foo
+
+Secure environment variables
+.............................
+
+Shippable allows you to encrypt the environment variable definitions and keep your configurations private using **secure** tag. Go to settings -> Repositories -> click on the enabled project name -> and select Secure variables tab. Enter the env variable and its value in the text box as shown below. 
+
+.. code-block:: python
+
+    name=abc
+
+Click on the encrypt button and copy the encrypted output string and add it to your yml file as shown below:
+
+
+.. code-block:: python
+   
+   env:
+     secure: <encrypted output>
+
+
+To encrypt multiple environment variables and use them as part of a single build, enter the environment variable definitions in the text box as shown below 
+
+.. code-block:: python
+
+  name1="abc" name2="xyz"    
+
+This will give you a single encrypted output that you can embed in your yml file.
+
+
+You can also combine encrypted output and clear text environments using **global** tag. 
+
+.. code-block:: python
+ 
+   env:
+     global:
+       - FOO="bar"
+       - secure: <encrypted output>
+
+
+To encrypt multiple environment variables separately, configure your yml file as shown below: 
+
+.. code-block:: python
+  
+  env:
+    global:
+      #encrypted output of first env variable
+      - secure: <encrypted output> 
+      #encrypted output of second env variable
+      - secure: <encrypted output>
+    matrix:
+      #encrypted output of third env variable
+      - secure: <encrypted output>
 
 
 include & exclude branches
