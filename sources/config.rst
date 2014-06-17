@@ -461,7 +461,7 @@ Sample ruby code using `Cassandra <https://github.com/Shippable/sample_ruby_cass
 firefox
 ..........
 
-By default our minion comes with the firefox version 29.0. To select a different firefox version, add the following to your shippable.yml file.
+We support different firefox versions like "18.0", "19.0", "20.0", "21.0", "22.0", "23.0", "24.0", "25.0", "26.0", "27.0", "28.0", "29.0". To select a specific firefox version, add the following to your shippable.yml file.
 
 .. code-block:: python
 
@@ -501,6 +501,8 @@ We support PostgreSQL 9.1, 9.2 and 9.3 versions and by default, version 9.2 is i
           addons:
            postgresql : "9.3"
   
+
+PostGIS 2.1 packages are pre-installed in our minions along with the PostgreSQL versions 9.1, 9.2 and 9.3.
 
 ----------
 
@@ -641,8 +643,8 @@ There are two types of roles that users can have -
 Owner is the highest role. This role permits users to create, run and delete a project. 
 
 
-**Build engineer :** 
-Build engineer can run or manage projects that are already setup. They have full visibility into the project and can trigger the build.
+**Collaborators :** 
+Collaborators can run or manage projects that are already setup. They have full visibility into the project and can trigger the build.
 
 
 --------
