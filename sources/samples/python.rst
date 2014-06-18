@@ -16,6 +16,10 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `Python Sample with MongoDB <https://github.com/Shippable/sample_python_mongodb>`_
 
+`Python Sample with CouchDB <https://github.com/Shippable/sample-python-couchdb>`_
+
+`Python Sample with RethinkDB <https://github.com/Shippable/sample-python-rethinkdb>`_
+
 `Python Sample with Neo4j <https://github.com/Shippable/sample_python_neo4j>`_
 
 `Python Sample with Coveralls <https://github.com/Shippable/sample_python_coveralls>`_
