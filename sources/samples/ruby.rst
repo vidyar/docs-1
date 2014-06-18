@@ -16,6 +16,10 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `Ruby Sample with Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_
 
+`Ruby Sample with CouchDB <https://github.com/Shippable/sample-ruby-couchdb>`_
+
+`Ruby Sample with RethinkDB <https://github.com/Shippable/sample-ruby-rethinkdb>`_
+
 We need the yml file to analyze the project details. So add the shippable.yml file to the root of your repo by specifying the following details:
 
 **language :** Specify the language used to create the project. Ruby is used in this sample code.
