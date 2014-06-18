@@ -68,8 +68,8 @@ A set of common tools are available on all minions. The following is a list of a
   - Selenium Server
   - Neo4j
   - Cassandra
-  - Couchdb
-  - Rethinkdb
+  - CouchDB
+  - RethinkDB
 
 - Headless browser testing tools
 
@@ -260,13 +260,64 @@ In this setting **4 builds** are triggered
 
 .. code-block:: python
         
-  # nPn builds
+  # npm builds
   node_js:
     - 0.10.24
     - 0.8.14
   env:
     - FOO=foo BAR=bar
     - FOO=bar BAR=foo
+
+Secure environment variables
+.............................
+
+Shippable allows you to encrypt the environment variable definitions and keep your configurations private using **secure** tag. Go to settings -> Repositories -> click on the enabled project name -> and select Secure variables tab. Enter the env variable and its value in the text box as shown below. 
+
+.. code-block:: python
+
+    name=abc
+
+Click on the encrypt button and copy the encrypted output string and add it to your yml file as shown below:
+
+
+.. code-block:: python
+   
+   env:
+     secure: <encrypted output>
+
+
+To encrypt multiple environment variables and use them as part of a single build, enter the environment variable definitions in the text box as shown below 
+
+.. code-block:: python
+
+  name1="abc" name2="xyz"    
+
+This will give you a single encrypted output that you can embed in your yml file.
+
+
+You can also combine encrypted output and clear text environments using **global** tag. 
+
+.. code-block:: python
+ 
+   env:
+     global:
+       - FOO="bar"
+       - secure: <encrypted output>
+
+
+To encrypt multiple environment variables separately, configure your yml file as shown below: 
+
+.. code-block:: python
+  
+  env:
+    global:
+      #encrypted output of first env variable
+      - secure: <encrypted output> 
+      #encrypted output of second env variable
+      - secure: <encrypted output>
+    matrix:
+      #encrypted output of third env variable
+      - secure: <encrypted output>
 
 
 include & exclude branches
@@ -461,7 +512,7 @@ Sample ruby code using `Cassandra <https://github.com/Shippable/sample_ruby_cass
 firefox
 ..........
 
-By default our minion comes with the firefox version 29.0. To select a different firefox version, add the following to your shippable.yml file.
+We support different firefox versions like "18.0", "19.0", "20.0", "21.0", "22.0", "23.0", "24.0", "25.0", "26.0", "27.0", "28.0", "29.0". To select a specific firefox version, add the following to your shippable.yml file.
 
 .. code-block:: python
 
@@ -501,6 +552,8 @@ We support PostgreSQL 9.1, 9.2 and 9.3 versions and by default, version 9.2 is i
           addons:
            postgresql : "9.3"
   
+PostGIS 2.1 packages are pre-installed in our minions along with the PostgreSQL versions 9.1, 9.2 and 9.3.
+
 
 ----------
 
@@ -641,8 +694,8 @@ There are two types of roles that users can have -
 Owner is the highest role. This role permits users to create, run and delete a project. 
 
 
-**Build engineer :** 
-Build engineer can run or manage projects that are already setup. They have full visibility into the project and can trigger the build.
+**Collaborators :** 
+Collaborators can run or manage projects that are already setup. They have full visibility into the project and can trigger the build.
 
 
 --------
