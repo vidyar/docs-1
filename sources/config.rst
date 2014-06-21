@@ -268,6 +268,8 @@ In this setting **4 builds** are triggered
     - FOO=foo BAR=bar
     - FOO=bar BAR=foo
 
+.. _secure_env_variables:
+
 Secure environment variables
 .............................
 
@@ -670,6 +672,65 @@ You need to copy the Git URL from your project for deployment in Heroku.
   after_success :
     - git push git@heroku.com:shroudd-headland-1758.git master
 
+
+Continuous deployment to Amazon Elastic Beanstalk
+.................................................
+
+Amazon Elastic Beanstalk features predefined runtime environments for Java, Node.js, PHP, Python and Ruby, so it is possible to configure Shippable minions to automatically deploy applications targeting these environments. Moreover, Elastic Beanstalk also support defining custom runtime environments via Docker containers, giving the developer full flexibility in the configuration of technology stack. However, as the standard, pre-packaged environments are far easier to set up and cover nearly all languages currently supported by Shippable (except for Go), we will concentrate on how to integrate with Amazon Elastic Beanstalk using the former option.
+
+To interact with Elastic Beanstalk, one needs to use command line tools supplied by Amazon, from which the most commonly used is ``eb`` command. These tools must be available to Shippable in order to perform deployment. The easiest way of doing so is to include the tool in your repository. Additionally, some of the subcommands, e.g. ``eb init`` are interactive-only (they require console input), rendering them impossible to use in automated builds. Thus, we recommend our modified Elastic Beanstalk tools that are free of this limitation. You can copy them from one of the sample projects listed below.
+
+You also need to obtain Access Key to connect ``eb`` tool with Elastic Beanstalk API. Please refer to `this documentation <http://docs.aws.amazon.com/general/latest/gr/getting-aws-sec-creds.html>`_ for details on obtaining the keys. It is recommended to save your access key as secret in Shippable, as is discussed in :ref:`secure_env_variables`. To use code from this tutorial, store the secret access key variable as ``AWSSecretKey``. It is safe to keep your access key id in plain text.
+
+After having the basic setup done, it is time to create an application in Elastic Beanstalk. You can use Web GUI for this task, by going to the main page in the Elastic Beanstalk console, and then choosing 'Create a New Application' button in the sidebar. After entering name for application, proceed to define an environment. After creating and launching the environment, create a file in your repository called ``config`` with your settings, where ``DevToolsEndpoint`` is based on the AWS region you are using:
+
+.. code-block :: bash
+
+  [global]
+  ApplicationName=bean-test
+  DevToolsEndpoint=git.elasticbeanstalk.us-west-2.amazonaws.com
+  EnvironmentName=bean-env
+  Region=us-west-2
+  ServiceEndpoint=https://elasticbeanstalk.us-west-2.amazonaws.com
+
+In PHP runtime environment, RDS database connection details are injected by Elastic Beanstalk as environment variables. It is secure and convenient, as we do not need to store them in any other place. However, during tests on Shippable, we need to supply the same variables with values correct for Shippable minion in ``shippable.yml`` (please note the ``secure`` definition for our AWS access key):
+
+.. code-block :: bash
+
+  env:
+    global:
+      - RDS_HOSTNAME=127.0.0.1 RDS_USERNAME=shippable RDS_PASSWORD="" RDS_DB_NAME=test RDS_PORT=3306
+      - secure: K7qw2XSFBaW+zEzrs0ODKMQq/Bo9AZqGotCXc50fao+et6WaxEmedlK//MO9JozmPdcxDRq5k8A0pmjTLsMLstkh7PUFLu3Z6xowU2OhMyjQ0pS2J8Hw16SgZ9n2EW+3cps4dIijEzOwjA0Yx5rTOC7F9N8nvr/1l4Yp4i11qgW08cefEKuwiF/ypgrkK5BYJyJreZOEJt3lJ6/aXyXxPPl3X3Z+L+ca9mQmTN6q1wnlEcYLDU5EJtkk87KtOfVyoi/+aOFh49eDpwStSD4zDnygia8eAnCGK/p0XGFJCAwWK1nnFY7aklJrvElD+V/2lbr14TwF0rhmiba6Y6ylnw==
+
+Then we can connect to the database as follows:
+
+.. code-block :: php
+
+  $con = mysqli_connect(
+    $_SERVER['RDS_HOSTNAME'],
+    $_SERVER['RDS_USERNAME'],
+    $_SERVER['RDS_PASSWORD'],
+    $_SERVER['RDS_DB_NAME'],
+    $_SERVER['RDS_PORT']
+  );            
+
+Finally, we need to add some steps to ``shippable.yml`` to update ``eb`` configuration and then launch it after successful build. Remember to replace value for ``AWSAccessKeyId`` with the one downloaded from your AWS Management Console:
+
+.. code-block :: bash
+
+  before_script: 
+    - mkdir -p ~/.elasticbeanstalk
+    - echo 'AWSAccessKeyId=AKIAJSZ63DT' >> ~/.elasticbeanstalk/aws_credential_file
+    - echo 'AWSSecretKey='$AWSSecretKey >> ~/.elasticbeanstalk/aws_credential_file
+
+  script:
+    - mkdir -p .elasticbeanstalk
+    - cp config .elasticbeanstalk/
+
+  after_success :
+    - export PATH=$PATH:$PWD/aws/eb/linux/python2.7/ && virtualenv ve && source ve/bin/activate && pip install -r aws/requirements.txt && eb init && eb push
+
+Full sample PHP code using Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-php-mysql-beanstalk>`_.
 
 ----------
 
