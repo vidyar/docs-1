@@ -57,3 +57,7 @@ This section helps you to create a shippable.yml file for your Java project.
 	       install: ant deps
 
 Save the test output in shippable/testresults and the codecoverage output in shippable/codecoverage folder to get the reports parsed. If the test and codecoverage output is not saved as specified, you will not find the reports in our CI. 
+
+**Build Examples**
+
+Want to see build examples? Reference our :ref:`Java build samples <java>`.

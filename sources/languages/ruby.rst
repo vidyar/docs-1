@@ -99,3 +99,7 @@ We are using Bundler, ``bundle install`` to install all your gems. We also use `
   		 - gem --version
 		 - gem update --system 2.1.11
   		 - gem --version
+
+**Build Examples**
+
+Want to see build examples? Reference our :ref:`Ruby build samples <ruby>`.

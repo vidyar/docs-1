@@ -64,3 +64,6 @@ This section helps you to configure the yml file for your python project.
 .. note::
  We are setting multiple versions here which means a single push to repo will trigger multiple builds. 
 
+**Build Examples**
+
+Want to see build examples? Reference our :ref:`Python build samples <python>`.
