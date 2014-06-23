@@ -43,5 +43,6 @@ This section helps you specify the build environment and other configuration spe
 
       sbt ++$SHIPPABLE_SCALA_VERSION test 
 
- 
-	   
+**Build Examples**
+
+Want to see build examples? Reference our :ref:`Scala build samples <scala>`.

@@ -67,3 +67,6 @@ It is also possible to install custom PHP extensions using `PECL <http://pecl.ph
 
 PECL will automatically enable the extension at the end of the installation.
 
+**Build Examples**
+
+Want to see build examples? Reference our :ref:`PHP build samples <php>`.

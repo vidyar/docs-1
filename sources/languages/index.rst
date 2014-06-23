@@ -21,3 +21,6 @@ We support the following languages
 
 This list keeps growing and if you need something that you dont see here, drop us a line at support @ shippable.com
 
+**Build Examples**
+
+Want to see build examples? Reference our :ref:`build samples <samplesref>`.
