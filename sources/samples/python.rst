@@ -28,6 +28,8 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `Python Sample with Memcache <https://github.com/Shippable/sample_python_memcache>`_
 
+`Python Sample with RabbitMQ <https://github.com/Shippable/sample_python_rabbitmq>`_
+
 `Python Sample with Redis <https://github.com/Shippable/sample_python_redis>`_
 
 `Python Sample with SQLlite <https://github.com/Shippable/sample_python_sqllite>`_
