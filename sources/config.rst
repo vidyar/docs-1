@@ -682,7 +682,7 @@ To interact with Elastic Beanstalk, one needs to use command line tools supplied
 
 .. code-block :: bash
 
-  git submodule add git://github.com/anowak/elastic-beanstalk-tools.git
+  git submodule add git://github.com/Shippable/elastic-beanstalk-tools.git
 
 You also need to obtain Access Key to connect ``eb`` tool with Elastic Beanstalk API. Please refer to `this documentation <http://docs.aws.amazon.com/general/latest/gr/getting-aws-sec-creds.html>`_ for details on obtaining the keys. It is recommended to save your access key as secret in Shippable, as is discussed in :ref:`secure_env_variables`. To use code from this tutorial, store the secret access key variable as ``AWSSecretKey``. It is safe to keep your access key id in plain text.
 
