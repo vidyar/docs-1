@@ -13,15 +13,17 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `Node Sample <https://github.com/Shippable/sample_node>`_
 
-`Node Sample with MySQL <https://github.com/Shippable/sample_node_mysql>`_
-
-`Node Sample with Postgres <https://github.com/Shippable/sample_node_postgres>`_
-
 `Node Sample with MongoDB <https://github.com/Shippable/sample_node_mongo>`_
 
 `Node Sample with CouchDB <https://github.com/Shippable/sample-node-couchdb>`_
 
 `Node Sample with RethinkDB <https://github.com/Shippable/sample-node-rethinkdb>`_
+
+`Node Sample with MySQL <https://github.com/Shippable/sample_node_mysql>`_
+
+`Node Sample with Postgres <https://github.com/Shippable/sample_node_postgres>`_
+
+`Node Sample with SQLite <https://github.com/Shippable/sample_node_sqlite>`_
 
 `Node Sample with Neo4j <https://github.com/Shippable/sample_node_neo4j>`_
 
