@@ -678,7 +678,11 @@ Continuous deployment to Amazon Elastic Beanstalk
 
 Amazon Elastic Beanstalk features predefined runtime environments for Java, Node.js, PHP, Python and Ruby, so it is possible to configure Shippable minions to automatically deploy applications targeting these environments. Moreover, Elastic Beanstalk also support defining custom runtime environments via Docker containers, giving the developer full flexibility in the configuration of technology stack. However, as the standard, pre-packaged environments are far easier to set up and cover nearly all languages currently supported by Shippable (except for Go), we will concentrate on how to integrate with Amazon Elastic Beanstalk using the former option.
 
-To interact with Elastic Beanstalk, one needs to use command line tools supplied by Amazon, from which the most commonly used is ``eb`` command. These tools must be available to Shippable in order to perform deployment. The easiest way of doing so is to include the tool in your repository. Additionally, some of the subcommands, e.g. ``eb init`` are interactive-only (they require console input), rendering them impossible to use in automated builds. Thus, we recommend our modified Elastic Beanstalk tools that are free of this limitation. You can copy them from one of the sample projects listed below.
+To interact with Elastic Beanstalk, one needs to use command line tools supplied by Amazon, from which the most commonly used is ``eb`` command. These tools must be available to Shippable in order to perform deployment. The easiest way of doing so is to include the tool in your repository. Additionally, some of the subcommands, e.g. ``eb init`` are interactive-only (they require console input), rendering them impossible to use in automated builds. Thus, we recommend our modified Elastic Beanstalk tools that are free of this limitation. You can add them as git submodule to your project as follows:
+
+.. code-block :: bash
+
+  git submodule add git://github.com/Shippable/elastic-beanstalk-tools.git aws
 
 You also need to obtain Access Key to connect ``eb`` tool with Elastic Beanstalk API. Please refer to `this documentation <http://docs.aws.amazon.com/general/latest/gr/getting-aws-sec-creds.html>`_ for details on obtaining the keys. It is recommended to save your access key as secret in Shippable, as is discussed in :ref:`secure_env_variables`. To use code from this tutorial, store the secret access key variable as ``AWSSecretKey``. It is safe to keep your access key id in plain text.
 
@@ -693,7 +697,7 @@ After having the basic setup done, it is time to create an application in Elasti
   Region=us-west-2
   ServiceEndpoint=https://elasticbeanstalk.us-west-2.amazonaws.com
 
-In PHP runtime environment, RDS database connection details are injected by Elastic Beanstalk as environment variables. It is secure and convenient, as we do not need to store them in any other place. However, during tests on Shippable, we need to supply the same variables with values correct for Shippable minion in ``shippable.yml`` (please note the ``secure`` definition for our AWS access key):
+In the runtime environment, RDS database connection details are injected by Elastic Beanstalk as environment variables. It is secure and convenient, as we do not need to store them in any other place. However, during tests on Shippable, we need to supply the same variables with values correct for Shippable minion in ``shippable.yml`` (please note the ``secure`` definition for our AWS access key):
 
 .. code-block :: bash
 
@@ -702,19 +706,7 @@ In PHP runtime environment, RDS database connection details are injected by Elas
       - RDS_HOSTNAME=127.0.0.1 RDS_USERNAME=shippable RDS_PASSWORD="" RDS_DB_NAME=test RDS_PORT=3306
       - secure: K7qw2XSFBaW+zEzrs0ODKMQq/Bo9AZqGotCXc50fao+et6WaxEmedlK//MO9JozmPdcxDRq5k8A0pmjTLsMLstkh7PUFLu3Z6xowU2OhMyjQ0pS2J8Hw16SgZ9n2EW+3cps4dIijEzOwjA0Yx5rTOC7F9N8nvr/1l4Yp4i11qgW08cefEKuwiF/ypgrkK5BYJyJreZOEJt3lJ6/aXyXxPPl3X3Z+L+ca9mQmTN6q1wnlEcYLDU5EJtkk87KtOfVyoi/+aOFh49eDpwStSD4zDnygia8eAnCGK/p0XGFJCAwWK1nnFY7aklJrvElD+V/2lbr14TwF0rhmiba6Y6ylnw==
 
-Then we can connect to the database as follows:
-
-.. code-block :: php
-
-  $con = mysqli_connect(
-    $_SERVER['RDS_HOSTNAME'],
-    $_SERVER['RDS_USERNAME'],
-    $_SERVER['RDS_PASSWORD'],
-    $_SERVER['RDS_DB_NAME'],
-    $_SERVER['RDS_PORT']
-  );            
-
-Finally, we need to add some steps to ``shippable.yml`` to update ``eb`` configuration and then launch it after successful build. Remember to replace value for ``AWSAccessKeyId`` with the one downloaded from your AWS Management Console:
+Then, we need to add some steps to ``shippable.yml`` to update ``eb`` configuration and then launch it after successful build. Remember to replace value for ``AWSAccessKeyId`` with the one downloaded from your AWS Management Console:
 
 .. code-block :: bash
 
@@ -730,7 +722,109 @@ Finally, we need to add some steps to ``shippable.yml`` to update ``eb`` configu
   after_success :
     - export PATH=$PATH:$PWD/aws/eb/linux/python2.7/ && virtualenv ve && source ve/bin/activate && pip install -r aws/requirements.txt && eb init && eb push
 
-Full sample PHP code using Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-php-mysql-beanstalk>`_.
+Finally, we can connect to the database using environment variables as defined above.
+
+**PHP:**
+
+.. code-block :: php
+
+  $con = mysqli_connect(
+    $_SERVER['RDS_HOSTNAME'],
+    $_SERVER['RDS_USERNAME'],
+    $_SERVER['RDS_PASSWORD'],
+    $_SERVER['RDS_DB_NAME'],
+    $_SERVER['RDS_PORT']
+  );            
+
+Elastic Beanstalk serves your repository root as the document root of the webserver, so e.g. ``index.php`` file will be interpreted when you access the root context of your Elastic Beanstalk application. 
+See full sample PHP code using Elastic Beanstalk available `on GitHub <https://github.com/Shippable/sample-php-mysql-beanstalk>`_.
+
+**Ruby:**
+
+.. code-block :: ruby
+
+  con = Mysql2::Client.new(
+    :host => ENV['RDS_HOSTNAME'],
+    :username => ENV['RDS_USERNAME'],
+    :password => ENV['RDS_PASSWORD'],
+    :port => ENV['RDS_PORT'],
+    :database => ENV['RDS_DB_NAME']
+  )
+
+Elastic Beanstalk runtime expects that the entry point of your application will be found in ``config.ru`` file. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby_sinatra.html>`_ for details.
+Full sample Ruby code using Sinatra and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-ruby-mysql-beanstalk>`_.
+
+**Python:**
+
+.. code-block :: python
+
+  self.db = MySQLdb.connect(
+    host = os.environ['RDS_HOSTNAME'],
+    user = os.environ['RDS_USERNAME'],
+    passwd = os.environ['RDS_PASSWORD'],
+    port = int(os.environ['RDS_PORT']),
+    db = os.environ['RDS_DB_NAME'])
+
+As Python projects are already run in ``virtualenv`` on Shippable minions, change the ``after_success`` step from the end of the general description above to:
+
+.. code-block :: python
+
+  after_success :
+    - export PATH=$PATH:$PWD/aws/eb/linux/python2.7/ && pip install -r aws/requirements.txt && eb init && eb push
+
+Elastic Beanstalk runtime expects that the entry point of your application will be found in ``application.py`` file. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Python_flask.html>`_ for details.
+Full sample Python code using Flask and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-python-mysql-beanstalk>`_.
+
+**Node.js:**
+
+.. code-block :: javascript
+
+  var connection = mysql.createConnection({
+    host: process.env.RDS_HOSTNAME,
+    port: process.env.RDS_PORT,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    database: process.env.RDS_DB_NAME
+  });
+
+Elastic Beanstalk expects that the entry point of your application will be found in `app.js` or `server.js` file in the repository root. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html>`_ for details.
+Full sample Node.js code using Express and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-nodejs-mysql-beanstalk>`_.
+
+**Java:**
+
+For JVM, the connection setting are passed as system properties, rather than environment variables:
+
+.. code-block :: java
+
+  private final String dbName = System.getProperty("RDS_DB_NAME"); 
+  private final String userName = System.getProperty("RDS_USERNAME"); 
+  private final String password = System.getProperty("RDS_PASSWORD"); 
+  private final String hostname = System.getProperty("RDS_HOSTNAME");
+  private final int port = Integer.parseInt(System.getProperty("RDS_PORT"));
+  private final String databaseUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName;
+
+Because of this difference, dummy connection details for Shippable environment need to be passed as arguments during JVM invocation. Here is an example for Maven:
+
+.. code-block :: bash
+
+  script:
+    - mkdir -p .elasticbeanstalk
+    - cp config .elasticbeanstalk/
+    - mvn clean cobertura:cobertura
+    - mvn test -DRDS_PORT=3306 -DRDS_DB_NAME=test -DRDS_HOSTNAME=localhost -DRDS_PASSWORD= -DRDS_USERNAME=shippable
+
+Finally, Elastic Beanstalk `expects exploded WAR <https://forums.aws.amazon.com/thread.jspa?messageID=329550>`_ in the root of the repository, so we need to copy and commit its contents as the final build step, prior to the deployment:
+
+.. code-block :: bash
+
+  after_success:
+    - mvn compile war:exploded
+    - cp -r target/App/* ./
+    - git add -f META-INF WEB-INF
+    - git commit -m "Deploy"
+    - export PATH=$PATH:$PWD/aws/eb/linux/python2.7/ && virtualenv ve && source ve/bin/activate && pip install -r aws/requirements.txt && eb init && eb push
+
+See the full sample of Java web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-java-mysql-beanstalk>`_ for details.
 
 ----------
 
