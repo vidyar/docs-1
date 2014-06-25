@@ -453,7 +453,7 @@ Elastic Search
 
 .. code-block:: bash
 
-  #elastic search is on default port 9200
+  # elastic search is on default port 9200
   services:
       - elasticsearch
 
@@ -464,7 +464,7 @@ Memcached
 
 .. code-block:: bash
 
-  #memcache runs on default port 11211
+  # memcached runs on default port 11211
   services:
       - memcached
 
@@ -476,7 +476,7 @@ Redis
 
 .. code-block:: bash
 
-  #redis runs on default port 6379
+  # redis runs on default port 6379
   services:
       - redis
 
@@ -500,11 +500,45 @@ Cassandra
 
 .. code-block:: bash
  
- #cassandra binds to the default localhost 127.0.0.1 and is not started on boot. 
+ # cassandra binds to the default localhost 127.0.0.1 and is not started on boot. 
  services:
    - cassandra
 
-Sample ruby code using `Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_.
+Sample ruby code using `Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_ .
+
+CouchDB
+.........
+
+.. code-block:: bash
+
+ # couchdb binds to the default localhost 127.0.0.1 and runs on default port 5984. It is not started on boot.
+ services:
+   - couchdb
+
+Sample ruby code using `CouchDB <https://github.com/Shippable/sample-ruby-couchdb/blob/master/shippable.yml>`_ .
+
+RethinkDB
+...........
+
+.. code-block:: bash
+
+ # rethinkdb binds to the default localhost 127.0.0.1 and is not started on boot.
+ services:
+   - rethinkdb
+
+Sample javascript code using `RethinkDB <https://github.com/Shippable/sample-node-rethinkdb>`_.
+ 
+RabbitMQ
+.........
+
+.. code-block:: bash
+
+  # rabbitmq binds to 127.0.0.1 and is not started on boot. Default vhost "/", username "guest" and password "guest" can be used.
+  services:
+    - rabbitmq
+
+Sample python code using `RabbitMQ <https://github.com/Shippable/sample_python_rabbitmq>`_ .
+
 
 --------
 
