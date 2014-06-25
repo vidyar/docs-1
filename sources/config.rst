@@ -254,7 +254,7 @@ You can set your own environment variables in the yml. Every statement of this c
 
 .. note::
 
-  Env variables can create an exponential number of builds when comined with ``jdk`` & ``rvm, node_js etc.`` i.e. it is multiplicative
+  Env variables can create an exponential number of builds when combined with ``jdk`` & ``rvm, node_js etc.`` i.e. it is multiplicative
 
 In this setting **4 builds** are triggered
 
@@ -453,7 +453,7 @@ Elastic Search
 
 .. code-block:: bash
 
-  #elastic search is on default port 9200
+  # elastic search is on default port 9200
   services:
       - elasticsearch
 
@@ -464,7 +464,7 @@ Memcached
 
 .. code-block:: bash
 
-  #memcache runs on default port 11211
+  # memcached runs on default port 11211
   services:
       - memcached
 
@@ -476,7 +476,7 @@ Redis
 
 .. code-block:: bash
 
-  #redis runs on default port 6379
+  # redis runs on default port 6379
   services:
       - redis
 
@@ -500,11 +500,45 @@ Cassandra
 
 .. code-block:: bash
  
- #cassandra binds to the default localhost 127.0.0.1 and is not started on boot. 
+ # cassandra binds to the default localhost 127.0.0.1 and is not started on boot. 
  services:
    - cassandra
 
-Sample ruby code using `Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_.
+Sample ruby code using `Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_ .
+
+CouchDB
+.........
+
+.. code-block:: bash
+
+ # couchdb binds to the default localhost 127.0.0.1 and runs on default port 5984. It is not started on boot.
+ services:
+   - couchdb
+
+Sample ruby code using `CouchDB <https://github.com/Shippable/sample-ruby-couchdb/blob/master/shippable.yml>`_ .
+
+RethinkDB
+...........
+
+.. code-block:: bash
+
+ # rethinkdb binds to the default localhost 127.0.0.1 and is not started on boot.
+ services:
+   - rethinkdb
+
+Sample javascript code using `RethinkDB <https://github.com/Shippable/sample-node-rethinkdb>`_.
+ 
+RabbitMQ
+.........
+
+.. code-block:: bash
+
+  # rabbitmq binds to 127.0.0.1 and is not started on boot. Default vhost "/", username "guest" and password "guest" can be used.
+  services:
+    - rabbitmq
+
+Sample python code using `RabbitMQ <https://github.com/Shippable/sample_python_rabbitmq>`_ .
+
 
 --------
 
@@ -861,3 +895,11 @@ Collaborators can run or manage projects that are already setup. They have full 
 
 If your script or test suite hangs for a long time or there hasn't been any log output in 20 minutes, then Shippable will forcefully terminate the build and add a message to the console log.
 
+--------
+
+**Skipping a build**
+-----------------------
+
+Any changes to your source code will trigger a build automatically on Shippable. So if you do not want to run build for a particular commit, then add **[ci skip]** or **[skip ci]** to your commit message. 
+
+Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** in the commit message and if it exists, we do not create build for that commit.
