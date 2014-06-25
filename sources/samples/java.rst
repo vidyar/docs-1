@@ -11,6 +11,8 @@ java-samples
 The goal of this code samples is to show you how to set up and build your repo on shippable. These projects use
 `cobertura <http://cobertura.github.io/cobertura/>`_ and `Junit <http://junit.org/>`_ .
 
+`Java Sample <https://github.com/Shippable/sample_java>`_
+
 `Java Sample with MySQL <https://github.com/Shippable/sample_java_mysql>`_
 
 `Java Sample with Postgres <https://github.com/Shippable/sample_java_postgres>`_
