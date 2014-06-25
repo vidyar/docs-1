@@ -254,7 +254,7 @@ You can set your own environment variables in the yml. Every statement of this c
 
 .. note::
 
-  Env variables can create an exponential number of builds when comined with ``jdk`` & ``rvm, node_js etc.`` i.e. it is multiplicative
+  Env variables can create an exponential number of builds when combined with ``jdk`` & ``rvm, node_js etc.`` i.e. it is multiplicative
 
 In this setting **4 builds** are triggered
 
@@ -861,3 +861,11 @@ Collaborators can run or manage projects that are already setup. They have full 
 
 If your script or test suite hangs for a long time or there hasn't been any log output in 20 minutes, then Shippable will forcefully terminate the build and add a message to the console log.
 
+--------
+
+**Skipping a build**
+-----------------------
+
+Any changes to your source code will trigger a build automatically on Shippable. So if you do not want to run build for some specific changes, add **[ci skip]** or **[skip ci]** to your commit message. 
+
+Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** in the commit message and if it exists, we do not create build for that commit.
