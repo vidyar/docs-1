@@ -712,15 +712,20 @@ Continuous deployment to Amazon Elastic Beanstalk
 
 Amazon Elastic Beanstalk features predefined runtime environments for Java, Node.js, PHP, Python and Ruby, so it is possible to configure Shippable minions to automatically deploy applications targeting these environments. Moreover, Elastic Beanstalk also support defining custom runtime environments via Docker containers, giving the developer full flexibility in the configuration of technology stack. However, as the standard, pre-packaged environments are far easier to set up and cover nearly all languages currently supported by Shippable (except for Go), we will concentrate on how to integrate with Amazon Elastic Beanstalk using the former option.
 
-To interact with Elastic Beanstalk, one needs to use command line tools supplied by Amazon, from which the most commonly used is ``eb`` command. These tools must be available to Shippable in order to perform deployment. The easiest way of doing so is to include the tool in your repository. Additionally, some of the subcommands, e.g. ``eb init`` are interactive-only (they require console input), rendering them impossible to use in automated builds. Thus, we recommend our modified Elastic Beanstalk tools that are free of this limitation. You can add them as git submodule to your project as follows:
+To interact with Elastic Beanstalk, one needs to use command line tools supplied by Amazon, from which the most commonly used is ``eb`` command. These tools must be available to Shippable in order to perform deployment. The easiest way of doing so is to download them in ``before_install`` step:
 
 .. code-block :: bash
 
-  git submodule add git://github.com/Shippable/elastic-beanstalk-tools.git aws
+  env:
+    global:
+      - EB_TOOLS_DIR=/tmp/eb_tools EB_VERSION=AWS-ElasticBeanstalk-CLI-2.6.3 EB_TOOLS=$EB_TOOLS_DIR/$EB_VERSION
+
+  before_install:
+    - if [ ! -e $EB_TOOLS ]; then wget -q -O /tmp/eb.zip https://s3.amazonaws.com/elasticbeanstalk/cli/$EB_VERSION.zip && mkdir -p $EB_TOOLS_DIR && unzip /tmp/eb.zip -d $EB_TOOLS_DIR; fi
 
 You also need to obtain Access Key to connect ``eb`` tool with Elastic Beanstalk API. Please refer to `this documentation <http://docs.aws.amazon.com/general/latest/gr/getting-aws-sec-creds.html>`_ for details on obtaining the keys. It is recommended to save your access key as secret in Shippable, as is discussed in :ref:`secure_env_variables`. To use code from this tutorial, store the secret access key variable as ``AWSSecretKey``. It is safe to keep your access key id in plain text.
 
-After having the basic setup done, it is time to create an application in Elastic Beanstalk. You can use Web GUI for this task, by going to the main page in the Elastic Beanstalk console, and then choosing 'Create a New Application' button in the sidebar. After entering name for application, proceed to define an environment. After creating and launching the environment, create a file in your repository called ``config`` with your settings, where ``DevToolsEndpoint`` is based on the AWS region you are using:
+After having the basic setup done, it is time to create an application in Elastic Beanstalk. You can use Web GUI for this task, by going to the main page in the Elastic Beanstalk console, and then choosing 'Create a New Application' button in the sidebar. After entering name for application, proceed to define an environment. When you have the environment ready, create a file in your repository called ``config`` with your settings, where ``DevToolsEndpoint`` is based on the AWS region you are using:
 
 .. code-block :: bash
 
@@ -737,10 +742,11 @@ In the runtime environment, RDS database connection details are injected by Elas
 
   env:
     global:
+      - EB_TOOLS_DIR=/tmp/eb_tools EB_VERSION=AWS-ElasticBeanstalk-CLI-2.6.3 EB_TOOLS=$EB_TOOLS_DIR/$EB_VERSION
       - RDS_HOSTNAME=127.0.0.1 RDS_USERNAME=shippable RDS_PASSWORD="" RDS_DB_NAME=test RDS_PORT=3306
       - secure: K7qw2XSFBaW+zEzrs0ODKMQq/Bo9AZqGotCXc50fao+et6WaxEmedlK//MO9JozmPdcxDRq5k8A0pmjTLsMLstkh7PUFLu3Z6xowU2OhMyjQ0pS2J8Hw16SgZ9n2EW+3cps4dIijEzOwjA0Yx5rTOC7F9N8nvr/1l4Yp4i11qgW08cefEKuwiF/ypgrkK5BYJyJreZOEJt3lJ6/aXyXxPPl3X3Z+L+ca9mQmTN6q1wnlEcYLDU5EJtkk87KtOfVyoi/+aOFh49eDpwStSD4zDnygia8eAnCGK/p0XGFJCAwWK1nnFY7aklJrvElD+V/2lbr14TwF0rhmiba6Y6ylnw==
 
-Then, we need to add some steps to ``shippable.yml`` to update ``eb`` configuration and then launch it after successful build. Remember to replace value for ``AWSAccessKeyId`` with the one downloaded from your AWS Management Console:
+Then, we need to add some steps to ``shippable.yml`` to update ``eb`` configuration and then launch it after successful build. We are invoking ``AWSDevTools-RepositorySetup.sh`` to configure git-based workflow for Elastic Beanstalk deployment (for instance, this command adds git remotes pointing to AWS endpoints).  Remember to replace value for ``AWSAccessKeyId`` with the one downloaded from your AWS Management Console:
 
 .. code-block :: bash
 
@@ -754,7 +760,8 @@ Then, we need to add some steps to ``shippable.yml`` to update ``eb`` configurat
     - cp config .elasticbeanstalk/
 
   after_success :
-    - export PATH=$PATH:$PWD/aws/eb/linux/python2.7/ && virtualenv ve && source ve/bin/activate && pip install -r aws/requirements.txt && eb init && eb push
+    - $EB_TOOLS/AWSDevTools/Linux/AWSDevTools-RepositorySetup.sh
+    - export PATH=$PATH:$EB_TOOLS/eb/linux/python2.7/ && virtualenv ve && source ve/bin/activate && pip install boto==2.14.0 && eb push
 
 Finally, we can connect to the database using environment variables as defined above.
 
@@ -803,8 +810,9 @@ As Python projects are already run in ``virtualenv`` on Shippable minions, chang
 
 .. code-block :: python
 
-  after_success :
-    - export PATH=$PATH:$PWD/aws/eb/linux/python2.7/ && pip install -r aws/requirements.txt && eb init && eb push
+  after_success:
+    - $EB_TOOLS/AWSDevTools/Linux/AWSDevTools-RepositorySetup.sh
+    - export PATH=$PATH:$EB_TOOLS/eb/linux/python2.7/ && pip install boto==2.14.0 && eb push
 
 Elastic Beanstalk runtime expects that the entry point of your application will be found in ``application.py`` file. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Python_flask.html>`_ for details.
 Full sample Python code using Flask and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-python-mysql-beanstalk>`_.
@@ -856,9 +864,53 @@ Finally, Elastic Beanstalk `expects exploded WAR <https://forums.aws.amazon.com/
     - cp -r target/App/* ./
     - git add -f META-INF WEB-INF
     - git commit -m "Deploy"
-    - export PATH=$PATH:$PWD/aws/eb/linux/python2.7/ && virtualenv ve && source ve/bin/activate && pip install -r aws/requirements.txt && eb init && eb push
+    - $EB_TOOLS/AWSDevTools/Linux/AWSDevTools-RepositorySetup.sh
+    - export PATH=$PATH:$EB_TOOLS/eb/linux/python2.7/ && pip install boto==2.14.0 && eb push
 
 See the full sample of Java web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-java-mysql-beanstalk>`_ for details.
+
+**Scala:**
+
+Scala deployment is very similar to the one described for Java above. First, RDS connection details need to be obtained from system properties, rather then environment variables.
+Here is an example for `Slick <http://slick.typesafe.com/>`_:
+
+.. code-block :: scala
+
+  val dbName = System.getProperty("RDS_DB_NAME")
+  val userName = System.getProperty("RDS_USERNAME")
+  val password = System.getProperty("RDS_PASSWORD")
+  val hostname = System.getProperty("RDS_HOSTNAME")
+  val port = Integer.parseInt(System.getProperty("RDS_PORT"))
+  val databaseUrl = s"jdbc:mysql://${hostname}:${port}/${dbName}"
+
+  def connect = Database.forURL(
+    url = databaseUrl, user = userName, password = password, driver = "com.mysql.jdbc.Driver")
+
+Because of this difference, dummy connection details for Shippable environment need to be passed as arguments during JVM invocation. Here is an example for ``sbt``
+(please note copying the coverage results, as `sbt-scoverage <https://github.com/scoverage/sbt-scoverage>`_ does not allow customizing the path via options):
+
+.. code-block :: bash
+
+  script:
+    - mkdir -p .elasticbeanstalk
+    - cp config .elasticbeanstalk/
+    - sbt -DRDS_PORT=3306 -DRDS_DB_NAME=test -DRDS_HOSTNAME=localhost -DRDS_PASSWORD= -DRDS_USERNAME=shippable scoverage:test
+    - cp target/scala-2.10/coverage-report/cobertura.xml shippable/codecoverage/coverage.xml
+
+Finally, Elastic Beanstalk `expects exploded WAR <https://forums.aws.amazon.com/thread.jspa?messageID=329550>`_ in the root of the repository, so we need to copy and commit its contents as the final build step, prior to the deployment:
+
+.. code-block :: bash
+
+  after_success:
+    - sbt package
+    - unzip "target/scala-2.10/*.war" -d ./
+    - git add -f META-INF WEB-INF
+    - git commit -m "Deploy"
+    - $EB_TOOLS/AWSDevTools/Linux/AWSDevTools-RepositorySetup.sh
+    - export PATH=$PATH:$EB_TOOLS/eb/linux/python2.7/ && virtualenv ve && source ve/bin/activate && pip install boto==2.14.0 && eb push
+
+
+See the full sample of Scalatra+Slick web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-scala-mysql-beanstalk>`_ for details.
 
 ----------
 
