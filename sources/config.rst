@@ -614,7 +614,7 @@ Examples for other languages can be found in our :ref:`Code Samples <samplesref>
 
 Code coverage
 .............
-To set up test result visualization for a repository.
+To set up code coverage result visualization for a repository.
 
 * Output code coverage output to shippable/codecoverage folder. 
 * Make sure code coverage output is in cobertura xml format.
