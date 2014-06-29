@@ -1006,8 +1006,113 @@ Finally, Elastic Beanstalk `expects exploded WAR <https://forums.aws.amazon.com/
     - $EB_TOOLS/AWSDevTools/Linux/AWSDevTools-RepositorySetup.sh
     - export PATH=$PATH:$EB_TOOLS/eb/linux/python2.7/ && virtualenv ve && source ve/bin/activate && pip install boto==2.14.0 && eb push
 
-
 See the full sample of Scalatra+Slick web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-scala-mysql-beanstalk>`_ for details.
+
+Continuous deployment to AWS OpsWorks
+.....................................
+
+AWS OpsWorks is a new PaaS offering from Amazon that targets advanced IT administrators and DevOps, providing them with more flexibility in defining runtime environments of their applications.
+In OpsWorks, instances are arranged in so called layers, which in turn form stacks. Please refer to `the AWS documentation <http://docs.aws.amazon.com/opsworks/latest/userguide/gettingstarted.html>`_ for details.
+
+OpsWorks allows provisioning instances with custom Chef recipes, which means unconstrained range of technologies that may be used on this platform.
+Predefined Chef cookbooks are available for PHP, Ruby on Rails, Node.js and Java.
+
+OpsWorks deployment process has slightly different nature than the one for Heroku or Amazon Elastic Beanstalk. While the former are 'push-based', meaning that the deployment is done by sending the build artifacts
+to the platform, with OpsWorks you configure the service to pull the code and artifacts from a predefined resource.
+
+This is done during definition of your application on OpsWorks, by entering URL for the repository.
+Please note that for public access (without adding an SSH key), you need to use appropriate protocol for the endpoint, for example ``https://gihub.com/Shippable/sample-php-mysql-opsworks.git`` or ``git://gihub.com/Shippable/sample-php-mysql-opsworks.git``,
+instead of SSH URL, such as ``github.com:Shippable/sample-php-mysql-opsworks.git``.
+
+.. note::
+
+  During our tests, some git commands (like ``ls-remote``) timed out for 'public' URLs on GitHub. This problem does not occur for SSH access, so you may need to create
+  a SSH key for public repositories as well. To do so, execute ``ssh-keygen -f opsworks`` on your workstation and save the resulting files (``opsworks`` and ``opsworks.pub``)
+  in a safe place. Then, add the contents of ``opsworks.pub`` to Deployment Keys in your GitHub repository settings. Next, paste the contents of ``opsworks`` file in SSH key
+  box in Application definition in OpsWorks admin panel.
+
+To integrate Shippable with OpsWorks, first define the stack, layers, instances and application as outlined in the AWS documentation.
+We will use `AWS CLI tool <http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html>`_ to invoke deployments for your application.
+In order for this to work, we need to provide the tools with your AWS access keys to authenticate with the AWS endpoint:
+
+* Please refer to `this documentation <http://docs.aws.amazon.com/general/latest/gr/getting-aws-sec-creds.html>`_ for details on obtaining the keys. 
+* Then, encrypt the secret key as discussed in :ref:`secure_env_variables`. Use ``AWS_SECRET_ACCESS_KEY`` as name for the secure variable (i.e. add ``AWS_SECRET_ACCESS_KEY=<your secret key here>`` in Shippable settings panel).
+* Next, add the secret along with your key id as environment variables in ``shippable.yml`` (please note that name of the variable matters):
+
+.. code-block :: bash
+
+  env:
+    global:
+      - AWS_ACCESS_KEY_ID=AKIAJSZ63DTL3Z7KLVEQ
+      - secure: KRaEGMHtRkYxCmWfvHIEkyfoA/+9EWHcoi1CIoIqXrvsF/ILmVVr0jC7X8u7FdfAiXTqn3jYGtLc5mgo5KXe/8zSLtygCr9U1SKJfwCgsw1INENlJiUraHCQqnnty0b3rsTfoetBnnY0yFIl2g+FUm3A57VnGXH/sTcpDZSqHfjCXivptWrSzE9s4W7+pu4vP+9xLh0sTC9IQNcqQ15L7evM2RPeNNv8dQ+DMdf48915M91rnPkxGjxfebAIbIx1SIhR1ur4rEk2pV4LOHo4ny3sasWyqvA49p1xItnGnpQMWGUAzkr24ggOiy3J5FnL8A9oIkf49RtfK1Z2F0EryA==
+
+Finally, we can install and invoke AWS CLI tools to invoke deployment command in ``after_success`` step (application configuration settings were extracted to environment variables for readability):
+
+.. code-block :: bash
+
+  env:
+    global:
+      - AWS_DEFAULT_REGION=us-east-1 AWS_STACK=73f89cfc-3f99-4227-a339-73a0ba30acbb AWS_APP_ID=1604ff83-aeb4-4677-b436-a9daac1ceb98
+      - AWS_ACCESS_KEY_ID=AKIAJSZ63DTL3Z7KLVEQ
+      - secure: KRaEGMHtRkYxCmWfvHIEkyfoA/+9EWHcoi1CIoIqXrvsF/ILmVVr0jC7X8u7FdfAiXTqn3jYGtLc5mgo5KXe/8zSLtygCr9U1SKJfwCgsw1INENlJiUraHCQqnnty0b3rsTfoetBnnY0yFIl2g+FUm3A57VnGXH/sTcpDZSqHfjCXivptWrSzE9s4W7+pu4vP+9xLh0sTC9IQNcqQ15L7evM2RPeNNv8dQ+DMdf48915M91rnPkxGjxfebAIbIx1SIhR1ur4rEk2pV4LOHo4ny3sasWyqvA49p1xItnGnpQMWGUAzkr24ggOiy3J5FnL8A9oIkf49RtfK1Z2F0EryA==
+
+  after_success:
+    - virtualenv ve && source ve/bin/activate && pip install awscli
+    - aws opsworks create-deployment --stack-id $AWS_STACK --app-id $AWS_APP_ID --command '{"Name":"deploy"}'
+
+.. warning::
+
+  Do not change AWS region from ``us-east-1`` even if your instances reside in a different region!
+  This is a requirement of OpsWorks at the moment that all the requests are sent to this region, see `the documentation <http://docs.aws.amazon.com/opsworks/latest/userguide/cli-examples.html#cli-examples-create-deployment>`_.
+
+.. note::
+
+  ``AWS_STACK`` and ``AWS_APP_ID`` are not the names of your stack/application, but so called OpsWorks IDs. They can be accessed in stack/application settings page in the OpsWorks Management console.
+
+Connecting to MySQL
+^^^^^^^^^^^^^^^^^^^
+
+OpsWorks provides predefined MySQL layer to add to your stack. Connection details for the database are stored in a generated file in the application root.
+Type of the file being generated depends on the programming language you defined for your app. For example, for PHP it is ``opsworks.php`` scripts that exposes two classes: ``OpsWorksDb`` and ``OpsWorks``.
+You can instantiate these classes to access connection details, as follows:
+
+.. code-block :: php
+
+  require_once("shared/config/opsworks.php");
+  $opsWorks = new OpsWorks();
+  $db = $opsWorks->db;
+  $con = mysqli_connect($db->host, $db->username, $db->password, $db->database);
+
+During tests on Shippable, we need to provide similar file to simulate production environment. For PHP, add the following file to your repository (e.g. under ``test-config/opsworks.php``):
+
+.. code-block :: php
+
+  <?php
+  class OpsWorksDb {
+    public $adapter, $database, $encoding, $host, $username, $password, $reconnect;
+
+    public function __construct() {
+      $this->adapter = 'mysql';
+      $this->database = 'test';
+      $this->encoding = 'utf8';
+      $this->host = '127.0.0.1';
+      $this->username = 'shippable';
+      $this->password = '';
+      $this->reconnect = 'true';
+    }
+  }
+
+  // ...rest of the file omitted for brevity, you can access it at
+  // https://github.com/Shippable/sample-php-mysql-opsworks/blob/master/test-config/opsworks.php
+
+Then, in ``before_script`` step of your build, copy this file to the location required by your application code:
+
+.. code-block :: bash
+
+  before_script: 
+    - cp test-config/opsworks.php .
+
+See the full sample of PHP web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-php-mysql-opsworks>`_ for details.
 
 ----------
 
