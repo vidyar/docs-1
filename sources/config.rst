@@ -679,33 +679,124 @@ If you do not want to get notified, you can configure email notifications to fal
 -------------------------
 
 Continuous deployment to Heroku
-................................
+...............................
 
-Heroku supports Ruby, Node.js, Python, so you can use these languages to build and deploy apps on Heroku. You can deploy to your own server by adding a custom after_success:. For this you need to add the Public key that was generated for your subscription in Shippable to set up continous deployment on providers.
+Heroku supports Ruby, Java, Python, Node.js, PHP, Clojure and Scala (with special support for Play Framework), so you can use these technologies to build and deploy apps on Heroku.
+There are two methods of deploying your applications to Heroku: using Heroku toolbelt or plain git command only.
 
-* Go to settings and copy the SSH Key or public key generated for your subscription.
-* Log In to Heroku and add the SSH key to your account 
+Without Heroku toolbelt
+^^^^^^^^^^^^^^^^^^^^^^^
 
+To be able to push your code to Heroku, you need to add SSH public key associated with your Shippable account to authorized keys in `Heroku Account Settings <https://dashboard.heroku.com/account>`_.
+In Shippable, go to 'Settings' and choose 'Deployment key' tab. Copy the contents of the key and add it in 'SSH keys' section of Heroku settings.
 
-A sample deployment configuration in your shippable.yml file is given below
+Next, create your Heroku application using Web GUI or ``heroku`` command installed on your workstation.
+
+* Go to your app's settings page.
+* In the application info pane (that is also displayed at the end of the application creation process) you will see 'Git URL'.
+* Just use it to push the code in ``after_success`` step of Shippable build:
 
 .. code-block:: bash
 
   after_success :
-    - git push  git@heroku.com:shroudd-headland-1758.git master
+    - git push -f git@heroku.com:shroudd-headland-1758.git master
 
+Full sample of deploying PHP+MySQL application to Heroku without using toolbelt can be found on `our GitHub account <https://github.com/Shippable/sample-php-mysql-heroku/tree/without-toolbelt>`_.
 
-You need to copy the Git URL from your project for deployment in Heroku.
+.. note::
 
-* Go to apps and select your project
-* Go to the settings page of your project and copy the Git URL
-* Add it to the shippable.yml file
+  If you happen to build other branches than ``master``, please see :ref:`heroku_other_branches` for details.
 
-.. code-block :: bash
+With Heroku toolbelt
+^^^^^^^^^^^^^^^^^^^^
 
-  after_success :
-    - git push git@heroku.com:shroudd-headland-1758.git master
+In some circumstances, you may choose to use Heroku toolbelt to deploy your application. For example, you may want to execute Rake commands straight from your Shippable build (like ``heroku run rake db:migrate``).
 
+To use Heroku toolbelt, you first need to obtain API key for your account. Go to your `account settings <https://dashboard.heroku.com/account>`_ and copy it from 'API Key' section.
+It is recommended to save your access key as secret in Shippable, as is discussed in :ref:`secure_env_variables`. Encrypt your variable as ``HEROKU_API_KEY=<your key here>`` and paste the encrypted secret in ``shippable.yml`` as follows:
+
+.. code-block:: bash
+
+  env:
+    global:
+      - secure: MRuHkLbL9HPkJPU5lzkKM1+NOq1S5RrhxEyhJkk60xxYiF7DMzydiBN8oFBjWrSmyGeGRuEC22a0I5ItobdWVszfcJCaXHwtfKzfGOUdKuyCnDgvojXhv/jrBvULyLK6zsLw3b8NMxdnwNsHqSPm19qW/EIGEl9Zv/637Igos69z9aT7+xrEG013+6HtKYb8RHm+iPSNsFoBi/RSAHYuM1eLTZWG2WAkjgzZaYmrHCgNwVmk+HOGR+TOWN7Iu5lrjyvC1XDCQrOvo1hZI30cd9OqJ5aadFm3exQpNhI4I7AgOnCbK3NoWNc/GAnqKXCvsaIQ80Jd/uLIOVyMjD6Xmg==
+
+Then, install the toolbelt in ``before_install`` step:
+
+.. code-block:: bash
+
+  before_install:
+    - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+Next, create your Heroku application using Web GUI or ``heroku`` command installed on your workstation. Then, add the following ``after_success`` step to your Shippable build: 
+
+.. code-block:: bash
+
+  after_success:
+    - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
+    - git remote -v | grep ^heroku || heroku git:remote --app obscure-citadel-8851
+    - git push -f heroku $BRANCH:master
+
+* First we generate public SSH key out of the private one to a file with a custom name. We then authorize this key with Heroku. Using custom name for the file allows us to skip this step on subsequent builds.
+  Please note that we need to use ``test -f ...`` instead of ``[ -f ... ]`` here, as the latter would be interpreted by YAML parser
+* Then, we make sure ``heroku`` remote is added to the local git repository (replace name after ``--app`` with the name of your application)
+* Finally, we push the code to Herkou
+
+Please refer to the sections below for language-specific details of configuring Heroku builds.
+
+.. note::
+
+  If you happen to build other branches than ``master``, please see :ref:`heroku_other_branches` for details.
+
+.. _heroku_other_branches:
+
+Deploying from branches other than master
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Heroku always deploys contents of ``master`` branch, so if you happen to deploy code from other branches, you need to change the final step in ``after_success`` block to the following:
+
+.. code-block:: bash
+
+  - git push -f heroku $BRANCH:master
+
+``BRANCH`` environment variable in Shippable stores the name of the branch for which current build is being run.
+
+Please note that if you switch between branches in your project, it means that you are pushing different content to the same remote branch, hence ``-f`` parameter above. In case you
+run into problems related to this situation, such as:
+
+.. code-block:: bash
+
+  error: src refspec master does not match any.
+  error: failed to push some refs to git@heroku.com:obscure-citadel-8851.git
+
+You may need to recreate your project on Shippable.
+
+Using ClearDB MySQL database
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Heroku passes ClearDB MySQL connection details as an environment variable called ``CLEARDB_DATABASE_URL`` containing connection url.
+To mock it with the test database during build, add the following environment variable in your ``shippable.yml`` config:
+
+.. code-block:: bash
+
+  env:
+    global:
+      - CLEARDB_DATABASE_URL=mysql://shippable@127.0.0.1:3306/test?reconnect=true
+
+Then, in your application you need to retrieve and parse the url. For example, in PHP:
+
+.. code-block:: php
+
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    $host = $url["host"];
+    $username = $url["user"];
+    $password = array_key_exists("pass", $url) ? $url["pass"] : "";
+    $db = substr($url["path"], 1);
+
+    $con = mysqli_connect($host, $username, $password, $db);
+
+Please refer to `Heroku docs <https://devcenter.heroku.com/articles/cleardb>`_ for details on how to fetch and parse the url in different programming languages.
+Full sample of deploying PHP+MySQL application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-php-mysql-heroku>`_.
 
 Continuous deployment to Amazon Elastic Beanstalk
 .................................................
@@ -765,7 +856,8 @@ Then, we need to add some steps to ``shippable.yml`` to update ``eb`` configurat
 
 Finally, we can connect to the database using environment variables as defined above.
 
-**PHP:**
+PHP
+^^^
 
 .. code-block :: php
 
@@ -780,7 +872,8 @@ Finally, we can connect to the database using environment variables as defined a
 Elastic Beanstalk serves your repository root as the document root of the webserver, so e.g. ``index.php`` file will be interpreted when you access the root context of your Elastic Beanstalk application. 
 See full sample PHP code using Elastic Beanstalk available `on GitHub <https://github.com/Shippable/sample-php-mysql-beanstalk>`_.
 
-**Ruby:**
+Ruby
+^^^^
 
 .. code-block :: ruby
 
@@ -795,7 +888,8 @@ See full sample PHP code using Elastic Beanstalk available `on GitHub <https://g
 Elastic Beanstalk runtime expects that the entry point of your application will be found in ``config.ru`` file. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby_sinatra.html>`_ for details.
 Full sample Ruby code using Sinatra and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-ruby-mysql-beanstalk>`_.
 
-**Python:**
+Python
+^^^^^^
 
 .. code-block :: python
 
@@ -817,7 +911,8 @@ As Python projects are already run in ``virtualenv`` on Shippable minions, chang
 Elastic Beanstalk runtime expects that the entry point of your application will be found in ``application.py`` file. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Python_flask.html>`_ for details.
 Full sample Python code using Flask and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-python-mysql-beanstalk>`_.
 
-**Node.js:**
+Node.js
+^^^^^^^
 
 .. code-block :: javascript
 
@@ -832,7 +927,8 @@ Full sample Python code using Flask and MySQL on Elastic Beanstalk is available 
 Elastic Beanstalk expects that the entry point of your application will be found in `app.js` or `server.js` file in the repository root. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html>`_ for details.
 Full sample Node.js code using Express and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-nodejs-mysql-beanstalk>`_.
 
-**Java:**
+Java
+^^^^
 
 For JVM, the connection setting are passed as system properties, rather than environment variables:
 
@@ -869,7 +965,8 @@ Finally, Elastic Beanstalk `expects exploded WAR <https://forums.aws.amazon.com/
 
 See the full sample of Java web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-java-mysql-beanstalk>`_ for details.
 
-**Scala:**
+Scala
+^^^^^
 
 Scala deployment is very similar to the one described for Java above. First, RDS connection details need to be obtained from system properties, rather then environment variables.
 Here is an example for `Slick <http://slick.typesafe.com/>`_:
