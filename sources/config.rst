@@ -698,8 +698,12 @@ Next, create your Heroku application using Web GUI or ``heroku`` command install
 
 .. code-block:: bash
 
+  env:
+    global:
+      - APP_NAME=shroudd-headland-1758
+
   after_success :
-    - git push -f git@heroku.com:shroudd-headland-1758.git master
+    - git push -f git@heroku.com:$APP_NAME.git master
 
 Full sample of deploying PHP+MySQL application to Heroku without using toolbelt can be found on `our GitHub account <https://github.com/Shippable/sample-php-mysql-heroku/tree/without-toolbelt>`_.
 
@@ -719,14 +723,15 @@ It is recommended to save your access key as secret in Shippable, as is discusse
 
   env:
     global:
+      - APP_NAME=shroudd-headland-1758
       - secure: MRuHkLbL9HPkJPU5lzkKM1+NOq1S5RrhxEyhJkk60xxYiF7DMzydiBN8oFBjWrSmyGeGRuEC22a0I5ItobdWVszfcJCaXHwtfKzfGOUdKuyCnDgvojXhv/jrBvULyLK6zsLw3b8NMxdnwNsHqSPm19qW/EIGEl9Zv/637Igos69z9aT7+xrEG013+6HtKYb8RHm+iPSNsFoBi/RSAHYuM1eLTZWG2WAkjgzZaYmrHCgNwVmk+HOGR+TOWN7Iu5lrjyvC1XDCQrOvo1hZI30cd9OqJ5aadFm3exQpNhI4I7AgOnCbK3NoWNc/GAnqKXCvsaIQ80Jd/uLIOVyMjD6Xmg==
 
-Then, install the toolbelt in ``before_install`` step:
+Then, install the toolbelt in ``before_install`` step (``which heroku`` is for skipping this step if the tools are already installed):
 
 .. code-block:: bash
 
   before_install:
-    - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    - which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
 Next, create your Heroku application using Web GUI or ``heroku`` command installed on your workstation. Then, add the following ``after_success`` step to your Shippable build: 
 
@@ -734,13 +739,13 @@ Next, create your Heroku application using Web GUI or ``heroku`` command install
 
   after_success:
     - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
-    - git remote -v | grep ^heroku || heroku git:remote --app obscure-citadel-8851
-    - git push -f heroku $BRANCH:master
+    - git remote -v | grep ^heroku || heroku git:remote --app $APP_NAME
+    - git push -f heroku master
 
 * First we generate public SSH key out of the private one to a file with a custom name. We then authorize this key with Heroku. Using custom name for the file allows us to skip this step on subsequent builds.
   Please note that we need to use ``test -f ...`` instead of ``[ -f ... ]`` here, as the latter would be interpreted by YAML parser
-* Then, we make sure ``heroku`` remote is added to the local git repository (replace name after ``--app`` with the name of your application)
-* Finally, we push the code to Herkou
+* Then, we make sure ``heroku`` remote is added to the local git repository
+* Finally, we push the code to Heroku
 
 Please refer to the sections below for language-specific details of configuring Heroku builds.
 
@@ -753,28 +758,24 @@ Please refer to the sections below for language-specific details of configuring 
 Deploying from branches other than master
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Heroku always deploys contents of ``master`` branch, so if you happen to deploy code from other branches, you need to change the final step in ``after_success`` block to the following:
+Heroku always deploys contents of ``master`` branch, so if you happen to deploy code from other branches, `the Heroku documentation <https://devcenter.heroku.com/articles/git#deploying-code>`_
+instructs you to use the following syntax:
 
 .. code-block:: bash
 
-  - git push -f heroku $BRANCH:master
+  - git push heroku yourbranch:master
 
-``BRANCH`` environment variable in Shippable stores the name of the branch for which current build is being run.
-
-Please note that if you switch between branches in your project, it means that you are pushing different content to the same remote branch, hence ``-f`` parameter above. In case you
-run into problems related to this situation, such as:
+However, Shippable sets its local repository in such a way that the current branch is always seen as ``master``, no matter how it is called in your remote repository. For this reason, make sure
+to always use only remote branch name when deploying to Heroku:
 
 .. code-block:: bash
 
-  error: src refspec master does not match any.
-  error: failed to push some refs to git@heroku.com:obscure-citadel-8851.git
-
-You may need to recreate your project on Shippable.
+  - git push heroku master
 
 Using ClearDB MySQL database
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Heroku passes ClearDB MySQL connection details as an environment variable called ``CLEARDB_DATABASE_URL`` containing connection url.
+Heroku passes ClearDB MySQL connection details as an environment variable called ``CLEARDB_DATABASE_URL`` containing connection URL.
 To mock it with the test database during build, add the following environment variable in your ``shippable.yml`` config:
 
 .. code-block:: bash
@@ -797,6 +798,69 @@ Then, in your application you need to retrieve and parse the url. For example, i
 
 Please refer to `Heroku docs <https://devcenter.heroku.com/articles/cleardb>`_ for details on how to fetch and parse the url in different programming languages.
 Full sample of deploying PHP+MySQL application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-php-mysql-heroku>`_.
+
+General information on using MongoDB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You have two addons to choose from when using MongoDB on Heroku: MongoLab and MongoHQ. Setup for both of them with Shippable is the same.
+The only difference is the name of the environment variable that contains connection details:
+
+* For MongoLab it is called ``MONGOLAB_URI``
+* For MongoHQ the name of the variable is ``MONGOHQ_URL``
+
+Examples below use MongoLab for consistency, but adapting them to MongoHQ is as simple as substituting all occurrences of this variable.
+
+To start using MongoDB, first add the addon of your choice to your Heroku application. Then proceed to configure your application as is outlined
+in per-language guides below.
+
+Using MongoDB with PHP
+^^^^^^^^^^^^^^^^^^^^^^
+
+First, tell Shippable to provide your environment with MongoDB service.
+Then, provide mock connection URL to be used by your tests. On Shippable, MongoDB is accessed without providing user nor password.
+
+.. code-block:: bash
+
+  services:
+     - mongodb
+
+  env:
+    global:
+      - APP_NAME=rocky-wave-3011
+      - MONGOLAB_URI=mongodb://localhost/test
+
+Next, activate the official Mongo driver extension in ``php.ini`` on Shippable minion, as is explained in the documentation on PHP extensions:
+
+.. code-block:: bash
+
+  before_script: 
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+Then, tell Heroku to enable the extension as well by providing the following ``composer.json`` file in the root of your repository:
+
+.. code-block:: json
+
+  {
+    "require": {
+      "ext-mongo": "*"
+    }
+  }
+
+Finally, you can connect to the database with the code as follows: 
+
+.. code-block:: php
+
+  $mongoUrl = getenv("MONGOLAB_URI");
+  $dbName = substr(parse_url($mongoUrl)["path"], 1);
+  $this->mongo = new Mongo($mongoUrl);
+  $this->scores = $this->mongo->{$dbName}->scores;
+
+Please note that we need to parse the URL to the instance to extract the database name, as the Mongo driver expects that the database is selected by accessing property named
+the same as the database, which is demonstrated in the last line of the snippet above.
+
+Full sample of deploying PHP+MySQL application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-php-mongo-heroku>`_.
 
 Continuous deployment to Amazon Elastic Beanstalk
 .................................................
