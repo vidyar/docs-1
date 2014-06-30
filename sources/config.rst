@@ -144,7 +144,7 @@ When we receive a build trigger through a webhook or manual run, we execute the 
 7. Run the ``script`` command which runs build and all your tests
 8. Run ``after_script`` command
 9. Run either ``after_success`` or ``after_failure`` commands
-10. Run ``before_archive`` command to copy files ./shippable folder. Shippable will zips up all the files in this folder and makes the result available for download  
+10. Run ``before_archive`` command to copy files to ./shippable folder. Shippable will zips up all the files in this folder and makes the result available for download  
 11. Run ``after_archive`` command to get the api access token to download the artifacts
 
 
@@ -212,7 +212,7 @@ If you would like to turn submodules off completely -
 api access token
 .................
 
-Once the build is finished, shippable will automatically zips up all the files available under ./shippable folder and you can download it using the **Download** button from the build details tab. You can also download the artifacts with command line. Configure your yml file as shown below to download artifacts from command line.
+Once the build is finished, shippable will automatically zips up all the files available under ./shippable folder and you can download it using the **Download** button from the build details tab. You can also configure your yml file as shown below to get the api access token from console log to download the artifacts.
 
 .. code-block:: python
  
@@ -227,7 +227,7 @@ Once the build is finished, shippable will automatically zips up all the files a
      # value of the below variable will be true if archive is successfull else it will be false.
       - echo $ARTIFACTS_UPLOAD_SUCCESSFUL
  
-.. note::  This URL will expire after 20 minutes from the time build finishes off execution.
+.. note::  This URL is valid only for 20 minutes from the time build finishes off execution.
 
 
 common environment variables
