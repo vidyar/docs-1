@@ -28,14 +28,14 @@ We need the yml file to analyze the project details. Add the shippable.yml file 
 
 **script :** Execute the sample code using script tag. 
 
-Here is the complete yml file for neo4j-buildsample
+Here is the complete yml file for sample_ruby_neo4j project
 
 .. code-block:: bash
    
    language: ruby
 
    rvm:
-     - jruby-1.7.9
+     - jruby-1.7.12
 
    services:
      - neo4j
@@ -47,5 +47,5 @@ Here is the complete yml file for neo4j-buildsample
      - ruby sample.rb
  
   
-Enable the repo neo4j-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output on the respective build's page.
+Enable the repo sample_ruby_neo4j and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output on the respective build's page.
 
