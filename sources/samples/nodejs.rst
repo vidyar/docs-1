@@ -33,27 +33,43 @@ Keep the test and code coverage output in the special folders Shippable/testresu
 
 We need the yml file to analyze the project details. So add the shippable.yml file to the root of your repo by specifying:
 
-**language :** Specify the language used to create the project.  node_js is used  in our project.
+**language :** Specify the language used to create the project. node_js is used in our project.
 
 **version numbers :** 0.10 is used.
 
-**after_script:** Specify the command to run tests and code coverage and save the results in their respective shippable folders. If you have not created the folders, you can create them using the before_script key.
+**env:** Specify the xunit output file path using env.
 
-**notification alerts:**  Email notifications are added to get alerts about the build status.
+**script:** Specify the command to run tests using script key.
 
-Here is the complete yml file for Node.js-buildsample.
+**after_script:** Specify the command to generate code coverage and save the results in their respective shippable folder. If you have not created the folders, you can create them using the before_script key.
+
+Here is the complete yml file for sample_node project.
 
 .. code-block:: bash
-	
-	node_js:
-           - "0.10"
-        language: node_js
-	before_script: mkdir -p shippable/codecoverage
-	after_script: 
-  	  - ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -u tdd 
-  	  - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
-	notifications:
-  	  email:
-    		- exampleone@org.com
 
-Enable the repo Node.js-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
+	# Language setting
+      	language: node_js
+
+	# Version number
+      	node_js:
+          - 0.10.25
+
+	# The path for Xunit to output test reports
+   	env:
+     	  - XUNIT_FILE=shippable/testresults/result.xml
+
+	# Create directories for test and coverage reports
+   	before_script:
+     	  - mkdir -p shippable/testresults
+          - mkdir -p shippable/codecoverage
+
+	# Running the tests with grunt
+   	script:
+     	  - grunt
+
+	# Tell istanbul to generate a coverage report
+   	after_script:
+     	  - ./node_modules/.bin/istanbul cover grunt -- -u tdd
+          - ./node_modules/.bin/istanbul report cobertura --dir  shippable/codecoverage/
+
+Enable the repo sample_node and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
