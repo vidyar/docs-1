@@ -34,18 +34,23 @@ We need the yml file to analyze the project details. So add the shippable.yml fi
 
 **notification alerts:** Email notifications are added to get alerts about the build status.
 
-This is the complete yml file for Java-buildsample:
+This is the complete yml file for sample_java project:
 
 .. code-block:: bash
 
 	language: java
+
 	jdk:
+   	   - openjdk7
    	   - oraclejdk7
            - openjdk6
-           - openjdk7
-        script: 
-           - ant coverage
-        notifications:
+           - oraclejdk8
+
+       after_success:
+          - mvn clean cobertura:cobertura
+          - mvn test
+      
+       notifications:
           email:
               recipients:
          	 - exampleone@org.com
@@ -53,4 +58,4 @@ This is the complete yml file for Java-buildsample:
 
  
 
-Create a project by enabling the repo Java-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
+Create a project by enabling the repo sample_java and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
