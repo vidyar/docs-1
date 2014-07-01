@@ -21,7 +21,7 @@ We need the yml file to analyze the project details. Add the shippable.yml file 
 
 **script :** Execute the sample code using script tag. 
 
-Here is the complete yml file for ample_ruby_cassandra project.
+Here is the complete yml file for sample_ruby_cassandra project.
 
 .. code-block:: bash
    
