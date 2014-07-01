@@ -51,7 +51,11 @@ Here is the complete yml file for sample_ruby project:
     # write the rspec tests to the output dir
     script:
       - rspec -f JUnit -o shippable/testresults/results.xml  
-
+    notifications:
+     email:
+         recipients:
+             - exampleone@org.com
+             - exampletwo@org.com
 
 
 
