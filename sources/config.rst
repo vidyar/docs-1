@@ -142,8 +142,11 @@ When we receive a build trigger through a webhook or manual run, we execute the 
 5. Run ``install`` section to install any project specific libraries or packages
 6. Run ``before_script`` section to create any folders and unzip files that might be needed for testing. Some users also restore DBs etc. here
 7. Run the ``script`` command which runs build and all your tests
-8. Run either ``after_success`` or ``after_failure`` commands
-9. Run ``after_script`` commands
+8. Run ``after_script`` command
+9. Run either ``after_success`` or ``after_failure`` commands
+10. Run ``before_archive`` command to copy files to ./shippable folder. Shippable will zips up all the files in this folder and makes the result available for download  
+11. Run ``after_archive`` command to get the api access token to download the artifacts
+
 
 The outcome of all the steps upto 7 determine the outcome of the build status. They need to return an exit code of ``0`` to be marked as success. Everything else is treated as a failure.
 
@@ -206,6 +209,27 @@ If you would like to turn submodules off completely -
   git:
    submodules: false
 
+api access token
+.................
+
+Once the build is finished, shippable will automatically zips up all the files available under ./shippable folder and you can download it using the **Download** button from the build details tab. You can also configure your yml file as shown below to get the api access token from console log to download the artifacts.
+
+.. code-block:: python
+ 
+ # move or copy files to shippable folder
+  before_archive:
+       - ls
+       - mv  calculator.php  shippable/src
+ 
+  after_archive:
+     # To get the URL of the api access token
+      - echo $SHIPPABLE_ARTIFACTS_URL
+     # value of the below variable will be true if archive is successfull else it will be false.
+      - echo $ARTIFACTS_UPLOAD_SUCCESSFUL
+ 
+.. note::  This URL is valid only for 20 minutes from the time build finishes off execution.
+
+
 common environment variables
 .............................
 
@@ -238,6 +262,10 @@ You will have the following environment variables available to you for every bui
 - RAILS_ENV : test
 
 - USER : shippable
+
+- SHIPPABLE_ARTIFACTS_URL : URL to download artifacts
+
+- ARTIFACTS_UPLOAD_SUCCESSFUL : Value of this variable will be true if archive is successfull else this will be set as false.
 
 user specified environment variables
 .....................................
@@ -673,7 +701,7 @@ If you do not want to get notified, you can configure email notifications to fal
      email: false
 
 
-----------
+---------
 
 **Continuous deployment**
 -------------------------
