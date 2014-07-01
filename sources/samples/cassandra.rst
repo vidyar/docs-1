@@ -21,7 +21,7 @@ We need the yml file to analyze the project details. Add the shippable.yml file 
 
 **script :** Execute the sample code using script tag. 
 
-Here is the complete yml file for cassandra-buildsample
+Here is the complete yml file for sample_ruby_cassandra project.
 
 .. code-block:: bash
    
@@ -39,6 +39,6 @@ Here is the complete yml file for cassandra-buildsample
      - cassandra-cli -host localhost -port 9160 -f removeKeyspace.txt 
    
      
-Enable the repo cassandra-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output on the respective build's page.
+Enable the repo sample_ruby_cassandra and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output on the respective build's page.
 
 

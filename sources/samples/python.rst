@@ -52,22 +52,28 @@ shippable folders. If you have not created the folders, then you can create it u
 
 **Notification alerts:**  Email notifications are added to get the alerts about the build status.
 
-Here is the complete yml file for Python-buildsample
+Here is the complete yml file for sample_python project.
 
 .. code-block:: bash
     
-    python:
-  	- "2.7"
-    language: python
-    before_script: mkdir -p shippable/codecoverage shippable/testresults
-    install: pip install --use-mirrors -r requirements.txt
-    script: 
-      - nosetests python/sample.py --with-xunit --xunit-file=shippable/testresults/nosetests.xml
-      - coverage run --branch python/sample.py
-      - coverage xml -o shippable/codecoverage/coverage.xml python/sample.py
-    notifications:
-      email:
-       - exampleone@org.com
+   language: python
 
-Enable the repo Python-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
+   python:
+      - 2.7
+
+   install:
+      - pip install -r requirements.txt
+
+   # Make folders for the reports
+  
+   before_script:
+      - mkdir -p shippable/testresults
+      - mkdir -p shippable/codecoverage
+
+   script:
+      - nosetests test.py --with-xunit --xunit-file=shippable/testresults/nosetests.xml
+      - which python && coverage run --branch test.py
+      - which python && coverage xml -o shippable/codecoverage/coverage.xml test.py
+
+Enable the repo sample_python and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
 

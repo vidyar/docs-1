@@ -217,15 +217,15 @@ Once the build is finished, shippable will automatically zips up all the files a
 .. code-block:: python
  
  # move or copy files to shippable folder
-  before_archive:
+   before_archive:
        - ls
        - mv  calculator.php  shippable/src
  
-  after_archive:
+   after_archive:
      # To get the URL of the api access token
-      - echo $SHIPPABLE_ARTIFACTS_URL
-     # value of the below variable will be true if archive is successfull else it will be false.
-      - echo $ARTIFACTS_UPLOAD_SUCCESSFUL
+       - echo $SHIPPABLE_ARTIFACTS_URL
+     # value of the below variable will be true if archive is successful else it will be false.
+       - echo $ARTIFACTS_UPLOAD_SUCCESSFUL
  
 .. note::  This URL is valid only for 20 minutes from the time build finishes off execution.
 
@@ -265,7 +265,7 @@ You will have the following environment variables available to you for every bui
 
 - SHIPPABLE_ARTIFACTS_URL : URL to download artifacts
 
-- ARTIFACTS_UPLOAD_SUCCESSFUL : Value of this variable will be true if archive is successfull else this will be set as false.
+- ARTIFACTS_UPLOAD_SUCCESSFUL : Value of this variable will be true if archive is successful else this will be set as false.
 
 user specified environment variables
 .....................................
