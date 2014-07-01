@@ -754,6 +754,11 @@ It is recommended to save your access key as secret in Shippable, as is discusse
       - APP_NAME=shroudd-headland-1758
       - secure: MRuHkLbL9HPkJPU5lzkKM1+NOq1S5RrhxEyhJkk60xxYiF7DMzydiBN8oFBjWrSmyGeGRuEC22a0I5ItobdWVszfcJCaXHwtfKzfGOUdKuyCnDgvojXhv/jrBvULyLK6zsLw3b8NMxdnwNsHqSPm19qW/EIGEl9Zv/637Igos69z9aT7+xrEG013+6HtKYb8RHm+iPSNsFoBi/RSAHYuM1eLTZWG2WAkjgzZaYmrHCgNwVmk+HOGR+TOWN7Iu5lrjyvC1XDCQrOvo1hZI30cd9OqJ5aadFm3exQpNhI4I7AgOnCbK3NoWNc/GAnqKXCvsaIQ80Jd/uLIOVyMjD6Xmg==
 
+.. note::
+
+  If your build times out during ``after_success`` step, please double check that you correctly defined ``HEROKU_API_KEY`` variable.
+  If no key is supplied, Heroku toolbelt will switch to an interactive mode, prompting for the username and causing the build to 'hang'.
+
 Then, install the toolbelt in ``before_install`` step (``which heroku`` is for skipping this step if the tools are already installed):
 
 .. code-block:: bash
@@ -838,13 +843,9 @@ The only difference is the name of the environment variable that contains connec
 
 Examples below use MongoLab for consistency, but adapting them to MongoHQ is as simple as substituting all occurrences of this variable.
 
-To start using MongoDB, first add the addon of your choice to your Heroku application. Then proceed to configure your application as is outlined
-in per-language guides below.
+To start using MongoDB, first add the addon of your choice to your Heroku application. 
 
-Using MongoDB with PHP
-^^^^^^^^^^^^^^^^^^^^^^
-
-First, tell Shippable to provide your environment with MongoDB service.
+In your ``shippable.yml`` you first need to tell Shippable to provide your build with MongoDB service.
 Then, provide mock connection URL to be used by your tests. On Shippable, MongoDB is accessed without providing user nor password.
 
 .. code-block:: bash
@@ -857,7 +858,12 @@ Then, provide mock connection URL to be used by your tests. On Shippable, MongoD
       - APP_NAME=rocky-wave-3011
       - MONGOLAB_URI=mongodb://localhost/test
 
-Next, activate the official Mongo driver extension in ``php.ini`` on Shippable minion, as is explained in the documentation on PHP extensions:
+Then proceed to configure your application as is outlined in per-language guides below.
+
+Using MongoDB with PHP
+^^^^^^^^^^^^^^^^^^^^^^
+
+First, activate the official Mongo driver extension in ``php.ini`` on Shippable minion, as is explained in the documentation on PHP extensions:
 
 .. code-block:: bash
 
@@ -888,7 +894,42 @@ Finally, you can connect to the database with the code as follows:
 Please note that we need to parse the URL to the instance to extract the database name, as the Mongo driver expects that the database is selected by accessing property named
 the same as the database, which is demonstrated in the last line of the snippet above.
 
-Full sample of deploying PHP+MySQL application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-php-mongo-heroku>`_.
+Full sample of deploying PHP+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-php-mongo-heroku>`_.
+
+Using MongoDB with Python
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First, create file called ``Procfile`` that will tell Heroku how to launch your Python application. For example, if you use Flask and create the application under name ``application``
+in ``hello.py``
+
+.. code-block:: bash
+
+  web: gunicorn hello:application
+
+Next, declare that your application depends on MongoDB official driver. Heroku requires ``requirements.txt`` file in the root of your repository that may be generated with ``pip freeze`` command.
+For our (Flask) example, we will use file with contents as follows:
+
+.. code-block:: bash
+
+  nose
+  coverage
+  gunicorn
+  Flask
+  pymongo
+
+Finally, you can connect to the database with the following code:
+
+.. code-block:: python
+
+  mongo_url = os.environ['MONGOLAB_URI']
+  db_name = urlparse.urlparse(mongo_url).path[1:]
+  client = MongoClient(mongo_url)
+  self.db = client[db_name]
+
+Please note that we need to parse the URL to the instance to extract the database name, as the Python Mongo driver follows the convention of accessing the database by property with
+the same as the database, which is demonstrated in the last line of the snippet above.
+
+Full sample of deploying Python+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-python-mongo-heroku>`_.
 
 Continuous deployment to Amazon Elastic Beanstalk
 .................................................
