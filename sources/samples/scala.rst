@@ -24,7 +24,7 @@ We need the yml file to analyze your project details . So add the shippable.yml 
 **notification alerts:**  Email notifications are added to get alerts about the build status.
 
 
-Here is the complete yml file for Scala-buildsample
+Here is the complete yml file for sample_scala project
 
 .. code-block:: bash
 
@@ -32,4 +32,4 @@ Here is the complete yml file for Scala-buildsample
 	scala:
     	    - 2.10.2
 
-Enable the repo Scala-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
+Enable the repo sample_scala and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
