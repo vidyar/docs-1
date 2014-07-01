@@ -33,7 +33,7 @@ We need the yml file to analyze the project details. So add the shippable.yml fi
 
 **notification alerts:** Email notifications are added to get alerts about the build status.
 
-Here is the complete yml file for the Ruby-buildsample:
+Here is the complete yml file for sample_ruby project:
 
 .. code-block:: bash
 	
@@ -55,4 +55,4 @@ Here is the complete yml file for the Ruby-buildsample:
 
 
 
-Enable the repo Ruby-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
+Enable the repo sample_ruby and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and codecoverage results on the respective build's page.
