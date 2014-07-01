@@ -265,7 +265,7 @@ You will have the following environment variables available to you for every bui
 
 - SHIPPABLE_ARTIFACTS_URL : URL to download artifacts
 
-- ARTIFACTS_UPLOAD_SUCCESSFUL : Value of this variable will be true if archive is successfull else this will be set as false.
+- ARTIFACTS_UPLOAD_SUCCESSFUL : Value of this variable will be true if archive is successful else this will be set as false.
 
 user specified environment variables
 .....................................
