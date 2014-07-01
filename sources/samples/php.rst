@@ -28,7 +28,7 @@ We need the yml file to analyze the project details. So add the shippable.yml fi
 
 **notification alerts:** Email notifications are disabled in this sample project.
 
-This is the complete yml file for php-buildsample:
+This is the complete yml file for sample_php project:
 
 .. code-block:: bash
 
@@ -48,5 +48,5 @@ This is the complete yml file for php-buildsample:
           email: false
 
 
-Create a project by enabling the repo php-buildsample and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and code coverage output on the respective build’s tab.
+Create a project by enabling the repo sample_php and run it using an Ubuntu minion. Once the build finishes execution, you can check for the console output, test and code coverage output on the respective build’s tab.
 
