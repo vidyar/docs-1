@@ -931,6 +931,57 @@ the same as the database, which is demonstrated in the last line of the snippet 
 
 Full sample of deploying Python+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-python-mongo-heroku>`_.
 
+Using MongoDB with Ruby
+^^^^^^^^^^^^^^^^^^^^^^^
+
+First, create a file called ``Procfile`` that will tell Heroku how to launch your application. For example, if you use Sinatra and your application entry point is located in file
+called ``helloworld.rb``:
+
+.. code-block:: bash
+
+  web: bundle exec ruby helloworld.rb -p $PORT
+
+Next, declare your dependencies in ``Gemfile``. For example, if using `Mongoid <http://mongoid.org/>`_ to access the database:
+
+.. code-block:: bash
+
+  source "https://rubygems.org"
+
+  gem "rspec"
+  gem "simplecov"
+  gem "simplecov-csv"
+  gem "rspec_junit_formatter"
+  gem "sinatra"
+  gem "mongoid"
+
+To separate Mongoid configuration from your code, create YAML file (e.g. called ``mongoid.yml``):
+
+.. code-block:: yaml
+
+  production:
+    sessions:
+      default:
+        uri: <%= ENV['MONGOLAB_URI'] %>
+
+Next, use this file to connect to the database in your application:
+
+.. code-block:: ruby
+
+  require 'mongoid'
+  Mongoid.load!('mongoid.yml', :production)
+
+You can also execute Rake tasks in your ``after_success`` step using Heroku toolbelt. For example, to run database migrations at the end of the build:
+
+.. code-block:: bash
+
+  after_success:
+    - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
+    - git remote -v | grep ^heroku || heroku git:remote --app $APP_NAME
+    - git push -f heroku master
+    - heroku run rake db:migrate
+
+Full sample of deploying Sinatra+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-ruby-mongo-heroku>`_.
+
 Continuous deployment to Amazon Elastic Beanstalk
 .................................................
 
