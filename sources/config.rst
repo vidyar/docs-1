@@ -982,6 +982,35 @@ You can also execute Rake tasks in your ``after_success`` step using Heroku tool
 
 Full sample of deploying Sinatra+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-ruby-mongo-heroku>`_.
 
+Using MongoDB with Node.js
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First, create file called ``Procfile`` that will tell Heroku how to launch your Node.js application. For example, if you use Express and define your routes in file called ``app.js``:
+
+.. code-block:: bash
+
+  web: node app.js
+
+Next, declare that your application depends on Mongoose (or other library of your choice). Heroku will read your ``package.json`` file:
+
+.. code-block:: json
+
+  ...
+  "dependencies": {
+    "express": "~4.2.0",
+    "mongoose": "^3.8.12",
+    "when": "~3.2.3"
+  },
+
+Finally, you can connect to the database with the following code:
+
+.. code-block:: javascript
+
+  var mongoose = require('mongoose');
+  mongoose.connect(process.env.MONGOLAB_URI);
+
+Full sample of deploying Express+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-nodejs-mongo-heroku>`_.
+
 Continuous deployment to Amazon Elastic Beanstalk
 .................................................
 
