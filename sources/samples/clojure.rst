@@ -12,6 +12,7 @@ This sample will help you get started with Shippable. The testing framework used
 
 `Clojure Sample <https://github.com/Shippable/sample_clojure>`_
 
+`Clojure Sample with MongoDB <https://github.com/Shippable/sample_clojure_mongodb>`_
 
 Copy the test and code coverage output into the special folders Shippable/testresults and Shippable/codecoverage to get the reports parsed. The test report must be in the JUnit XML format and code coverage report in the Cobertura XML format.
 
