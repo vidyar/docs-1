@@ -12,6 +12,7 @@ This sample will help you get started with Shippable. The testing framework used
 
 `Go Sample <https://github.com/Shippable/sample_go>`_
 
+`Go Sample with MongoDB <https://github.com/Shippable/sample_go_mongo>`_
 
 Copy the test and code coverage output into the special folders Shippable/testresults and Shippable/codecoverage to get the reports parsed. The test report must be in JUnit format.
 
