@@ -39,8 +39,6 @@ However, shippable allows you to clear files and folders between builds using **
 
 This will remove all files and folders from the previous builds. You can also achieve this by adding **[reset_minion]** in the commit message.
 
-**reset_minion** tag also helps you to clear the submodule files. For example, you are using a submodule project that you do not have permissions to use. Removing the submodule from gitconfig file will not clear all its dependencies from shippable. You will have to include **reset_minion: true** flag in yml file or **[reset_minion]** string in commit message to clear the remaining files and its dependencies from each build.
-
 
 Common Tools
 ............
@@ -579,7 +577,7 @@ Sample python code using `RabbitMQ <https://github.com/Shippable/sample_python_r
 Selenium
 .........
 
-Our minions are pre-installed with selenium-server-standalone-2.41.0.jar. Selenium is not started on boot, you will have to enable it using **services** tag and start xvfb (X Virtual Framebuffer) on display port 99.0, so that firefox can run on the server without using a GUI. Configure your yml file as shown below to start selenium on firefox.
+Selenium is not started on boot, you will have to enable it using **services** tag and start xvfb (X Virtual Framebuffer) on display port 99.0, so that firefox can run on the server without using a GUI. Configure your yml file as shown below to start selenium on firefox.
 
 .. code-block:: bash
    
