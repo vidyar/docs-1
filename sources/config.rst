@@ -577,23 +577,15 @@ Sample python code using `RabbitMQ <https://github.com/Shippable/sample_python_r
 Selenium
 .........
 
-Selenium is not started on boot, you will have to enable it using **services** tag and start xvfb (X Virtual Framebuffer) on display port 99.0, so that firefox can run on the server without using a GUI. Configure your yml file as shown below to start selenium on firefox.
+Selenium is not started on boot. You will have to enable it using **services** tag. Configure your yml file as shown below.
 
 .. code-block:: bash
    
-   addons:
-     firefox: "23.0"
-
    services:
      - selenium
 
-   before_script:
-     - "export DISPLAY=:99.0"
-     - "/etc/init.d/xvfb start"
-
-   after_script:
-     - "/etc/init.d/xvfb stop"
-  
+This will automatically start xvfb on display port 99.0 and all your test suites will run on the server without using a GUI.
+     
 Sample javascript code using `Selenium <https://github.com/Shippable/sample_node_selenium>`_ .
 
 
