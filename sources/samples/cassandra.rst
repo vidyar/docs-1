@@ -1,10 +1,10 @@
-:title: cassandra-buildsample
-:description: A brief description about cassandra-buildsample
+:title: cassandra sample
+:description: A brief description about cassandra-sample
 :keywords: cassandra, Language,services,Install
 
 .. _cassandra:
 
-cassandra-samples
+cassandra-sample
 =================
 
 The goal of this code samples is to show you how to set up and build your repo on shippable.

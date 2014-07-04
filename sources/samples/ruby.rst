@@ -1,4 +1,4 @@
-:title: Ruby Sample
+:title: Ruby Samples
 :description: Step by step instructions to configure a ruby build in Shippable
 :keywords: Ruby, Language, version number,env, Notification alerts
 

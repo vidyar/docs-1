@@ -1,5 +1,5 @@
-:title:  Node.js-buildsample
-:description:   A brief description about Nodejs-buildsample 
+:title:  Node.js samples
+:description:   A brief description about Node.js_sample 
 :keywords: Node.js, Language, version numbers, script, Notification alerts
 
 

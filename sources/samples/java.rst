@@ -1,5 +1,5 @@
-:titles: Java buildsample
-:description: A brief description about java buildsample
+:titles: Java samples
+:description: A brief description about java_sample
 :keywords: Java, Language,jdk,script,Notification alerts
 
 
