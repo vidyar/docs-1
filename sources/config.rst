@@ -37,7 +37,7 @@ However, shippable allows you to clear files and folders between builds using **
  
    reset_minion: true
 
-This will remove all files and folders from the previous builds. You can also achieve this by adding **[reset_minion]** in the commit message.
+Before the build, we check for the tag **reset_minion** and if it exists, we will delete all the files and folders from the previous builds. You can also achieve this by adding **[reset_minion]** in the commit message.
 
 
 Common Tools
