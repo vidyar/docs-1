@@ -46,11 +46,11 @@ This is the complete yml file for sample_java project:
            - openjdk6
            - oraclejdk8
 
-       after_success:
-          - mvn clean cobertura:cobertura
-          - mvn test
+        after_success:
+           - mvn clean cobertura:cobertura
+           - mvn test
       
-       notifications:
+        notifications:
           email:
               recipients:
          	 - exampleone@org.com
