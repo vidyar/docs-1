@@ -31,7 +31,15 @@ State Management
 
 Shippable maintains the state of each minion between builds. We believe that build speed is very important, so reinstalling everything and cloning git repos every single time just doesn't make sense. 
 
-(Coming soon) However, we also understand the value of testing on pristine environments. Hence we have a commit message tag [reset minion] which will reset your minion to its base setting and allow your test to run on a prisitne minion.
+However, shippable allows you to clear files and folders between builds using **reset_minion** tag. Configure your yml file as shown below:
+
+.. code-block:: bash
+ 
+   reset_minion: true
+
+This will remove all files and folders from the previous builds. You can also achieve this by adding **[reset_minion]** in the commit message.
+
+**reset_minion** tag also helps you to clear the submodule files. For example, you are using a submodule project that you do not have permissions to use. Removing the submodule from gitconfig file will not clear all its dependencies from shippable. You will have to include **reset_minion: true** flag in yml file or **[reset_minion]** string in commit message to clear the remaining files and its dependencies from each build.
 
 
 Common Tools
@@ -566,6 +574,29 @@ RabbitMQ
     - rabbitmq
 
 Sample python code using `RabbitMQ <https://github.com/Shippable/sample_python_rabbitmq>`_ .
+
+
+Selenium
+.........
+
+Our minions are pre-installed with selenium-server-standalone-2.41.0.jar. Selenium is not started on boot, you will have to enable it using **services** tag and start xvfb (X Virtual Framebuffer) on display port 99.0, so that firefox can run on the server without using a GUI. Configure your yml file as shown below to start selenium on firefox.
+
+.. code-block:: bash
+   
+   addons:
+     firefox: "23.0"
+
+   services:
+     - selenium
+
+   before_script:
+     - "export DISPLAY=:99.0"
+     - "/etc/init.d/xvfb start"
+
+   after_script:
+     - "/etc/init.d/xvfb stop"
+  
+Sample javascript code using `Selenium <https://github.com/Shippable/sample_node_selenium>`_ .
 
 
 --------
