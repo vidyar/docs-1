@@ -30,6 +30,8 @@ This section helps you to set the build environment and other configuration spec
          - 1.9.3
          - 2.0.0
          - 2.1.0
+         - 2.1.1
+         - 2.1.2
          - jruby-18mode
          - jruby-19mode
          - rbx
@@ -87,9 +89,10 @@ We are using Bundler, ``bundle install`` to install all your gems. We also use `
         
         # jdk tag
 		jdk:
-		 - openjdk7
+                 - openjdk7
 		 - oraclejdk7
 		 - openjdk6
+                
 
 - You can also update the versions on your minion by running a simple command or even downgrade if you choose to. The script below demonstrates an upgrade and downgrade -
     .. code-block:: python
