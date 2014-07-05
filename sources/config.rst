@@ -1327,6 +1327,197 @@ Then, in ``before_script`` step of your build, copy this file to the location re
 
 See the full sample of PHP web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-php-mysql-opsworks>`_ for details.
 
+General information on using Amazon DynamoDB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Amazon DynamoDB is a schema-less, fully managed NoSQL database service. It is not a part of OpsWorks offering, but rather a separate service that is accessed using SDK provided
+by Amazon.
+
+As DynamoDB is not available for download and is hosted only by Amazon, special care needs to be taken while setting up Shippable build. Connecting to the real DynamoDB from the
+integration tests is not an option most of the times, mostly due to cost considerations and time it takes to create a new table in DynamoDB.
+
+For this reason, mock databases were implemented, such as `Dynalite <https://github.com/mhart/dynalite>`_. Comprehensive list of the available mock databases is available on the
+`AWS blog <http://aws.amazon.com/blogs/aws/amazon-dynamodb-libraries-mappers-and-mock-implementations-galore/>`_. During our tests it turned out that only the official mock
+implementation provided by Amazon (`DynamoDB Local <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tools.DynamoDBLocal.html>`_) worked flawlessly with PHP SDK
+and this is the reason why it was included in the samples below. Your mileage may vary, especially as other mock databases catch up with the changes in the SDK.
+
+We also need to inject AWS access key into the production environment, so our application can connect to the DynamoDB API endpoint. There are several ways of realizing this, 
+all of which are documented extensively in the `AWS SDK guide <http://docs.aws.amazon.com/aws-sdk-php/guide/latest/credentials.html#credential-profiles>`_.
+Here, we will take advantage of the fact that the access key is already available in the Shippable build (in encrypted form, see above) and generate the
+configuration file during deployment.
+
+To make the application under test connect to the mock database, we will override ``endpoint`` parameter passed to AWS SDK. Create a JSON file (called ``aws.json`` here)
+with following contents:
+
+.. code-block:: json
+
+  {
+    "includes": ["_aws"],
+    "services": {
+      "default_settings": {
+        "params": {
+          "key": "fake_key",
+          "secret": "fake_secret",
+          "region": "us-west-2",
+          "base_url": "http://localhost:8000"
+        }
+      }
+    }
+  }
+
+Supplying ``key``, ``secret`` and a valid region is mandatory, even though they will not be used in the test environment. For this reason, we enter some fake values
+to make sure that the application will not be able to reach our production DynamoDB instance.
+
+.. code-block:: bash
+
+  env:
+    global:
+      - AWS_DEFAULT_REGION=us-east-1 AWS_STACK=73f89cfc-3f99-4227-a339-73a0ba30acbb AWS_APP_ID=1604ff83-aeb4-4677-b436-a9daac1ceb98
+      - AWS_ACCESS_KEY_ID=AKIAJSZ63DTL3Z7KLVEQ AWS_REAL_REGION=us-west-2
+      - DYNAMODB_LOCAL_DIR=/tmp/dynamodb-local
+      - secure: KRaEGMHtRkYxCmWfvHIEkyfoA/+9EWHcoi1CIoIqXrvsF/ILmVVr0jC7X8u7FdfAiXTqn3jYGtLc5mgo5KXe/8zSLtygCr9U1SKJfwCgsw1INENlJiUraHCQqnnty0b3rsTfoetBnnY0yFIl2g+FUm3A57VnGXH/sTcpDZSqHfjCXivptWrSzE9s4W7+pu4vP+9xLh0sTC9IQNcqQ15L7evM2RPeNNv8dQ+DMdf48915M91rnPkxGjxfebAIbIx1SIhR1ur4rEk2pV4LOHo4ny3sasWyqvA49p1xItnGnpQMWGUAzkr24ggOiy3J5FnL8A9oIkf49RtfK1Z2F0EryA==
+
+  before_install:
+    - test -e $DYNAMODB_LOCAL_DIR || (mkdir -p $DYNAMODB_LOCAL_DIR && wget http://dynamodb-local.s3-website-us-west-2.amazonaws.com/dynamodb_local_latest -qO- | tar xz -C $DYNAMODB_LOCAL_DIR)
+
+Then, in the ``before_install`` step, we download the latest version of DynamoDB Local and extract it to a temporary location. In ``script`` step we first kill any
+outstanding instances of the database, then launch the mock database in the background, saving the process pid in a variable.
+We use ``-inMemory`` option here so that the mock database will not save any data to disk. Next, the actual tests are run and we complete the step by shutting down
+the database instance.
+
+.. code-block:: bash
+
+  script:
+    - ps -ef | grep [D]ynamoDBLocal | awk '{print $2}' | xargs --no-run-if-empty kill
+    - java -Djava.library.path=$DYNAMODB_LOCAL_DIR/DynamoDBLocal_lib -jar $DYNAMODB_LOCAL_DIR/DynamoDBLocal.jar -inMemory &
+    - DYNAMODB_PID=$!
+    # tests run here (language-specific)
+    - kill $DYNAMODB_PID
+
+.. note::
+
+  ``grep`` invocation above creates a (somewhat extraneous) character class for the first letter of the search string. This is done to prevent ``grep`` from including itself
+  in the results. It works because the ``grep`` process will have ``[D]ynamoDBLocal`` string in its command, which is not matched by ``[D]ynamodblocal`` (because of the square brackets).
+
+Next, we need some way of injecting AWS secret key in the ``aws.json`` file on the target OpsWorks instance. This can be done by registering a Chef deployment hook that will overwrite
+this file with values retrieved from Chef configuration. Hooks are registered by placing aptly named files in ``deploy`` directory in your repository root.
+Please refer to `AWS documentation <http://docs.aws.amazon.com/opsworks/latest/userguide/workingcookbook-extend-hooks.html>`_
+and `Opscode documentation on deploy resource <http://docs.opscode.com/resource_deploy.html#deploy-phases>`_ if you interested in details.
+
+For your convenience, here (and in samples repositories) we provide a ``before_restart`` hook that will generate correct ``aws.json``.
+Please note that we don't define ``endpoint`` here, so AWS will pick the correct one based on the region.
+Place this file as ``deploy/before_restart.rb`` in your repository root:
+
+.. code-block:: ruby
+
+  require 'json'
+
+  Chef::Log.info('Generating aws.json configuration file')
+
+  aws_config = {
+    :includes => ['_aws'],
+    :services => {
+      :default_settings => {
+        :params => {
+          :key => node[:dynamodb][:aws_key],
+          :secret => node[:dynamodb][:aws_secret],
+          :region => node[:dynamodb][:region]
+        }
+      }
+    }
+  }
+
+  aws_file_path = ::File.join(release_path, 'aws.json')
+  file aws_file_path do
+    content aws_config.to_json
+    owner new_resource.user
+    group new_resource.group
+    mode 00440
+  end
+
+The script above reads the required configuration variables from the Chef node attributes and saves them as JSON file in the format expected by AWS SDKs.
+
+While launching deployment, we can override node attributes by passing `custom JSON <http://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-json.html>`_. We will take
+advantage of this option to set node attributes that the hook above expects.
+The special syntax with ``>`` sign is used here to prevent YAML parser from interpreting colons in the JSON definition.
+
+.. code-block:: bash
+
+  after_success:
+    - >
+      DEPLOY_JSON=$(printf '{"dynamodb": {"aws_key": "%s", "aws_secret": "%s", "region": "%s"}}' $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY $AWS_REAL_REGION)
+    - virtualenv ve && source ve/bin/activate && pip install awscli
+    - aws opsworks create-deployment --stack-id $AWS_STACK --app-id $AWS_APP_ID --command '{"Name":"deploy"}' --custom-json "$DEPLOY_JSON"
+
+Then proceed to configure your application as is outlined in per-language guides below.
+
+Using DynamoDB with PHP
+^^^^^^^^^^^^^^^^^^^^^^^
+
+To access DynamoDB, you need some client library that is able to speak AWS API. We will use the official `AWS PHP SDK <http://aws.amazon.com/sdkforphp/>`_ in the sample below.
+We will install the library using `Composer <https://getcomposer.org/>`_. Create ``composer.json`` in the root of your repository with the following contents:
+
+.. code-block:: json
+
+  {
+    "require": {
+      "aws/aws-sdk-php": "2.*"
+    }
+  }
+
+Composer will be already available on Shippable minion. Install the dependencies during ``before_script`` step as follows:
+
+.. code-block:: bash
+
+  before_script: 
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - composer install
+
+Then, we need to perform the same step on the target OpsWorks instance. Add the following deploy hook as ``deploy/before_symlink.rb``:
+
+.. code-block:: ruby
+
+  run "cd #{release_path} && ([ -f tmp/composer.phar ] || curl -sS https://getcomposer.org/installer | php -- --install-dir=tmp)"
+  run "cd #{release_path} && php tmp/composer.phar --no-dev install"
+
+We can then proceed to consume ``aws.json`` file we created in the previous section to instantiate AWS SDK client:
+
+.. code-block:: php
+
+  require('vendor/autoload.php');
+  use Aws\Common\Aws;
+
+  $aws = Aws::factory('aws.json');
+  $client = $aws->get('DynamoDb');
+
+This client can be then used to interact with DynamoDB, for example as follows:
+
+.. code-block:: php
+
+  $client->createTable(array(
+    'TableName' => self::TABLE_NAME,
+    'AttributeDefinitions' => array(
+      array(
+        'AttributeName' => 'id',
+        'AttributeType' => 'N'
+      )
+    ),
+    'KeySchema' => array(
+      array(
+        'AttributeName' => 'id',
+        'KeyType' => 'HASH'
+      )
+    ),
+    'ProvisionedThroughput' => array(
+      'ReadCapacityUnits' => 1,
+      'WriteCapacityUnits' => 1
+    )
+  ));
+
+Refer to the `Amazon DB client documentation <http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html>`_
+and `the full sample <https://github.com/Shippable/sample-php-dynamo-opsworks>`_ on our GitHub account for details.
+
 ----------
 
 **Pull Request**
