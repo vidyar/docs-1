@@ -1515,8 +1515,83 @@ This client can be then used to interact with DynamoDB, for example as follows:
     )
   ));
 
-Refer to the `Amazon DB client documentation <http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html>`_
+Refer to the `DynamoDB client documentation <http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html>`_
 and `the full sample <https://github.com/Shippable/sample-php-dynamo-opsworks>`_ on our GitHub account for details.
+
+Using DynamoDB with Node.js
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To access DynamoDB, you need some client library that is able to speak AWS API. We will use the official `AWS Node.js SDK <http://aws.amazon.com/sdkfornodejs/>`_ in the sample below.
+We will install the library using ``npm`` (saving the dependency to ``package.json``):
+
+.. code-block:: bash
+
+  npm install --save aws-sdk
+
+The packages will be then installed automatically (by invoking ``npm install``) both by Shippable and OpsWorks deployment recipe.
+
+Configuration file (that we called ``aws.json``) has slightly different structure for Node.js SDK. For Shippable build environment it
+will look as follows:
+
+.. code-block:: json
+
+  {
+    "accessKeyId": "fake_key",
+    "secretAccessKey": "fake_secret",
+    "region": "us-west-2",
+    "endpoint": "http://localhost:8000"
+  }
+
+We also need to slightly change the Chef deployment hook for the modified JSON structure:
+
+.. code-block:: ruby
+
+  require 'json'
+
+  return unless node[:dynamodb]
+  Chef::Log.info('Generating aws.json configuration file')
+
+  aws_config = {
+    :accessKeyId => node[:dynamodb][:aws_key],
+    :secretAccessKey => node[:dynamodb][:aws_secret],
+    :region => node[:dynamodb][:region]
+  }
+
+  aws_file_path = ::File.join(release_path, 'aws.json')
+  file aws_file_path do
+    content aws_config.to_json
+    owner new_resource.user
+    group new_resource.group
+    mode 00440
+  end
+
+DynamoDB client can be then constructed with the following snippet:
+
+.. code-block:: javascript
+
+  var AWS = require('aws-sdk');
+  AWS.config.loadFromPath('./aws.json');
+  var db = new AWS.DynamoDB();
+
+Next, the client can be used to interact with DynamoDB, for example as follows:
+
+.. code-block:: javascript
+
+  var params = {
+    TableName: TABLE_NAME,
+    Item: {
+      id: {
+        N: '1'
+      },
+      score: {
+        N: String(score)
+      }
+    }
+  };
+  db.putItem(params, callback);
+
+Refer to the `DynamoDB client documentation <http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html>`_
+and `the full sample <https://github.com/Shippable/sample-nodejs-dynamo-opsworks>`_ on our GitHub account for details.
 
 ----------
 
