@@ -1,5 +1,5 @@
-:title: neo4j-buildsample
-:description: A brief description about neo4j-buildsample
+:title: Neo4j samples
+:description: A brief description about neo4j-sample
 :keywords: neo4j, Language,version number, Install, services
 
 .. _neo4j:

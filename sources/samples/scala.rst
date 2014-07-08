@@ -1,10 +1,10 @@
-:title: Scala_buildsample
-:description: A brief description about scala-buildsample
+:title: Scala sample
+:description: A brief description about scala-sample
 :keywords: Scala, Language, version number, Notification alerts
 
 .. _scala:
 
-scala-samples
+scala-sample
 =============
  
 This sample will help you get started with Shippable. Testing framework used here is

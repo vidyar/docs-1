@@ -31,7 +31,13 @@ State Management
 
 Shippable maintains the state of each minion between builds. We believe that build speed is very important, so reinstalling everything and cloning git repos every single time just doesn't make sense. 
 
-(Coming soon) However, we also understand the value of testing on pristine environments. Hence we have a commit message tag [reset minion] which will reset your minion to its base setting and allow your test to run on a prisitne minion.
+However, shippable allows you to clear files and folders between builds using **reset_minion** tag. Configure your yml file as shown below:
+
+.. code-block:: bash
+ 
+   reset_minion: true
+
+Before the build, we check for the tag **reset_minion** and if it exists, we will delete all the files and folders from the previous builds. You can also achieve this by adding **[reset_minion]** in the commit message.
 
 
 Common Tools
@@ -566,6 +572,27 @@ RabbitMQ
     - rabbitmq
 
 Sample python code using `RabbitMQ <https://github.com/Shippable/sample_python_rabbitmq>`_ .
+
+
+Selenium
+.........
+
+Selenium is not started on boot. You will have to enable it using **services** tag and start xvfb (X Virtual Framebuffer) on display port 99.0, so that all your test suites will run on the server without a display. Configure your yml file as shown below to start selenium on firefox.
+
+.. code-block:: bash
+   
+     addons:
+        firefox: "23.0"
+     services:
+       - selenium
+     before_script:
+       - "export DISPLAY=:99.0"
+       - "/etc/init.d/xvfb start"
+     after_script:
+       - "/etc/init.d/xvfb stop"
+
+     
+Sample javascript code using `Selenium <https://github.com/Shippable/sample_node_selenium>`_ .
 
 
 --------

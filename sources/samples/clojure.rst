@@ -1,11 +1,11 @@
-:title: Clojure Sample
+:title: Clojure Samples
 :description: A brief description about sample_clojure
 :keywords: Clojure, Leiningen, Language, version number, Notification alerts
 
 .. _clojure:
 
 clojure-samples
-=============
+=================
  
 This sample will help you get started with Shippable. The testing framework used here is
 `Clojure.test <http://richhickey.github.io/clojure/clojure.test-api.html>`_ .

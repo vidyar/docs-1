@@ -1,4 +1,4 @@
-:title: Go Sample
+:title: Go Samples
 :description: A brief description about sample_go
 :keywords: Go, Golang, Language, version number, Notification alerts
 

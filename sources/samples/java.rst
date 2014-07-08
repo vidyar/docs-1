@@ -1,5 +1,5 @@
-:titles: Java buildsample
-:description: A brief description about java buildsample
+:titles: Java samples
+:description: A brief description about java_sample
 :keywords: Java, Language,jdk,script,Notification alerts
 
 
@@ -46,11 +46,11 @@ This is the complete yml file for sample_java project:
            - openjdk6
            - oraclejdk8
 
-       after_success:
-          - mvn clean cobertura:cobertura
-          - mvn test
+        after_success:
+           - mvn clean cobertura:cobertura
+           - mvn test
       
-       notifications:
+        notifications:
           email:
               recipients:
          	 - exampleone@org.com

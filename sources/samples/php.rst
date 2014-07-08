@@ -1,5 +1,5 @@
-:titles: PHP-buildsample
-:description: A brief description about php buildsample
+:titles: php samples
+:description: A brief description about php sample
 :keywords: php, Language,phpunit,script,Notification alerts
 
 

@@ -1,5 +1,5 @@
-:title: Python-buildsample
-:description: A brief description about Python-buildsample
+:title: Python samples
+:description: A brief description about Python-sample
 :keywords: Python, Language,version number, Install, Notification alerts
 
 .. _python :
