@@ -236,6 +236,18 @@ Once the build is finished, shippable will automatically zips up all the files a
 .. note::  This URL is valid only for 20 minutes from the time build finishes off execution.
 
 
+
+You can also configure your yml to trigger any other project's build using an api access token. For example, inorder to trigger build for project B, add the following line in any script section of project A's shippable.yml. 
+
+
+.. code-block:: python
+
+    curl -XPOST https://api.shippable.com/projects/<project_B_project_id>/build?token=$SHIPPABLE_API_TOKEN
+
+
+Replace the <project_B_project_id> of the above line with project id provided in the console log of project B. $SHIPPABLE_API_TOKEN is unique to each build and we need this token to check for the authentication. If it is valid, then we will trigger the build for project B.    
+ 
+  
 common environment variables
 .............................
 
@@ -272,6 +284,9 @@ You will have the following environment variables available to you for every bui
 - SHIPPABLE_ARTIFACTS_URL : URL to download artifacts
 
 - ARTIFACTS_UPLOAD_SUCCESSFUL : Value of this variable will be true if archive is successful else this will be set as false.
+
+- SHIPPABLE_API_TOKEN : Api access token for current build
+ 
 
 user specified environment variables
 .....................................
