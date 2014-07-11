@@ -1635,6 +1635,215 @@ Next, the client can be used to interact with DynamoDB, for example as follows:
 Refer to the `DynamoDB client documentation <http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html>`_
 and `the full sample <https://github.com/Shippable/sample-nodejs-dynamo-opsworks>`_ on our GitHub account for details.
 
+Continuous deployment to Google App Engine
+..........................................
+
+Google App Engine supports Python, PHP, Go and Java applications. Support for PHP is in preview, while for Go is marked as experimental. As runtime present on App Engine is a very specific one, with many Google-specific services and some blacklisted modules, it is recommended to use Google App Engine SDK both during the development and testing of your application.
+
+Installation of the GAE SDK
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SDKs for all the runtimes are available as ZIP downloads on `the Google App Engine page <https://developers.google.com/appengine/downloads>`_.
+The SDK contains tools to interact with the GAE API: for instance, it allows deployment of the application. 
+Moreover, it comes with Development Server that lets you test the application on your local machine (and on Shippable minion), simulating
+the GAE environment. Stubs for the GAE services are also provided to make unit testing easier.
+
+Download the SDK for your platform from the link above to begin working on the application.
+To make the SDK available for your Shippable build (here, for a Python project), add the following ``before_install`` step:
+
+.. code-block:: bash
+
+  env:
+    global:
+      - GAE_DIR=/tmp/gae
+
+  before_install:
+    - >
+      test -e $GAE_DIR || 
+      (mkdir -p $GAE_DIR && 
+       wget https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.6.zip -q -O /tmp/gae.zip &&
+       unzip /tmp/gae.zip -d $GAE_DIR)
+
+It will first test if the tools are already available and download & unzip them if there are not.
+
+Using Datastore from Python
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Google App Engine offers a number of storage services. One of them is NDB Datastore that is instantly available to your application, once
+you deploy it to the platform.
+To interact with Datastore, you need to use libraries bundled with the SDK. Below is a simple example of code that stores and retrieves data from 
+Datastore. More information can be found in `the GAE documentation <https://developers.google.com/appengine/docs/python/ndb/>`_:
+
+.. code-block:: python
+
+  from google.appengine.ext import ndb
+
+  class Score(ndb.Model):
+    score = ndb.IntegerProperty()
+    timestamp = ndb.DateTimeProperty(auto_now_add=True)
+
+  class Storage():
+    def score_key(self):
+      return ndb.Key('Score', 'Store')
+
+    def populate(self):
+      new_score = Score(parent=self.score_key())
+      new_score.score = random.randint(1, 1234)
+      new_score.put()
+
+    def get_score(self):
+      score_query = Score.query(ancestor=self.score_key()).order(-Score.timestamp)
+      return score_query.get().score
+
+No connection setup is required, as the GAE will handle providing the service to your application automatically.
+Thanks to the existence of the Development Server, we can test this code both with a unit test and a integration test.
+
+Unit test that stubs Datastore calls looks as follows:
+
+.. code-block:: python
+
+  import unittest
+  from google.appengine.ext import db
+  from google.appengine.ext import testbed
+  from helloworld import Storage
+
+  class HelloTestCase(unittest.TestCase):
+    def setUp(self):
+      self.testbed = testbed.Testbed()
+      self.testbed.activate()
+      self.testbed.init_datastore_v3_stub()
+
+    def tearDown(self):
+      self.testbed.deactivate()
+
+    def test(self):
+      storage = Storage()
+      storage.populate()
+      score = storage.get_score()
+      self.assertLess(score, 1234)
+
+  if __name__ == "__main__":
+    unittest.main()
+
+The only GAE-specific code is enclosed in ``setUp`` and ``tearDown`` methods and it initializes and then closes the stubbing framework.
+
+We can also write an integration test, in which the code connects to a mock database included in the SDK:
+
+.. code-block:: python
+
+  from webtest import TestApp
+  from helloworld import application
+
+  app = TestApp(application)
+
+  def test_index():
+    response = app.get('/')
+    assert 'Hello, World' in response
+
+For the above to work, we need to use a dedicated test runner that will run the test in the Development Server environment.
+For example, to use `NoseGAE <https://github.com/Trii/NoseGAE>`_,  we need to install the following modules (preferably listed in ``requirements.txt``
+file):
+
+.. code-block:: bash
+
+  nose
+  coverage
+  NoseGAE
+  WebTest
+
+We then install them on Shippable minion, using the following ``install`` step:
+
+.. code-block:: bash
+
+  install:
+    - pip install -r requirements.txt
+
+Finally, we can launch the both tests by invoking the test runner with extra arguments during the ``script`` step:
+
+.. code-block:: bash
+
+  script:
+    - >
+      nosetests test.py func_test.py 
+      --with-gae --without-sandbox --gae-lib-root=$GAE_DIR/google_appengine
+      --with-xunit --xunit-file=shippable/testresults/test.xml
+      --with-coverage --cover-xml --cover-xml-file=shippable/codecoverage/coverage.xml
+
+Please note the second line of the command, where we turn on the GAE plugin and pass the path of the SDK installation on the minion.
+The ``--without-sandbox`` option was required to have the tests working successfully. This NoseGAE option tries to simulate the GAE environment,
+where some functions are prohibited. Apparently, it doesn't work correctly for Datastore services.
+
+The other parameters are here to generate JUnit XML report in the location expected by Shippable, as well as the coverage report.
+
+Deployment of a Python application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After you create the application using the GAE Admin Console, you can deploy it using the ``appcfg`` tool from the SDK.
+First, create ``app.yaml`` file, including your application name in the first line:
+
+.. code-block:: bash
+
+  application: sample-python-datastore
+  version: 1
+  runtime: python27
+  api_version: 1
+  threadsafe: 1
+
+  handlers:
+  - url: /.*
+    script: helloworld.application
+
+Then, we need to authenticate against the GAE API. We have two options here that are suitable for non-interactive build environment:
+password-based authentication and OAuth2.
+
+To setup password-based authentication, include two environment variables in your ``shippable.yml``:
+``EMAIL`` (that stores the name of your Google account) and ``GAE_PASSWORD``.
+It is recommended to store the password in encrypted form, using :ref:`secure_env_variables`:
+
+.. code-block:: bash
+
+  env:
+    global:
+      - GAE_DIR=/tmp/gae
+      - EMAIL=shippable@gmail.com
+      - secure: lffPR8giDdKinq1LfjTabgM8Lufb3sdweFWJcoU8o/KIvwTg9NOxEw3oG5pw4+pI0c3q/k0JkBv7QgDGkoiRHwZkebWYNcHwyo2NFaa/cpwpNjv3pMZsXpMiw+duSvfjA/XmFAynmW8/ft2YaAzpB1Mbn5p2k7ID2qCMv/YmFgIu605VK/WUnYPEdxMD2vkifVSNAIH42GOR+2ht4nKj85Wsu9OGgMBJ5XAqVcQoWX+Ui9yZvtaf3WKzowg+MC4PQ0qGLH/l6WHkY8bBCduMz65JjZIss2s972L4P8Hwpk+gDdVtRE82hKH7GuEYdNKhKjbthZmn5AF4thI72N5TjQ==
+
+Next, you can invoke ``appcfg update`` command to deploy new version of your application with the following ``after_success`` step:
+
+.. code-block:: bash
+
+  after_success:
+    - echo "$GAE_PASSWORD" | $GAE_DIR/google_appengine/appcfg.py -e "$EMAIL" --passin update .
+
+.. note::
+
+  If you use two-factor authentication for your Google account, you need to generate application-specific password for the GAE to use.
+  Refer to `this documentation <https://support.google.com/accounts/answer/185833?hl=en>`_ for the details.
+
+Alternatively, you can use OAuth2 protocol to authenticate against the GAE API. To set it up, first run this command in the repository root on your
+local workstation:
+
+.. code-block:: bash
+
+  $PATH_TO_GAE_SDK/appcfg.py --oauth2 list_versions .
+
+It will open a page in your browser where you can authorize the GAE to access your Google account.
+As the result, ``.appcfg_oauth2_tokens`` file will be created in your home directory, containing the access token.
+You can then encrypt it as Shippable secure variable and use in your ``after_success`` step as follows:
+
+.. code-block:: bash
+
+  after_success:
+    - $GAE_DIR/google_appengine/appcfg.py --oauth2_access_token=$GAE_TOKEN update .
+
+.. note::
+
+  Recently, Google opened a preview of git-based deployment workflow, in which you push the code to a git repository, triggering the build.
+  As this functionality is not yet in its final form, it is not discussed here. Please refer to
+  `the GAE documentation <https://developers.google.com/cloud/devtools/repo/push-to-deploy>`_ to track its progress.
+
+Full sample of Python+Datastore application can be found on `our Github account <https://github.com/Shippable/sample-python-datastore-appengine>`_.
+
 ----------
 
 **Pull Request**
