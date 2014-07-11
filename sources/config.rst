@@ -874,6 +874,71 @@ Then, in your application you need to retrieve and parse the url. For example, i
 Please refer to `Heroku docs <https://devcenter.heroku.com/articles/cleardb>`_ for details on how to fetch and parse the url in different programming languages.
 Full sample of deploying PHP+MySQL application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-php-mysql-heroku>`_.
 
+Using Heroku Postgres with Ruby on Rails
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Configuring Ruby on Rails application to work with Postgres on Heroku is really simple, thanks to Heroku doing all heavy-lifting related to setting up the connection.
+When Heroku detects that the application you deploy is using Ruby on Rails, it will overwrite ``config/database.yml`` file with correct production configuration.
+
+On Shippable, Postgres in version 9.3 is started by default during minion boot. To use different version of Postgres, please refer to the
+dedicated section on PostgreSQL configuration.
+
+All we need to do is to create a database in the ``before_script`` step:
+
+.. code-block:: bash
+
+  before_script: 
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - psql -c 'create database "sample-rubyonrails-postgres-heroku_test";' -U postgres
+
+And then include its name in ``config/database.yml`` file that is stored in the repository (username and password do not need to be configured):
+
+.. code-block:: bash
+
+  test:
+    <<: *default
+  database: sample-rubyonrails-postgres-heroku_test
+
+The last thing to do is to add ``pg`` to your ``Gemfile``. Note that it will be done automatically if you create your rails app with ``--database=postgresql`` option.
+See `our sample Ruby on Rails Heroku application <https://github.com/Shippable/sample-rubyonrails-postgres-heroku>`_ for details.
+
+Test and coverage reports for Ruby on Rails
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In Rails 4 and Ruby 1.9+, the built-in test framework is based on Minitest.
+To enable Shippable-compatible reporting of test and coverage reports, we need to add the following gems to the ``Gemfile``:
+
+.. code-block:: bash
+
+  gem 'simplecov'
+  gem 'simplecov-csv'
+  gem 'minitest-reporters'
+
+Then, add the following snippet at the beginning of the ``test/test_helper.rb`` file:
+
+.. code-block:: bash
+
+  require 'minitest/reporters'
+  require 'simplecov'
+  require 'simplecov-csv'
+  SimpleCov.formatter = SimpleCov::Formatter::CSVFormatter
+  SimpleCov.coverage_dir(ENV["COVERAGE_REPORTS"])
+  SimpleCov.start
+
+  MiniTest::Reporters.use! [MiniTest::Reporters::DefaultReporter.new,
+                            MiniTest::Reporters::JUnitReporter.new(ENV["CI_REPORTS"])]
+
+Finally, we need to add environment variables with the locations for the reporter results:
+
+.. code-block:: bash
+
+  env:
+    global:
+      - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
+
+See `our sample Ruby on Rails Heroku application <https://github.com/Shippable/sample-rubyonrails-postgres-heroku>`_ for details.
+
 General information on using MongoDB
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
