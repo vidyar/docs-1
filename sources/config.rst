@@ -1840,6 +1840,8 @@ where some functions are prohibited. Apparently, it doesn't work correctly for D
 
 The other parameters are here to generate JUnit XML report in the location expected by Shippable, as well as the coverage report.
 
+.. _gae_python_deployment:
+
 Deployment of a Python application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -1908,6 +1910,189 @@ You can then encrypt it as Shippable secure variable and use in your ``after_suc
   `the GAE documentation <https://developers.google.com/cloud/devtools/repo/push-to-deploy>`_ to track its progress.
 
 Full sample of Python+Datastore application can be found on `our Github account <https://github.com/Shippable/sample-python-datastore-appengine>`_.
+
+Using Datastore from Go
+^^^^^^^^^^^^^^^^^^^^^^^
+
+To interact with Datastore from Go, you need to use libraries bundled with the SDK. Below is a simple example of code that stores and retrieves data from 
+Datastore. More information can be found in `the GAE documentation <https://developers.google.com/appengine/docs/go/datastore/>`_:
+
+.. code-block:: go
+
+  import (
+    "math/rand"
+    "time"
+
+    "appengine"
+    "appengine/datastore"
+  )
+
+  type Score struct {
+    Score int
+    Date  time.Time
+  }
+
+  func scoreKey(c appengine.Context) *datastore.Key {
+    return datastore.NewKey(c, "Scores", "default_scoreboard", 0, nil)
+  }
+
+  func populate(c appengine.Context) error {
+    score := Score{
+      Score: rand.Intn(1234),
+      Date:  time.Now(),
+    }
+    key := datastore.NewIncompleteKey(c, "Score", scoreKey(c))
+    _, err := datastore.Put(c, key, &score)
+    return err
+  }
+
+  func getScore(c appengine.Context) (int, error) {
+    query := datastore.NewQuery("Score").Ancestor(scoreKey(c)).Order("-Date").Limit(1)
+    for t := query.Run(c); ; {
+      var score Score
+      if _, err := t.Next(&score); err != nil {
+        return -1, err
+      }
+
+      return score.Score, nil
+    }
+  }
+
+No connection setup is required, as the GAE will handle providing the service to your application automatically.
+
+Unit test that stubs Datastore calls using `aetest package <https://godoc.org/code.google.com/p/appengine-go/appengine/aetest>`_ looks as follows:
+
+.. code-block:: go
+
+  import (
+    "testing"
+
+    "appengine/aetest"
+  )
+
+  func TestStorage(t *testing.T) {
+    c, err := aetest.NewContext(nil)
+    if err != nil {
+      t.Fatal(err)
+    }
+    defer c.Close()
+
+    if err := populate(c); err != nil {
+      t.Fatal(err)
+    }
+
+    score, err := getScore(c)
+    if err != nil {
+      t.Fatal(err)
+    }
+    if score < 0 || score > 1023 {
+      t.Errorf("Score outside of expected range: %d", score)
+    }
+  }
+
+.. note::
+
+  Full integration testing of GAE Go applications with automatic mocking of the services is not yet available,
+  but work on it is `being performed by Google team <https://groups.google.com/d/msg/google-appengine-go/9JZDLUMRkRE/B_UOS44UQjkJ>`_.
+
+For the above to work, we need to run the tests via ``goapp`` command that is supplied as part of the GAE Go SDK.
+Its installation and setup is described in the section below.
+
+Deployment of a Go application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Go packages are resolved relative to ``GOPATH`` variable that needs to be set both in your development environment and on Shippable minion.
+`The common practice <http://code.google.com/p/go-wiki/wiki/GithubCodeLayout>`_ when structuring an application that is hosted on GitHub
+is to name your packages according to the following pattern:
+
+.. code-block:: bash
+
+  github.com/<GitHub username>/<repository name>/<package name, probably nested>
+
+For example, the package that houses the main HTTP handler in `our Go sample <https://github.com/Shippable/sample-go-datastore-appengine>`_
+is called ``github.com/Shippable/sample-go-datastore-appengine/hello``. It follows that in your development environment the contents of
+the sample repository would be stored in the ``$GOPATH/src/github.com/Shippable/sample-go-datastore-appengine`` path.
+
+Adhering to this convention ensures that the testing tools (which are package-aware) will work correctly and that your package can be
+consumed by other packages.
+
+Google App Engine slightly diverges from this structure, expecting to find the main entry point for the application in the root of your
+repository.
+In other words, while ``goapp test`` command lives in a package-oriented world, ``goapp serve`` and ``goapp deploy`` are tied to the
+current directory.
+Hence, it is common to create a dispatcher in the root of the repository that then calls the individual packages:
+
+.. code-block:: go
+
+  package routes
+
+  import (
+    "net/http"
+
+    "github.com/Shippable/sample-go-datastore-appengine/hello"
+  )
+
+  func init() {
+    http.HandleFunc("/", hello.Handler)
+  }
+
+This way, we can test the individual packages, while ensuring that the application will deploy properly.
+The following snippet from ``shippable.yml`` downloads the GAE Go SDK, installs the packages required for generation of test and
+coverage reports and then links the repository to the correct place in Go workspace (root of which is identified by ``GOPATH``).
+Of note are also the environment variables used to authenticate against the GAE API.
+Please refer to :ref:`gae_python_deployment` for details on different methods of authentication.
+
+.. code-block:: yaml
+
+  env:
+    global:
+      - GAE_DIR=/tmp/go_appengine
+      - EMAIL=shippable@gmail.com
+      - secure: lffPR8giDdKinq1LfjTabgM8Lufb3sdweFWJcoU8o/KIvwTg9NOxEw3oG5pw4+pI0c3q/k0JkBv7QgDGkoiRHwZkebWYNcHwyo2NFaa/cpwpNjv3pMZsXpMiw+duSvfjA/XmFAynmW8/ft2YaAzpB1Mbn5p2k7ID2qCMv/YmFgIu605VK/WUnYPEdxMD2vkifVSNAIH42GOR+2ht4nKj85Wsu9OGgMBJ5XAqVcQoWX+Ui9yZvtaf3WKzowg+MC4PQ0qGLH/l6WHkY8bBCduMz65JjZIss2s972L4P8Hwpk+gDdVtRE82hKH7GuEYdNKhKjbthZmn5AF4thI72N5TjQ==
+
+  before_install:
+    - >
+      test -e $GAE_DIR || 
+      (mkdir -p $GAE_DIR && 
+       wget https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.6.zip -q -O /tmp/gae.zip &&
+       unzip /tmp/gae.zip -d /tmp)
+    - go get github.com/jstemmer/go-junit-report
+    - go get github.com/t-yuki/gocover-cobertura
+    - mkdir -p $GOPATH/src/github.com/Shippable
+    - ln -sfn $PWD $GOPATH/src/github.com/Shippable/sample-go-datastore-appengine
+
+Finally, we can launch the test by invoking the test runner with extra arguments during the ``script`` step:
+
+.. code-block:: yaml
+
+  script:
+    - >
+      $GAE_DIR/goapp test -v -coverprofile=shippable/codecoverage/coverage.out github.com/Shippable/sample-go-datastore-appengine/hello |
+        $GOPATH/bin/go-junit-report > shippable/testresults/results.xml
+    - $GOPATH/bin/gocover-cobertura < shippable/codecoverage/coverage.out > shippable/codecoverage/coverage.xml
+
+Please note that we use ``goapp`` command from the GAE SDK instead of the standard ``go`` command.
+This is required in order to be able to use ``aetest`` package.
+
+Next, we need to create the application using the GAE console and create ``app.yml`` file with matching application name:
+
+.. code-block:: yaml
+
+  application: sample-go-datastore
+  version: 1
+  runtime: go
+  api_version: go1
+
+  handlers:
+  - url: /.*
+    script: _go_app
+
+Finally, we can deploy the application to Google App Engine in ``after_success`` step:
+
+.. code-block:: yaml
+
+  after_success:
+    - echo "$GAE_PASSWORD" | $GAE_DIR/appcfg.py -e "$EMAIL" --passin update .
 
 ----------
 
