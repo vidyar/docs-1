@@ -273,7 +273,7 @@ You will have the following environment variables available to you for every bui
 
 - MERB_ENV : test
 
-- PULL_REQUEST : Pull request id if the job is a pull request. If not, this will be set to 'none'
+- PULL_REQUEST : Pull request id if the job is a pull request. If not, this will be set to 'None'
 
 - RACK_ENV : test
 
