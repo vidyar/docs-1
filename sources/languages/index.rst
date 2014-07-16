@@ -12,6 +12,8 @@ We support the following languages
 .. toctree::
    :maxdepth: 1
 
+   clojure
+   go
    java
    nodejs
    python
