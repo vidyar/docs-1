@@ -13,9 +13,11 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `PHP Sample <https://github.com/Shippable/sample_php>`_
 
+`PHP Sample with MongoDB <https://github.com/Shippable/sample_php_mongo>`_
+
 `PHP Sample with MySQL <https://github.com/Shippable/sample_php_mysql>`_
 
-`PHP Sample with MongoDB <https://github.com/Shippable/sample_php_mongo>`_
+`PHP Sample with Redis <https://github.com/Shippable/sample_php_redis>`_
 
 We need the yml file to analyze the project details. So add the shippable.yml file to the root of your repo by specifying:
 
