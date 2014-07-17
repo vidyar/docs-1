@@ -13,6 +13,8 @@ These samples will help you get started with Shippable. Test and Coverage tools 
 
 `PHP Sample <https://github.com/Shippable/sample_php>`_
 
+`PHP Sample with Memcached <https://github.com/Shippable/sample_php_memcached>`_
+
 `PHP Sample with MongoDB <https://github.com/Shippable/sample_php_mongo>`_
 
 `PHP Sample with MySQL <https://github.com/Shippable/sample_php_mysql>`_
