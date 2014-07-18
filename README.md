@@ -3,8 +3,9 @@ Shippable Documentation
 
 Overview
 --------
+Shippable is a docker based continuous integration and deployment platform. This repository contains the documentation, which is open source to allow anyone to make quick changes if needed.
 
-The source for Shippable documentation is here under ``sources/`` in the
+The source is under ``sources/`` in the
 form of .rst files. These files use
 [reStructuredText](http://docutils.sourceforge.net/rst.html)
 formatting with [Sphinx](http://sphinx-doc.org/) extensions for
