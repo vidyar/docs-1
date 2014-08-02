@@ -838,14 +838,15 @@ instructs you to use the following syntax:
 
 .. code-block:: bash
 
-  - git push heroku yourbranch:master
+  - git push -f heroku yourbranch:master
 
-However, Shippable sets its local repository in such a way that the current branch is always seen as ``master``, no matter how it is called in your remote repository. For this reason, make sure
-to always use only remote branch name when deploying to Heroku:
+During the build, you can access the name of the branch as ``BRANCH`` variable, so the invocation would look as follows.
+We are forcing push here, as it can happen that builds (and pushes) can alternate between the branches, so plain push
+would fail due to divergent histories.
 
 .. code-block:: bash
 
-  - git push heroku master
+  - git push -f heroku $BRANCH:master
 
 Using ClearDB MySQL database
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1084,7 +1085,7 @@ You can also execute Rake tasks in your ``after_success`` step using Heroku tool
   after_success:
     - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
     - git remote -v | grep ^heroku || heroku git:remote --app $APP_NAME
-    - git push -f heroku master
+    - git push -f heroku $BRANCH:master
     - heroku run rake db:migrate
 
 Full sample of deploying Sinatra+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-ruby-mongo-heroku>`_.
@@ -2129,16 +2130,11 @@ After this, deployment is as simple, as pushing to the OpenShift repository in `
 .. code-block:: yaml
 
   after_success:
-    - git push -f openshift master
+    - git push -f openshift $BRANCH:master
 
 .. note::
 
-  Normally, when pushing from branch different than ``master``, one would use syntax like:
-  
-  ``git push openshift my-branch:master``
-
-  However, as on Shippable sources are always checked on ``master`` local branch, we don't need to include the branch name
-  when pushing.
+  Please see :ref:`heroku_other_branches` for explanation of why ``BRANCH`` variable is used above.
 
 Testing with Arquillian
 ^^^^^^^^^^^^^^^^^^^^^^^
