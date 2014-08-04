@@ -1912,6 +1912,280 @@ You can then encrypt it as Shippable secure variable and use in your ``after_suc
 
 Full sample of Python+Datastore application can be found on `our Github account <https://github.com/Shippable/sample-python-datastore-appengine>`_.
 
+Using Cloud SQL from Python
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Another storage service offered by Google App Engine is Cloud SQL. It is essentially a managed MySQL database and many applications that already
+use MySQL (or other relational database) can be ported to Google App Engine with relatively small effort.
+For this reason, the examples below will show how to adapt an existing Django application to use Cloud SQL.
+
+No changes need to be done to the application code. The code that interacts with the database uses only standard Django ORM abstractions:
+
+.. code-block:: python
+
+  from django.db import models
+
+  class Score(models.Model):
+    score = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+  class Storage():
+    def populate(self):
+      new_score = Score()
+      new_score.score = random.randint(1, 1234)
+      new_score.save()
+
+    def get_score(self):
+      score_query = Score.objects.all().order_by('-timestamp')[:1]
+      return score_query[0].score
+
+Connection settings in ``settings.py`` are different for each environment.
+Details of this configuration are explained in detail below:
+
+.. code-block:: python
+
+  APP_ENGINE = os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine')
+
+  if APP_ENGINE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/fifth-composite-657:test',
+            'NAME': 'django_test',
+            'USER': 'root',
+        }
+    }
+  elif os.getenv('SETTINGS_MODE') == 'prod':
+      # Running in development, but want to access the Google Cloud SQL instance
+      # in production.
+      DATABASES = {
+          'default': {
+              'ENGINE': 'google.appengine.ext.django.backends.rdbms',
+              'INSTANCE': 'fifth-composite-657:test',
+              'NAME': 'django_test',
+              'USER': 'root',
+          }
+      }
+  else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'test',
+            'USER': 'shippable',
+        }
+    }
+
+Here, the ``APP_ENGINE`` variable is used to determine whether the application is running on the App Engine.
+See `GAE documentation <https://developers.google.com/appengine/docs/python/cloud-sql/django#development-settings>`_
+for details. If so, we use standard MySQL Django engine to communicate with the database. The ``HOST`` variable
+identifies the Cloud SQL instance. Its value should always have the ``/cloudsql/<application_id>:<instance_id>``
+format.
+
+The ``root`` user is configured by Cloud SQL, while the database needs to be created manually.
+At the time of writing, (somewhat surprisingly) this was not possible from the new Google Cloud Developers Console.
+To create a database, one needs to go to `old Google APIs console <https://code.google.com/apis/console>`_, choose
+the correct project and then switch to "Google Cloud SQL" by clicking the link in the sidebar.  
+On the right, the "SQL Prompt" tab should be visible that allows to execute DDL commands
+(like ``create database django_test;``).
+
+The second ``if`` branch in the configuration above is for connecting to your Cloud SQL instance via HTTP API.
+This is particularly useful for executing management commands against the database, e.g. schema migrations.
+The ``ENGINE`` here uses module provided by Google App Engine SDK for Python.
+SDKs for all the runtimes are available as ZIP downloads on `the Google App Engine page <https://developers.google.com/appengine/downloads>`_.
+
+Instead of ``HOST`` variable, ``INSTANCE`` is passed here directly. The other options are the same as for the
+'production' configuration. Using this configuration, we can update schema on the Cloud SQL instance
+(or initialize it just after database creation), with the following commands:
+
+.. code-block:: bash
+
+  export PYTHONPATH=$PYTHONPATH:$GAE_DIR/google_appengine/lib/django-1.5:$GAE_DIR/google_appengine
+  SETTINGS_MODE='prod' python ./manage.py syncdb
+
+Here, we assume that ``GAE_DIR`` is the location where you unpacked the Google App Engine SDK.
+By setting ``SETTINGS_MODE`` environment variable we are triggering use of the second configuration.
+
+The third configuration is only used for testing and development purposes and it uses database installed
+locally. For simplicity, we use here ``test`` as database name and ``shippable`` as the user, so
+the settings on the developer workstation will mirror the ones found on Shippable minion.
+Of course, you can add another configuration section to keep settings for Shippable and development
+environment separate. We create the database on the Shippable minion in the ``before_script`` step:
+
+.. code-block:: yaml
+
+  before_script: 
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - mysql -e 'create database test;'
+
+Finally, we need to declare dependencies on the libraries that we will use for connecting to the
+database and testing the storage-related classes. In the ``requirements.txt`` file, we add the 
+following modules:
+
+.. code-block:: bash
+
+  coverage
+  Django==1.5
+  django-nose
+  mock
+  mock-django
+  MySQL-python
+
+Then, during the build, we install these dependencies in ``install`` step:
+
+.. code-block:: yaml
+
+  install:
+    - pip install -r requirements.txt
+
+Google App Engine uses different mechanism for dependency management.
+To ensure any non-standard modules will be available to your application, you need
+to add ``libraries`` section in the ``app.yaml`` file that is read by GAE deployment tools:
+
+.. code-block:: yaml
+
+  libraries:
+  - name: django
+    version: "1.5"
+  - name: MySQLdb
+    version: "latest"
+
+See the section below on deploying Django applications for the details.
+
+Again, unit tests for the application using Cloud SQL do not contain any GAE-specific code:
+
+.. code-block:: python
+
+  import unittest
+  from mock import patch, Mock
+  from mock_django.query import QuerySetMock
+  from django_cloudsql.storage import Storage
+  from models import Score
+
+  class StorageTestCase(unittest.TestCase):
+    @patch('django_cloudsql.storage.Score')
+    def test(self, score_class_mock):
+      save_mock = Mock(return_value=None)
+      score_class_mock.return_value.save = save_mock
+
+      storage = Storage()
+      storage.populate()
+      self.assertEqual(save_mock.call_count, 1)
+
+      score = Score()
+      score.score = 1234
+      score_class_mock.objects.all.return_value.order_by.return_value = QuerySetMock(score_class_mock, score)
+      score = storage.get_score()
+      self.assertEqual(score, 1234)
+
+  if __name__ == "__main__":
+    unittest.main()
+
+Running tests within the Django application context can be performed using ``django-nose`` test runner.
+To prevent it from being loaded on the production environment, we can once again use the ``APP_ENGINE`` variable:
+
+.. code-block:: python
+
+  APP_ENGINE = os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine')
+
+  # Application definition
+
+  INSTALLED_APPS = (
+      'django.contrib.admin',
+      'django.contrib.auth',
+      'django.contrib.contenttypes',
+      'django.contrib.sessions',
+      'django.contrib.messages',
+      'django.contrib.staticfiles',
+      'django_cloudsql',
+  )
+
+  # Add nose test runner if not on the production
+  if not APP_ENGINE:
+    INSTALLED_APPS = INSTALLED_APPS + ('django_nose',)
+
+  TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+  NOSE_ARGS = [
+    '--with-xunit', '--xunit-file=shippable/testresults/test.xml',
+    '--with-coverage', '--cover-xml', '--cover-xml-file=shippable/codecoverage/coverage.xml',
+  ]
+
+As all the paths needed to generate test and coverage reports consumed by Shippable are passed in the ``settings.py``, we
+can then run the tests with the following ``script`` build step:
+
+.. code-block:: bash
+
+  script:
+    - python manage.py test
+
+See the sample of Django+Cloud SQL application on
+`our GitHub account <https://github.com/Shippable/sample-django-cloudsql-appengine>`_ for the details.
+
+Deployment of a Django application
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After you create the application using the GAE Admin Console, you can deploy it using the ``appcfg`` tool from the SDK.
+First, create ``app.yaml`` file, including your application name in the first line (please note the declaration of the
+dependencies):
+
+.. code-block:: bash
+
+  application: fifth-composite-657
+  version: 1
+  runtime: python27
+  api_version: 1
+  threadsafe: 1
+
+  libraries:
+  - name: django
+    version: "1.5"
+  - name: MySQLdb
+    version: "latest"
+
+  builtins:
+  - django_wsgi: on
+
+Then, we need to authenticate against the GAE API.
+Please refer to :ref:`gae_python_deployment` for details on different methods of authentication.
+Full example of ``shippable.yml`` file, including download of the SDK and deployment of the
+application in the ``after_success`` step would then look like follows:
+
+.. code-block:: bash
+
+  language: python 
+  python:
+    - 2.7
+
+  env:
+    global:
+      - GAE_DIR=/tmp/gae
+      - EMAIL=shippable@gmail.com
+      - secure: lffPR8giDdKinq1LfjTabgM8Lufb3sdweFWJcoU8o/KIvwTg9NOxEw3oG5pw4+pI0c3q/k0JkBv7QgDGkoiRHwZkebWYNcHwyo2NFaa/cpwpNjv3pMZsXpMiw+duSvfjA/XmFAynmW8/ft2YaAzpB1Mbn5p2k7ID2qCMv/YmFgIu605VK/WUnYPEdxMD2vkifVSNAIH42GOR+2ht4nKj85Wsu9OGgMBJ5XAqVcQoWX+Ui9yZvtaf3WKzowg+MC4PQ0qGLH/l6WHkY8bBCduMz65JjZIss2s972L4P8Hwpk+gDdVtRE82hKH7GuEYdNKhKjbthZmn5AF4thI72N5TjQ==
+
+  before_install:
+    - >
+      test -e $GAE_DIR || 
+      (mkdir -p $GAE_DIR && 
+       wget https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.6.zip -q -O /tmp/gae.zip &&
+       unzip /tmp/gae.zip -d $GAE_DIR)
+
+  install:
+    - pip install -r requirements.txt
+
+  before_script: 
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - mysql -e 'create database test;'
+
+  script:
+    - python manage.py test
+
+  after_success:
+    - echo "$GAE_PASSWORD" | $GAE_DIR/google_appengine/appcfg.py -e "$EMAIL" --passin update .
+
+Full sample of Django+Cloud SQL application can be found on `our GitHub account <https://github.com/Shippable/sample-django-cloudsql-appengine>`_.
+
 Using Datastore from Go
 ^^^^^^^^^^^^^^^^^^^^^^^
 
