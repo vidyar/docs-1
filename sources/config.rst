@@ -2651,15 +2651,15 @@ Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** i
 
 --------
 
-**Mirroring code repository**
------------------------------
+**Using Shippable with Gitlab or other types of source control**
+----------------------------------------------------------------
 
 At the moment, Shippable supports repositories hosted either on GitHub or Bitbucket.
-However, your development setup may involve using different provider or even hosting the repository server on your own.
-In both cases, the easiest way for making your code available to Shippable is setting up a mirror of your repository with either of the supported services. 
+However, your development setup may involve using a different provider or even hosting the repository server on your own.
+In both cases, the easiest way to make your code available to Shippable is to set up a mirror of your repository with either of the supported services. 
 
 As `GitLab <https://about.gitlab.com/>`_ is a very popular choice among organizations managing their own repositories,
-the instructions below outline how to setup mirror of the repository hosted on GitLab Community Edition 7.2.1.
+the instructions below outline how to set up a mirror of a repository hosted on GitLab Community Edition 7.2.1.
 Other self-hosted solutions can be integrated in a very similar manner, the only differences being the locations of the files.
 If you experience any problems setting up a mirror using a different technology, please do not hesitate to reach out to us.
 Please also note that this method can be applied to mirror repositories using different VCS than Git or Mercurial, if only an extension to push the changes to Git is available.
