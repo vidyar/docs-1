@@ -8,39 +8,31 @@ Getting Started
 ===============
 
 
-
 **Step 1** : Sign Up
 --------------------
 
 To sign up with shippable, you should have either Github or Bitbucket account. Go to `Shippable.com <https://www.shippable.com>`_  and click on the 'Login' button on the top menu which will give you an option to sign in with either Github or Bitbucket credentials.
 
-
-**Sign up with Github**
-
-Selecting Github from the modal dialog window will take you to Github sign in page. Login with the Github credentials and give Read access to Shippable from the standard Github app authorization page. After authorization, you will be redirected to Shippable site.
-
-
-Choose the public or private repositories that you would like to build by clicking on the enable button from settings page and it will take you to the Github authorization page to give Shippable Read/Write permissions to your repos.      
+Click on the login button and choose the service provider that you would like to login with. After entering credentials, it will take you to the standard app authorization page and requests you to give access to Shippable.      
 
 .. note::
     We realize that most people do not want to give write access to their repo. However, we need write permissions to add deploy keys to your repos so that webhooks work. We do not touch anything else in the repo.
 
-After authorization, you will be authenticated by Github and redirected back to Shippable. An Ubuntu 12.04LTS Minion will be automatically provisioned for you. You are now ready to set up CI! 
+After authorization, you will be authenticated by the service provider and redirected back to Shippable. You are now ready to set up CI! 
 
-**Sign up with Bitbucket**
-
-Choosing Bitbucket from the modal dialog window will take you to the Bitbucket sign in page. Register with the bitbucket credentials and grant read/write access to Shippable from the standard bitbucket authorization page.
-
-
-After authorization, you will be redirected back to Shippable. An Ubuntu 12.04LTS Minion will be automatically provisioned for you. You are now ready to set up CI!
-
+Shippable allows you to connect both github and bitbucket service providers. To link both accounts, go to the dashboard page and click on the service provider button that you would like to connect.
 
 -------
 
 **Step 2** : Enable CI for repos
 ---------------------------------------
 
-You can now go to your repositories page by clicking on Settings in the top menu. You will see a list of repositories for your personal accounts and any organizational accounts you have access to. Enable the repo that you wish to do build.
+Follow the steps below to enable a project:
+
+
+1. Go to the individual dashboard's page by selecting your account from the dashboard. 
+
+2. Click on the **Repos** button and choose the project that you would like to build and then click on the enable button.
 
 -------
 
@@ -108,9 +100,7 @@ Webhooks are user-defined HTTP callbacks. They are usually triggered by some eve
 
 **Manual Builds** 
 
-- Go to dashboard and select the project from the Repos configured list . 
-- Click on the Run button. Immediately, the console log from your build minion starts to stream to your browser through sockets. By default, this will trigger build for master branch. If your build does not start or get queued, make sure you have enough minions to run the build by going to the minions page. 
-- If you want to build your project manually for non master branch, then go to Settings -> Repositories -> click on the project name -> go to Manual builds tab and choose the branch from the dropdrown list. Then follow the above two steps to trigger the build.
+All the enabled projects are listed in the individual dashboard page. Select your project and then click on the **Build this project** button to manually run the build. Instantly, the console log from your build minion starts to stream to your browser through sockets. 
 
 .. note::
 
@@ -134,10 +124,18 @@ Stdout of a build run is streamed to the browser in real-time using websockets. 
 * committer info
 
 **Artifact archive** :
-Upon completion of the build, build artifacts are automatically archived for each run. You can open the build details tab by clicking on a build number and then download artifacts as a .tar file. All files in ./shippable folder at the root of the project are automatically archived.
+To download artifacts, you need to add **archive: true** tag to your shippable.yml file. Build artifacts are automatically archived for each run after the completion. Go to build's page and then click on the `Artifacts` button to download the artifacts as a .tar file. All files in ./shippable folder at the root of the project are automatically archived. Make sure you include the **archive: true** tag in your yml file to enable the download archive button.
 
 **Test cases** :
-Test run output is streamed real-time to the console log when the tests are executed. If you want Shippable's parser to parse test output and provide a graphical representation, you need to export a JUNIT xml of your test output to the ./shippable/testresults folder. After the build completes, our build engine will automatically parse it and results appear on the Tests tab (available in the set of tabs to the right of the build details page).
+Test run output is streamed real-time to the console log when the tests are executed. If you want Shippable's parser to parse test output and provide a graphical representation, you need to export a JUNIT xml of your test output to the ./shippable/testresults folder. After the build completes, our build engine will automatically parse it and results appear on the Tests tab (available in build details page).
 
 **Code Coverage** :
 Executing tests but not really knowing what percentage of your code is actually being tested is like "Flying a plane without GPS". A variety of coverage tools like opencover, cobertura etc. provide a way to measure coverage of your tests. You can export the output of these tools to ./shippable/codecoverage and our build engine will automatically parse it and the results will appear on the Coverage tab.
+
+
+
+
+
+
+
+ 
