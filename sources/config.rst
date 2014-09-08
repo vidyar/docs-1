@@ -15,7 +15,7 @@ Build Minions and Build configuration are two things that you should care the mo
 
 Minions are Docker based containers that run your builds and tests. You can think of them as Build VMs. Each minion runs one build at a time, so the more minions you have, the more concurrency you will get.  
 
-We automatically create one minion for you when you first sign in to Shippable. Depending on your subscription, you can create more minions by going to Settings->Minions and clicking on the + sign.
+Minions are automatically provisioned whenever a build is triggered and it will get deleted after the build finishes execution. We will automatically add additional minions if you are upgrading your subscription plan.
 
 Each minion starts from a base image and can be customized by specifying ``before_install`` scripts in the YML file. A minion can be configured to run any package, library, or service that your application requires. There are some preinstalled tools and services that you can use to customize your minions even further. 
 
@@ -26,18 +26,6 @@ All our Linux minions start from a vanilla base image from the Docker registry. 
 
 (Coming soon) Our Windows minions are based on AWS AMI for Windows 2012.
 
-State Management
-................
-
-Shippable maintains the state of each minion between builds. We believe that build speed is very important, so reinstalling everything and cloning git repos every single time just doesn't make sense. 
-
-However, shippable allows you to clear files and folders between builds using **reset_minion** tag. Configure your yml file as shown below:
-
-.. code-block:: bash
- 
-   reset_minion: true
-
-Before the build, we check for the tag **reset_minion** and if it exists, we will delete all the files and folders from the previous builds. You can also achieve this by adding **[reset_minion]** in the commit message.
 
 
 Common Tools
@@ -150,11 +138,9 @@ When we receive a build trigger through a webhook or manual run, we execute the 
 7. Run the ``script`` command which runs build and all your tests
 8. Run ``after_script`` command
 9. Run either ``after_success`` or ``after_failure`` commands
-10. Run ``before_archive`` command to copy files to ./shippable folder. Shippable will zips up all the files in this folder and makes the result available for download  
-11. Run ``after_archive`` command to get the api access token to download the artifacts
 
 
-The outcome of all the steps upto 7 determine the outcome of the build status. They need to return an exit code of ``0`` to be marked as success. Everything else is treated as a failure.
+The build status will be determined based on the outcome of the above steps. They need to return an exit code of ``0`` to be marked as success. Everything else is treated as a failure.
 
 
 ----------
@@ -215,38 +201,7 @@ If you would like to turn submodules off completely -
   git:
    submodules: false
 
-api access token
-.................
 
-Once the build is finished, shippable will automatically zips up all the files available under ./shippable folder and you can download it using the **Download** button from the build details tab. You can also configure your yml file as shown below to get the api access token from console log to download the artifacts.
-
-.. code-block:: python
- 
- # move or copy files to shippable folder
-   before_archive:
-       - ls
-       - mv  calculator.php  shippable/src
- 
-   after_archive:
-     # To get the URL of the api access token
-       - echo $SHIPPABLE_ARTIFACTS_URL
-     # value of the below variable will be true if archive is successful else it will be false.
-       - echo $ARTIFACTS_UPLOAD_SUCCESSFUL
- 
-.. note::  This URL is valid only for 20 minutes from the time build finishes off execution.
-
-
-
-You can also configure your yml to trigger any other project's build using an api access token. For example, inorder to trigger build for project B, add the following line in any script section of project A's shippable.yml. 
-
-
-.. code-block:: python
-
-    curl -XPOST https://api.shippable.com/projects/<project_B_project_id>/build?token=$SHIPPABLE_API_TOKEN
-
-
-Replace the <project_B_project_id> of the above line with project id provided in the console log of project B. $SHIPPABLE_API_TOKEN is unique to each build and we need this token to check for the authentication. If it is valid, then we will trigger the build for project B.    
- 
   
 common environment variables
 .............................
@@ -322,7 +277,7 @@ In this setting **4 builds** are triggered
 Secure environment variables
 .............................
 
-Shippable allows you to encrypt the environment variable definitions and keep your configurations private using **secure** tag. Go to settings -> Repositories -> click on the enabled project name -> and select Secure variables tab. Enter the env variable and its value in the text box as shown below. 
+Shippable allows you to encrypt the environment variable definitions and keep your configurations private using **secure** tag. Go to the org account or individual dasboard page from where you have enabled your project and click on **ENCRYPT ENV VARIABLE** button on the top right corner of the page. Enter the env variable and its value in the text box as shown below. 
 
 .. code-block:: python
 
@@ -700,7 +655,8 @@ For example, here is the .yml file for a Python repo -
 
 Examples for other languages can be found in our :ref:`Code Samples <samplesref>`.
 
-----------
+
+-------------
 
 **Notifications**
 -----------------
@@ -2608,35 +2564,40 @@ We invite you to explore our JavaEE+MySQL sample for OpenShift on the
 ----------
 
 **Pull Request**
-----------------
+------------------
 
 
 Shippable will integrate with github to show your pull request status on CI. Whenever a pull request is opened for your repo, we will run the build for the respective pull request and notify you about the status. You can decide whether to merge the request or not, based on the status shown. If you accept the pull request, Shippable will run one more build for the merged repo and will send email notifications for the merged repo.
-
+To rerun a pull request build, go to your project's page -> Pull Request tab and then click on the **Build this Pull Request** button.
  
 --------
 
-**Collaborators**
+**Permissions**
 ------------------
 
-Shippable will automatically add your github collaborators when you create a project and by default they will be assigned the role of **Build engineer**. You can see the list of collaborators or change their role by expanding your repo on the settings page.
+We will automatically add your collaborators when you login to shippable and it will be updated in the user-interface. Incase if you do not find the collaborator's name on organisational dashboard, then click on the **sync repos** button on the top to update it. Go to the org dashboard and click on the **Permissions** button on the right side of the page to view your collaborators. 
 
 
-There are two types of roles that users can have -
+Project level permission:
+................................
 
-**Owner :** 
+To view the collaborators for your project, go to Project's page and click on the **Permissions** button. 
+
+There are two types of roles that users can have for a project -
+
+**Member owner :** 
 Owner is the highest role. This role permits users to create, run and delete a project. 
 
 
-**Collaborators :** 
-Collaborators can run or manage projects that are already setup. They have full visibility into the project and can trigger the build.
+**Member :** 
+Member can run or manage projects that are already setup. They have full visibility into the project and can trigger the build.
+
 
 
 --------
 
 **Build Termination**
 -----------------------
-
 
 If your script or test suite hangs for a long time or there hasn't been any log output in 20 minutes, then Shippable will forcefully terminate the build and add a message to the console log.
 
@@ -2647,7 +2608,7 @@ If your script or test suite hangs for a long time or there hasn't been any log 
 
 Any changes to your source code will trigger a build automatically on Shippable. So if you do not want to run build for a particular commit, then add **[ci skip]** or **[skip ci]** to your commit message. 
 
-Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** in the commit message and if it exists, we do not create build for that commit.
+Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** in the commit message and if it exists, then we will mark the build as **skipped** and do not run the build .
 
 --------
 
@@ -2785,3 +2746,26 @@ Next, add the ``post-receive`` hook in the same directory (you can read more abo
 
 You are now all set! After you push new changes to the GitLab, they whole repository will be automatically mirrored to either GitHub or Bitbucket.
 If any errors occur, they should be visible in the output of your local ``git push`` command.
+
+---------
+
+**Docker hub**
+---------------
+
+Shippable allows you to push the containers to docker registry after a successfull build. To avail this option, you will have to enable the Docker hub from shippable account first. Follow the steps below to enable and push the container to docker registry.
+
+1. Go to individual dashboard's page.
+2. Click on the **Docker Hub** button and then enter the docker hub credentials.
+3. Configure your yml file as shown below to push the container.
+
+
+.. code-block:: bash
+
+    commit_container: username/sample_project
+
+-------
+
+**Build Badge**
+-------------------
+
+You can find the build badges on the project's page. Click on the **Badge** button and copy the markdown to your README file to display the status of most recent build on your Github or Bitbucket repo page.
