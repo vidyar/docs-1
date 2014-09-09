@@ -734,7 +734,7 @@ Collaborator can run or manage projects that are already setup. They have full v
 
 Build will be forcefully terminated in the following scenarios:
 
-* If script or test suite hangs for a long time or there hasn't been any log output in 20 minutes  
+* If the script or test suite hangs for a long time or there hasn't been any log output in 20 minutes  
 * If build is still executing after 20 minutes 
 
 and the status of the build will be updated as **timeout**.
