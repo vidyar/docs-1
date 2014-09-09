@@ -9,6 +9,9 @@
 Continuous deployment
 ==========================
 
+Shippable allows you to deploy your applications to any PaaS providers like Heroku, Amazon Elastic Beanstalk, AWS OpsWorks, Google App Engine, Red Hat OpenShift or any infrastructure provider after a successfull build. The section below will give you more details.
+
+
 
 **Continuous deployment to Heroku**
 ----------------------------------------
