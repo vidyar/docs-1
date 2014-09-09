@@ -713,7 +713,7 @@ To rerun a pull request build, go to your project's page -> Pull Request tab and
 **Permissions**
 ------------------
 
-We will automatically add your collaborators when you login to shippable and it will be updated in the user-interface. Incase if you do not find the collaborator's name on organisational dashboard, then click on the **sync repos** button on the top to update it. Go to the org dashboard and click on the **Permissions** button on the right side of the page to view your collaborators. 
+We will automatically add your collaborators when you login to shippable and it will be updated in the user-interface. Go to the org dashboard and click on the **Permissions** button on the right side of the page to view your collaborators. 
 
 
 There are two types of roles that users can have for an organisation-
@@ -741,7 +741,7 @@ If your script or test suite hangs for a long time or there hasn't been any log 
 
 Any changes to your source code will trigger a build automatically on Shippable. So if you do not want to run build for a particular commit, then add **[ci skip]** or **[skip ci]** to your commit message. 
 
-Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** in the commit message and if it exists, then we will mark the build as **skipped** and do not run the build .
+Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** in the commit message and if it exists, then that particular webhook build will not be executed and the status of that build will be marked as **skipped** on UI .
 
 --------
 
