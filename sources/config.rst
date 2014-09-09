@@ -140,7 +140,7 @@ When we receive a build trigger through a webhook or manual run, we execute the 
 9. Run either ``after_success`` or ``after_failure`` commands
 
 
-The build status will be determined based on the outcome of the above steps. They need to return an exit code of ``0`` to be marked as success. Everything else is treated as a failure.
+Build status will be determined based on the outcome of the above steps. They need to return an exit code of ``0`` to be marked as success. Everything else is treated as a failure.
 
 
 ----------
@@ -258,9 +258,9 @@ You can set your own environment variables in the yml. Every statement of this c
 
 .. note::
 
-  Env variables can create an exponential number of builds when combined with ``jdk`` & ``rvm, node_js etc.`` i.e. it is multiplicative
+  Env variables can create an exponential number of builds when combined with ``jdk`` & ``rvm , node_js etc.`` i.e. it is multiplicative
 
-In this setting **4 builds** are triggered
+In this setting **4 individual builds** are triggered in a build group
 
 .. code-block:: python
         
@@ -732,8 +732,17 @@ Collaborator can run or manage projects that are already setup. They have full v
 **Build Termination**
 -----------------------
 
-If your script or test suite hangs for a long time or there hasn't been any log output in 20 minutes, then Shippable will forcefully terminate the build and add a message to the console log.
+We will teminate the build forcefully in the following scenarios:
 
+* Script or test suite hangs for a long time 
+* There hasn't been any log output in 20 minutes  
+* It is still executing after 20 minutes 
+
+and the status of the build will be updated as **timeout** .
+ 
+
+
+ 
 --------
 
 **Skipping a build**
