@@ -13,6 +13,7 @@ This documentation has the following resources:
    index
    start
    config
+   continuous_deployment
    languages/index
    samples/index
    glossary
