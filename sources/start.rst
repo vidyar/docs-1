@@ -20,7 +20,7 @@ Click on the login button and choose the service provider that you would like to
 
 After authorization, you will be authenticated by the service provider and redirected back to Shippable. You are now ready to set up CI! 
 
-Shippable allows you to connect both github and bitbucket service providers. To link both accounts, go to the dashboard page and click on the bucket or Github icon on the top right that you would like to connect.
+Shippable allows you to connect both github and bitbucket service providers. To link both accounts, go to the dashboard page and click on the Bitbucket or Github icon on the top right that you would like to connect.
 
 -------
 
@@ -124,10 +124,10 @@ Stdout of a build run is streamed to the browser in real-time using websockets. 
 * committer info
 
 **Artifact archive** :
-To download artifacts, you need to add **archive: true** tag to your shippable.yml file. Build artifacts are automatically archived for each run after the completion. Go to build's page and then click on the `Artifacts` button to download the artifacts as a .tar file. All files in ./shippable folder at the root of the project are automatically archived. Make sure you include the **archive: true** tag in your yml file to enable the download archive button.
+Add **archive: true** tag to your shippable.yml file to enable the download artifacts option. Build artifacts are automatically archived for each run after the completion. Go to build's page and then click on the **Artifacts** button to download the artifacts as a .tar file. All files in ./shippable folder at the root of the project are automatically archived. Make sure you include the **archive: true** tag in your yml file to enable the download archive button.
 
 **Test cases** :
-Test run output is streamed real-time to the console log when the tests are executed. If you want Shippable's parser to parse test output and provide a graphical representation, you need to export a JUNIT xml of your test output to the ./shippable/testresults folder. After the build completes, our build engine will automatically parse it and results appear on the Tests tab (available in build details page).
+Test run output is streamed real-time to the console log when the tests are executed. If you want Shippable's parser to parse test output and provide a graphical representation, you need to export a JUNIT xml of your test output to the ./shippable/testresults folder. After the build completes, our build engine will automatically parse it and results appear on the Tests tab (available in build's page).
 
 **Code Coverage** :
 Executing tests but not really knowing what percentage of your code is actually being tested is like "Flying a plane without GPS". A variety of coverage tools like opencover, cobertura etc. provide a way to measure coverage of your tests. You can export the output of these tools to ./shippable/codecoverage and our build engine will automatically parse it and the results will appear on the Coverage tab.
