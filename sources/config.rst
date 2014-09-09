@@ -277,7 +277,7 @@ In this setting **4 individual builds** are triggered in a build group
 Secure environment variables
 .............................
 
-Shippable allows you to encrypt the environment variable definitions and keep your configurations private using **secure** tag. Go to the org account or individual dasboard page from where you have enabled your project and click on **ENCRYPT ENV VARIABLE** button on the top right corner of the page. Enter the env variable and its value in the text box as shown below. 
+Shippable allows you to encrypt the environment variable definitions and keep your configurations private using **secure** tag. Go to the org dashboard  or individual dasboard page from where you have enabled your project and click on **ENCRYPT ENV VARIABLE** button on the top right corner of the page. Enter the env variable and its value in the text box as shown below. 
 
 .. code-block:: python
 
@@ -896,14 +896,18 @@ If any errors occur, they should be visible in the output of your local ``git pu
 
 Shippable allows you to push the containers to docker registry after a successfull build. To avail this option, you will have to enable the Docker hub from shippable account first. Follow the steps below to enable and push the container to docker registry.
 
-1. Go to individual dashboard's page.
-2. Click on the **Docker Hub** button and then enter the docker hub credentials.
+1. Select the source code hosted account from the dashboard. It will redirect you to the selected account's dashboard page.
+2. Click on the **Docker Hub** button on the top and then enter the docker hub credentials.
 3. Configure your yml file as shown below to push the container.
 
 
 .. code-block:: bash
 
     commit_container: username/sample_project
+
+
+Here you should use the same user name that you used to sign up on docker hub with. 
+
 
 -------
 
