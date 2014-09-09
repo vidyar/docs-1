@@ -30,9 +30,9 @@ Shippable allows you to connect both github and bitbucket service providers. To 
 Follow the steps below to enable a project:
 
 
-1. Go to the individual dashboard's page by selecting your account from the dashboard. 
+1. Select your source code hosted account from the right side of dashboard page and it will redirect you to the respective account's dashboard page. 
 
-2. Click on the **Repos** button and choose the project that you would like to build and then click on the enable button.
+2. Click on the **Repos** button and choose the project that you would like to build and then click on the **Enable** button.
 
 -------
 
@@ -100,7 +100,10 @@ Webhooks are user-defined HTTP callbacks. They are usually triggered by some eve
 
 **Manual Builds** 
 
-All the enabled projects are listed in the individual dashboard page. Select your project and then click on the **Build this project** button to manually run the build. Instantly, the console log from your build minion starts to stream to your browser through sockets. 
+After enabling the project, click on the **Build this project** button to manually run the build. Instantly,it will redirect you to the build's page and the console log from your build minion starts to stream to your browser through sockets. 
+
+Clicking on the **View build history** button  will take you to the project's page where you can find all the builds. 
+
 
 .. note::
 
