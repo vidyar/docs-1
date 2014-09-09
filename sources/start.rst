@@ -20,7 +20,7 @@ Click on the login button and choose the service provider that you would like to
 
 After authorization, you will be authenticated by the service provider and redirected back to Shippable. You are now ready to set up CI! 
 
-Shippable allows you to connect both github and bitbucket service providers. To link both accounts, go to the dashboard page and click on the service provider button that you would like to connect.
+Shippable allows you to connect both github and bitbucket service providers. To link both accounts, go to the dashboard page and click on the bucket or Github icon on the top right that you would like to connect.
 
 -------
 
