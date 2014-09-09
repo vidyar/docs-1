@@ -732,13 +732,12 @@ Collaborator can run or manage projects that are already setup. They have full v
 **Build Termination**
 -----------------------
 
-We will teminate the build forcefully in the following scenarios:
+Build will be forcefully terminated in the following scenarios:
 
-* Script or test suite hangs for a long time 
-* There hasn't been any log output in 20 minutes  
-* It is still executing after 20 minutes 
+* If script or test suite hangs for a long time or there hasn't been any log output in 20 minutes  
+* If build is still executing after 20 minutes 
 
-and the status of the build will be updated as **timeout** .
+and the status of the build will be updated as **timeout**.
  
 
 
