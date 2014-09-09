@@ -102,12 +102,6 @@ Webhooks are user-defined HTTP callbacks. They are usually triggered by some eve
 
 After enabling the project, click on the **Build this project** button to manually run the build. Instantly,it will redirect you to the build's page and the console log from your build minion starts to stream to your browser through sockets. 
 
-Clicking on the **View build history** button  will take you to the project's page where you can find all the builds. 
-
-
-.. note::
-
-  If your project has multiple versions, then each version results in a separate build.You can check the console output for each build by clicking on the build numbers listed in the latest build tab.
 
 --------
 
@@ -135,6 +129,8 @@ Test run output is streamed real-time to the console log when the tests are exec
 **Code Coverage** :
 Executing tests but not really knowing what percentage of your code is actually being tested is like "Flying a plane without GPS". A variety of coverage tools like opencover, cobertura etc. provide a way to measure coverage of your tests. You can export the output of these tools to ./shippable/codecoverage and our build engine will automatically parse it and the results will appear on the Coverage tab.
 
+
+Clicking on the **View build history** button will take you to the project's page where you can find all the builds.
 
 
 
