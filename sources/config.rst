@@ -222,7 +222,7 @@ If you would like to turn submodules off completely -
 common environment variables
 .............................
 
-The following environment variables are available to you for every build. You can use these in your scripts if required -
+The following environment variables are available for every build. You can use these in your scripts if required -
 
 - BRANCH : Name of branch being built
 
@@ -274,8 +274,6 @@ The following environment variables are available to you for every build. You ca
 
 - SHIPPABLE_POSTGRES_VERSION : "9.2"
 
-- SHIPPABLE_PYTHON : "/usr/bin/python2.7"
-
 - SHIPPABLE_POSTGRES_BINARY : "/usr/lib/postgresql/$SHIPPABLE_POSTGRES_VERSION/bin/postgres" 
 
 - SHIPPABLE_POSTGRES_CMD : "sudo -u postgres $SHIPPABLE_POSTGRES_BINARY -c \"config_file=/etc/postgresql/$SHIPPABLE_POSTGRES_VERSION/main/postgresql.conf\""
@@ -284,11 +282,6 @@ The following environment variables are available to you for every build. You ca
 
 - USER : shippable
 
-- VIRTUALENV_PYTHON : "2.7"
-
-- VIRTUALENV_RUBY : “1.9.3”
- 
- 
 
 user specified environment variables
 .....................................
