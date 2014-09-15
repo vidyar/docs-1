@@ -175,6 +175,22 @@ command collections
 In the example above, our minions will run ``./minions/do_something.sh`` and then run ``./minions/do_something-else.sh``. The only requirement is that all of these operations return a ``0`` exit code. Else the build will fail.
 
 
+shippable_retry
+.................
+
+Sometimes npm install may fail due to the intermittent network issues and affects your build execution. To avoid this, **shippable_retry** function will try to install the command again. It will check the return code of a command and if it is non-zero, then it will re-try to install up to three times.
+
+**shippable_retry** functionality is available for all default installation commands and it will re-try to install on failure. You can also use this functionality for any custom installation from external resources. For example:
+
+.. code-block:: python
+  
+    before_install:
+        - shippable_retry sudo apt-get update
+        - shippable_retry sudo apt-get install something
+
+
+
+
 git submodules
 ..............
 Shippable supports git submodules. This is a cool functionality of breaking your projects down into manageable chunks. We automatically initialize the ``.gitmodules`` file in the root of the repo. 
@@ -206,7 +222,7 @@ If you would like to turn submodules off completely -
 common environment variables
 .............................
 
-You will have the following environment variables available to you for every build. You can use these in your scripts if required -
+The following environment variables are available for every build. You can use these in your scripts if required -
 
 - BRANCH : Name of branch being built
 
@@ -214,34 +230,58 @@ You will have the following environment variables available to you for every bui
 
 - BUILD_URL : Direct URL link to the Build Output
 
+- CI : true
+
+- CONTINUOUS_INTEGRATION : true  
+
 - COMMIT : Commit id that is being built and tested
 
 - DEBIAN_FRONTEND : noninteractive
 
 - JOB_ID : id of job in Shippable
 
-- JRUBY_OPTS : --server -Dcext.enabled=false -Xcompile.invokedynamic=false
-
 - LANG : en_US.UTF-8
 
 - LC_ALL : en_US.UTF-8
 
+- LC_CTYPE : en_US.UTF-8
+
 - MERB_ENV : test
 
-- PULL_REQUEST : Pull request id if the job is a pull request. If not, this will be set to 'None'
+- PATH : $HOME/bin:$PATH
+
+- PULL_REQUEST : Pull request number if the job is a pull request. If not, this will be set to 'false'
 
 - RACK_ENV : test
 
 - RAILS_ENV : test
 
+- REPO_NAME : Name of the repository currently being built
+
+- REPOSITORY_URL : URL of your Github or Bitbucket repository
+
+- SERVICE_SKIP : false
+
+- SHIPPABLE : true
+
+- SHIPPABLE_ARCHIVE : true
+
+- SHIPPABLE_BUILD_ID : id of build in Shippable 
+
+- SHIPPABLE_MYSQL_BINARY : "/usr/bin/mysqld_safe"
+
+- SHIPPABLE_MYSQL_CMD : "$SHIPPABLE_MYSQL_BINARY"
+
+- SHIPPABLE_POSTGRES_VERSION : "9.2"
+
+- SHIPPABLE_POSTGRES_BINARY : "/usr/lib/postgresql/$SHIPPABLE_POSTGRES_VERSION/bin/postgres" 
+
+- SHIPPABLE_POSTGRES_CMD : "sudo -u postgres $SHIPPABLE_POSTGRES_BINARY -c \"config_file=/etc/postgresql/$SHIPPABLE_POSTGRES_VERSION/main/postgresql.conf\""
+
+- SHIPPABLE_VE_DIR : "$HOME/build_ve/python/2.7"
+
 - USER : shippable
 
-- SHIPPABLE_ARTIFACTS_URL : URL to download artifacts
-
-- ARTIFACTS_UPLOAD_SUCCESSFUL : Value of this variable will be true if archive is successful else this will be set as false.
-
-- SHIPPABLE_API_TOKEN : Api access token for current build
- 
 
 user specified environment variables
 .....................................
@@ -734,10 +774,14 @@ Collaborator can run or manage projects that are already setup. They have full v
 
 Build will be forcefully terminated in the following scenarios:
 
-* If the script or test suite hangs for a long time or there hasn't been any log output in 20 minutes  
-* If build is still executing after 20 minutes 
+* If a command hangs for a long time or there hasn't been any log output   
+* If the build is still executing after 60 minutes 
 
 and the status of the build will be updated as **timeout**.
+
+.. note::
+  
+     Build termination time depends on the pricing plan. If it is a **Startup** plan, then the build will be terminated after 90 minutes. 	
  
 
 
@@ -893,7 +937,7 @@ If any errors occur, they should be visible in the output of your local ``git pu
 **Docker hub**
 ---------------
 
-Shippable allows you to push the containers to docker registry after a successfull build. To avail this option, you will have to enable the Docker hub from shippable account first. Follow the steps below to enable and push the container to docker registry.
+Shippable allows you to push the containers to docker registry after a successful build. To avail this option, you will have to enable the Docker hub from shippable account first. Follow the steps below to enable and push the container to docker registry.
 
 1. Select the source code hosted account from the dashboard. It will redirect you to the selected account's dashboard page.
 2. Click on the **Docker Hub** button on the top and then enter the docker hub credentials.
