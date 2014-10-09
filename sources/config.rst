@@ -932,6 +932,71 @@ Next, add the ``post-receive`` hook in the same directory (you can read more abo
 You are now all set! After you push new changes to the GitLab, they whole repository will be automatically mirrored to either GitHub or Bitbucket.
 If any errors occur, they should be visible in the output of your local ``git push`` command.
 
+Mirroring Mercurial repository
+..............................
+
+At the very moment, Shippable supports only Git repositories.
+This will likely change in the near future, but in the meantime, the only way to use a Mercurial repository with Shippable is to set up a Git mirror.
+
+A bridge between Mercurial and Git exists in form of `Hg-Git Mercurial plugin <http://hg-git.github.io/>`_.
+This plugin needs to be installed on the machine from which pushes to Git repositories will be performed
+(i.e. developer workstation or server that hosts Mercurial repository).
+
+Installation of the plugin is simple:
+
+1. Install the plugin package with ``easy_install hg-git`` or ``pip install hg-git``.
+2. Add the plugin to ``.hgrc`` file (either ``~/.hgrc`` to enable the plugin globally or ``<repository>/.hg/hgrc`` to switch it on for individual repository):
+
+.. code-block:: bash
+
+  [extensions]
+  hggit = 
+
+Then, add the remote endpoint for the Git repository to the list of paths in the ``<repository>/.hg/hgrc`` file.
+The url needs to have ``git+ssh`` protocol in order to be picked up by ``hg-git`` plugin. 
+
+.. code-block:: bash
+
+  [paths]
+  default = ssh://hg@bitbucket.org/Shippable/hg-mirror-test
+  git = git+ssh://git@bitbucket.org/Shippable/hg-mirror-test-git.git
+
+Then, it should be possible to send the changesets to the Git repository with the following command
+(see the sections above for details how to configure SSH authentication for GitHub and Bitbucket):
+
+.. code-block:: bash
+
+  $ hg push git
+  pushing to git+ssh://git@bitbucket.org/Shippable/hg-mirror-test-git.git
+  ["git-receive-pack '/Shippable/hg-mirror-test-git.git'"]
+  searching for changes
+  adding objects
+  added 1 commits with 1 trees and 0 blobs
+  adding reference refs/heads/master
+
+Next, we can create Mercurial hooks to perform the push automatically.
+For example, when configuring the mirror on Mercurial repository server, the best idea is to use
+``changegroup`` hook that gets invoked after every group of changesets that arrive at the repository.
+
+Add the following section to ``<repository>/.hg/hgrc`` file:
+
+.. code-block:: bash
+
+  [hooks]
+  changegroup = hg bookmark -f -r tip master && hg push -r tip git
+
+The first command in the snippet above moves the ``master`` bookmark that
+is used by ``hg-git`` to track the remote ``master`` branch from the Git repository.
+
+There are a few caveats related to branch handling differences between Mercurial and Git.
+Git branches are most akin to Mercurial bookmarks and ``hg-git`` handles them this way.
+No good equivalent of Mercurial branches exist in Git, so these will not be synchronized to the Git repository,
+unless an extra bookmark is created to track the branch. Please refer to ``hg-git`` documentation for more details.
+
+One particular problem connected to this issue is that Mercurial bookmarks are bound to the local repository and
+are not pushed. This means that the bookmarks are invisible to 'central' repository that has the hook in place (and sends the changes to Git).
+The only solution here is to clone (i.e. fork) Mercurial repositories and keep separate Git mirrors for them, instead of creating branches.
+
 ---------
 
 **Docker hub**
