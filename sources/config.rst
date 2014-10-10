@@ -236,11 +236,15 @@ The following environment variables are available for every build. You can use t
 
 - COMMIT : Commit id that is being built and tested
 
+- COMPARE_URL : A link to GitHub/BitBucket's comparision view for the push
+ 
 - DEBIAN_FRONTEND : noninteractive
 
 - JOB_ID : id of job in Shippable
 
 - LANG : en_US.UTF-8
+
+- LAST_SUCCESSFUL_BUILD_TIMESTAMP : Timestamp of the last successful build in seconds. This will be set to **false** for the first build or for the build with no prior successful builds 
 
 - LC_ALL : en_US.UTF-8
 
@@ -250,7 +254,7 @@ The following environment variables are available for every build. You can use t
 
 - PATH : $HOME/bin:$PATH
 
-- PULL_REQUEST : Pull request number if the job is a pull request. If not, this will be set to 'false'
+- PULL_REQUEST : Pull request number if the job is a pull request. If not, this will be set to **false**
 
 - RACK_ENV : test
 
@@ -793,7 +797,7 @@ and the status of the build will be updated as **timeout**.
 
 Any changes to your source code will trigger a build automatically on Shippable. So if you do not want to run build for a particular commit, then add **[ci skip]** or **[skip ci]** to your commit message. 
 
-Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** in the commit message and if it exists, then that particular webhook build will not be executed and the status of that build will be marked as **skipped** on UI .
+Our webhook processor will look for the string  **[ci skip]** or **[skip ci]** in the commit message and if it exists, then that particular webhook build will not be executed.
 
 --------
 
