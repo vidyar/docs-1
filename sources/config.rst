@@ -369,10 +369,10 @@ To encrypt multiple environment variables separately, configure your yml file as
       #encrypted output of third env variable
       - secure: <encrypted output>
 
-
 .. note::
 
-   Due to the security risk of exposing your secure variables, we do not decrypt secure variables for pull request from the forks of public projects. Secure variable decryption is limited to the pull request triggered from the branches on the same repository .  	
+   Due to the security risk of exposing your secure variables, we do not decrypt secure variables for pull request from the forks of public projects. Secure variable decryption is limited to the pull request triggered from the branches on the same repository. And the decrypted secured variables are also not displayed in the script tab for security reasons. 	
+
 
 
 include & exclude branches
