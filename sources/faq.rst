@@ -24,5 +24,5 @@ If you have already logged in to shippable with both the service providers accou
 
 **Why am I not able to see bitbucket org repos after recreating my account?**
  
-Deleting the shippable account will also delete all the permissions associated with the account. If you recreate your account, bitbucket will not allow us to pull all the permissions you have, unless the owner of that organisation logs in back to shippable and then click on the sync repos button to see the repos. 
+Deleting the shippable account will also delete all the permissions associated with the account. If you recreate your account, bitbucket will not allow us to pull all the permissions you have, unless the owner of that organization logs in back to shippable and then click on the sync repos button to see the repos. 
  
