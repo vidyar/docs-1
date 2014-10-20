@@ -709,7 +709,7 @@ Examples for other languages can be found in our :ref:`Code Samples <samplesref>
 
 **Notifications**
 -----------------
-Shippable can notify you about the status of your build. If you want to get notified about the build status (success, failure or unstable), you need to follow the rules below to configure your yml file. Shippable will send the consolidated build reports in individual emails for matrix build projects. By default Shippable will send the email notifications to the last committer.
+Shippable can notify you about the status of your build. If you want to get notified about the build status (success, failure or unstable), you need to follow the rules below to configure your yml file. Shippable will send the consolidated build reports in individual emails for matrix build projects. If there are any changes in the build status, then we will send email notification to the last committer by default.
 
 
 Email notification
@@ -1031,4 +1031,20 @@ Here you should use the same user name that you used to sign up on docker hub wi
 **Build Badge**
 -------------------
 
-You can find the build badges on the project's page. Click on the **Badge** button and copy the markdown to your README file to display the status of most recent build on your Github or Bitbucket repo page.
+Badges will display the status of your default branch. You can find the build badges on the project's page. Click on the **Badge** button and copy the markdown to your README file to display the status of most recent build on your Github or Bitbucket repo page.
+
+
+--------
+
+**Caching minions**
+-------------------------
+
+Shippable does not cache dependencies between builds. Each build will run on a fresh minion and as soon as the build finishes execution, minion will be deleted. However, we also understand that installing dependencies for each build will take more time and it affects your build speed . Hence we have a caching feature that helps you to cache dependencies between builds. Add the following line to your yml file to enable caching: 
+
+.. code-block:: bash
+  
+     cache: true 
+
+Before the build, we will check for the flag **cache: true** and if it exists, the minion will be cached after the build runs and the cached minion will be reused for further builds.  
+
+You can use the **[reset_minion]** tag in commit message to reset the minion. We will clear all the cached dependencies and packages, when we see a [reset_minion] tag and your build will run on a fresh minion. Once this build finishes execution, we will cache the minion once again so that further builds can run using the cached minion.

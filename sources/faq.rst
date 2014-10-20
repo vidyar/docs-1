@@ -27,7 +27,7 @@ If you have already logged in to shippable with both the service providers accou
 Deleting the shippable account will also delete all the permissions associated with the account. If you recreate your account, bitbucket will not allow us to pull all the permissions you have, unless the owner of that organization logs in back to shippable and then click on the sync repos button to see the repos. 
 
 
-**setting timezone**
+**Setting timezone**
 ---------------------
 
 **How to set desired timezones inside the minions?**
