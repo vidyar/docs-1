@@ -44,13 +44,13 @@ Our CI environment needs a little information about your project to run the righ
 .. note::
   This example is for a node.js project. For other languages, refer to our :ref:`language guides <langrefs>`. 
 
-  **If you use TravisCI,  we support** ``.travis.yml`` **natively, so that you can test your repos in parallel with Shippable and compare the speed and rich visualizations.**
+  **If you use TravisCI, we support** ``.travis.yml`` **natively, so that you can test your repos in parallel with Shippable and compare the speed and rich visualizations.**
 
-* Tell us what your build environment is. This is an optional setting and if omitted, Ubuntu 12.04 is used as a default.
+* Tell us what build image to use. This is an optional setting and if omitted, ``shippable/minv2`` is used as a default (syntax is ``<docker_hub_username>/<image_name>``).
     .. code-block:: python
         
-        # Build Environment
-        build_environment: Ubuntu 12.04
+        # build image from Docker Hub (see https://registry.hub.docker.com/repos/shippableimages/)
+        build_image: shippableimages/ubuntu1404_nodejs
 
 * Set the appropriate language and the version number. You can test against multiple versions for a single push by adding more entries. We support all versions of Node.js as it is auto installed during your first run.
     .. code-block:: python

@@ -22,7 +22,7 @@ Each minion starts from a base image and can be customized by specifying ``befor
 Operating Systems
 .................
 
-All our Linux minions start from a vanilla base image from the Docker registry. We support all images as a starting point for your minion. Minions can be further customized by using the ``before_install`` and ``install`` tags in ``shippable.yml`` that is in the root of your code repository.
+All our Linux minions start from a vanilla base image from the Docker registry. In your YML file you can use the ``build_image`` option to specify the image you want to use. We support all images as a starting point for your minion. Minions can be further customized by using the ``before_install`` and ``install`` tags in ``shippable.yml`` that is in the root of your code repository.
 
 (Coming soon) Our Windows minions are based on AWS AMI for Windows 2012.
 
