@@ -10,17 +10,17 @@ ruby-samples
 These samples will help you get started with Shippable. Test and Coverage tools used here are
 `simplecov <http://rubydoc.info/gems/simplecov/>`_  and `RSpec <http://rspec.info/>`_  .
 
-`Ruby Sample <https://github.com/Shippable/sample_ruby>`_
+`Ruby Sample <https://github.com/shippableSamples/sample_ruby>`_
 
-`Ruby Sample with Neo4j <https://github.com/Shippable/sample_ruby_neo4j>`_
+`Ruby Sample with Neo4j <https://github.com/shippableSamples/sample_ruby_neo4j>`_
 
-`Ruby Sample with Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_
+`Ruby Sample with Cassandra <https://github.com/shippableSamples/sample_ruby_cassandra>`_
 
-`Ruby Sample with CouchDB <https://github.com/Shippable/sample-ruby-couchdb>`_
+`Ruby Sample with CouchDB <https://github.com/shippableSamples/sample-ruby-couchdb>`_
 
-`Ruby Sample with RethinkDB <https://github.com/Shippable/sample-ruby-rethinkdb>`_
+`Ruby Sample with RethinkDB <https://github.com/shippableSamples/sample-ruby-rethinkdb>`_
 
-`Ruby Sample with RabbitMQ <https://github.com/Shippable/sample_ruby_rabbitmq>`_
+`Ruby Sample with RabbitMQ <https://github.com/shippableSamples/sample_ruby_rabbitmq>`_
 
 We need the yml file to analyze the project details. So add the shippable.yml file to the root of your repo by specifying the following details:
 

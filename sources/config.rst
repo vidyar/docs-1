@@ -476,7 +476,7 @@ MongoDB
   services:
    - mongodb
 
-Sample PHP code using `mongodb <https://github.com/Shippable/sample_php_mongo>`_ .
+Sample PHP code using `mongodb <https://github.com/shippableSamples/sample_php_mongo>`_ .
 
 
 MySQL
@@ -490,7 +490,7 @@ MySQL
   before_script:
       - mysql -e 'create database myapp_test;'
                                  
-Sample javascript code using `mysql <https://github.com/Shippable/sample_node_mysql>`_.
+Sample javascript code using `mysql <https://github.com/shippableSamples/sample_node_mysql>`_.
 
 
 SQLite3
@@ -498,7 +498,7 @@ SQLite3
 
 SQLite is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine. So you can use SQLite, if you do not want to test your code behaviour with other databases.
 
-Sample python code using `SQLite <https://github.com/Shippable/sample_python_sqllite>`_.
+Sample python code using `SQLite <https://github.com/shippableSamples/sample_python_sqllite>`_.
 
 
 Elastic Search
@@ -510,7 +510,7 @@ Elastic Search
   services:
       - elasticsearch
 
-Sample python code using `Elastic Search <https://github.com/Shippable/sample_python_elasticsearch>`_.
+Sample python code using `Elastic Search <https://github.com/shippableSamples/sample_python_elasticsearch>`_.
 
 Memcached
 ..........
@@ -521,7 +521,7 @@ Memcached
   services:
       - memcached
 
-Sample python code using `Memcached <https://github.com/Shippable/sample_python_memcache>`_ .
+Sample python code using `Memcached <https://github.com/shippableSamples/sample_python_memcache>`_ .
 
 
 Redis
@@ -534,7 +534,7 @@ Redis
       - redis
 
 
-Sample python code using `Redis <https://github.com/Shippable/sample_python_redis>`_.
+Sample python code using `Redis <https://github.com/shippableSamples/sample_python_redis>`_.
 
 
 Neo4j
@@ -546,7 +546,7 @@ Neo4j
  services:
   - neo4j
 
-Sample javascript code using `Neo4j <https://github.com/Shippable/sample_node_neo4j>`_ .
+Sample javascript code using `Neo4j <https://github.com/shippableSamples/sample_node_neo4j>`_ .
 
 Cassandra
 ..........
@@ -557,7 +557,7 @@ Cassandra
  services:
    - cassandra
 
-Sample ruby code using `Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_ .
+Sample ruby code using `Cassandra <https://github.com/shippableSamples/sample_ruby_cassandra>`_ .
 
 CouchDB
 .........
@@ -568,7 +568,7 @@ CouchDB
  services:
    - couchdb
 
-Sample ruby code using `CouchDB <https://github.com/Shippable/sample-ruby-couchdb/blob/master/shippable.yml>`_ .
+Sample ruby code using `CouchDB <https://github.com/shippableSamples/sample-ruby-couchdb>`_ .
 
 RethinkDB
 ...........
@@ -579,7 +579,7 @@ RethinkDB
  services:
    - rethinkdb
 
-Sample javascript code using `RethinkDB <https://github.com/Shippable/sample-node-rethinkdb>`_.
+Sample javascript code using `RethinkDB <https://github.com/shippableSamples/sample-node-rethinkdb>`_.
  
 RabbitMQ
 .........
@@ -590,7 +590,7 @@ RabbitMQ
   services:
     - rabbitmq
 
-Sample python code using `RabbitMQ <https://github.com/Shippable/sample_python_rabbitmq>`_ .
+Sample python code using `RabbitMQ <https://github.com/shippableSamples/sample_python_rabbitmq>`_ .
 
 
 Selenium
@@ -611,7 +611,7 @@ Selenium is not started on boot. You will have to enable it using **services** t
        - "/etc/init.d/xvfb stop"
 
      
-Sample javascript code using `Selenium <https://github.com/Shippable/sample_node_selenium>`_ .
+Sample javascript code using `Selenium <https://github.com/shippableSamples/sample_node_selenium>`_ .
 
 
 --------
@@ -652,7 +652,7 @@ PostgreSQL
   before_script:
     - psql -c 'create database myapp_test;' -U postgres
 
-Sample java code using `PostgreSQL <https://github.com/Shippable/sample_java_postgres>`_.
+Sample java code using `PostgreSQL <https://github.com/shippableSamples/sample_java_postgres>`_.
 
 We support PostgreSQL 9.1, 9.2 and 9.3 versions and by default, version 9.2 is installed on our minions. Configure your yml file using **PostgreSQL** addons to select different versions. Add the following to your yml file to select the version 9.3.
 

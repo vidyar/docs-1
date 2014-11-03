@@ -9,7 +9,7 @@ cassandra-sample
 
 The goal of this code samples is to show you how to set up and build your repo on shippable.
 
-`Ruby Sample with Cassandra <https://github.com/Shippable/sample_ruby_cassandra>`_
+`Ruby Sample with Cassandra <https://github.com/shippableSamples/sample_ruby_cassandra>`_
 
 We need the yml file to analyze the project details. Add the shippable.yml file to the root of your repo by specifying:
 

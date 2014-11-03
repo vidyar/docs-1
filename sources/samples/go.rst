@@ -10,11 +10,11 @@ go-samples
 This sample will help you get started with Shippable. The testing framework used here is
 `Ginkgo <http://onsi.github.io/ginkgo/>`_ .
 
-`Go Sample <https://github.com/Shippable/sample_go>`_
+`Go Sample <https://github.com/shippableSamples/sample_go>`_
 
-`Go Sample with MongoDB <https://github.com/Shippable/sample_go_mongo>`_
+`Go Sample with MongoDB <https://github.com/shippableSamples/sample_go_mongo>`_
 
-`Go Sample with PostgreSQL <https://github.com/Shippable/sample_go_postgres>`_
+`Go Sample with PostgreSQL <https://github.com/shippableSamples/sample_go_postgres>`_
 
 Copy the test and code coverage output into the special folders Shippable/testresults and Shippable/codecoverage to get the reports parsed. The test report must be in JUnit format.
 

@@ -40,7 +40,7 @@ Next, create your Heroku application using Web GUI or ``heroku`` command install
   after_success :
     - git push -f git@heroku.com:$APP_NAME.git master
 
-Full sample of deploying PHP+MySQL application to Heroku without using toolbelt can be found on `our GitHub account <https://github.com/Shippable/sample-php-mysql-heroku/tree/without-toolbelt>`_.
+Full sample of deploying PHP+MySQL application to Heroku without using toolbelt can be found on `our GitHub account <https://github.com/shippableSamples/sample-php-mysql-heroku/tree/without-toolbelt>`_.
 
 .. note::
 
@@ -138,7 +138,7 @@ Then, in your application you need to retrieve and parse the url. For example, i
     $con = mysqli_connect($host, $username, $password, $db);
 
 Please refer to `Heroku docs <https://devcenter.heroku.com/articles/cleardb>`_ for details on how to fetch and parse the url in different programming languages.
-Full sample of deploying PHP+MySQL application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-php-mysql-heroku>`_.
+Full sample of deploying PHP+MySQL application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/shippableSamples/sample-php-mysql-heroku>`_.
 
 Using Heroku Postgres with Ruby on Rails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -167,7 +167,7 @@ And then include its name in ``config/database.yml`` file that is stored in the 
   database: sample-rubyonrails-postgres-heroku_test
 
 The last thing to do is to add ``pg`` to your ``Gemfile``. Note that it will be done automatically if you create your rails app with ``--database=postgresql`` option.
-See `our sample Ruby on Rails Heroku application <https://github.com/Shippable/sample-rubyonrails-postgres-heroku>`_ for details.
+See `our sample Ruby on Rails Heroku application <https://github.com/shippableSamples/sample-rubyonrails-postgres-heroku>`_ for details.
 
 Test and coverage reports for Ruby on Rails
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -203,7 +203,7 @@ Finally, we need to add environment variables with the locations for the reporte
     global:
       - CI_REPORTS=shippable/testresults COVERAGE_REPORTS=shippable/codecoverage
 
-See `our sample Ruby on Rails Heroku application <https://github.com/Shippable/sample-rubyonrails-postgres-heroku>`_ for details.
+See `our sample Ruby on Rails Heroku application <https://github.com/shippableSamples/sample-rubyonrails-postgres-heroku>`_ for details.
 
 General information on using MongoDB
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -267,7 +267,7 @@ Finally, you can connect to the database with the code as follows:
 Please note that we need to parse the URL to the instance to extract the database name, as the Mongo driver expects that the database is selected by accessing property named
 the same as the database, which is demonstrated in the last line of the snippet above.
 
-Full sample of deploying PHP+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-php-mongo-heroku>`_.
+Full sample of deploying PHP+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/shippableSamples/sample-php-mongo-heroku>`_.
 
 Using MongoDB with Python
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -302,7 +302,7 @@ Finally, you can connect to the database with the following code:
 Please note that we need to parse the URL to the instance to extract the database name, as the Python Mongo driver follows the convention of accessing the database by property with
 the same as the database, which is demonstrated in the last line of the snippet above.
 
-Full sample of deploying Python+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-python-mongo-heroku>`_.
+Full sample of deploying Python+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/shippableSamples/sample-python-mongo-heroku>`_.
 
 Using MongoDB with Ruby
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -353,7 +353,7 @@ You can also execute Rake tasks in your ``after_success`` step using Heroku tool
     - git push -f heroku $BRANCH:master
     - heroku run rake db:migrate
 
-Full sample of deploying Sinatra+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-ruby-mongo-heroku>`_.
+Full sample of deploying Sinatra+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/shippableSamples/sample-ruby-mongo-heroku>`_.
 
 Using MongoDB with Node.js
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -382,7 +382,7 @@ Finally, you can connect to the database with the following code:
   var mongoose = require('mongoose');
   mongoose.connect(process.env.MONGOLAB_URI);
 
-Full sample of deploying Express+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/Shippable/sample-nodejs-mongo-heroku>`_.
+Full sample of deploying Express+MongoDB application to Heroku (using Heroku toolbelt) can be found on `our GitHub account <https://github.com/shippableSamples/sample-nodejs-mongo-heroku>`_.
 
 ---------------------------
 
@@ -458,7 +458,7 @@ PHP
   );            
 
 Elastic Beanstalk serves your repository root as the document root of the webserver, so e.g. ``index.php`` file will be interpreted when you access the root context of your Elastic Beanstalk application. 
-See full sample PHP code using Elastic Beanstalk available `on GitHub <https://github.com/Shippable/sample-php-mysql-beanstalk>`_.
+See full sample PHP code using Elastic Beanstalk available `on GitHub <https://github.com/shippableSamples/sample-php-mysql-beanstalk>`_.
 
 Ruby
 ^^^^
@@ -474,7 +474,7 @@ Ruby
   )
 
 Elastic Beanstalk runtime expects that the entry point of your application will be found in ``config.ru`` file. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Ruby_sinatra.html>`_ for details.
-Full sample Ruby code using Sinatra and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-ruby-mysql-beanstalk>`_.
+Full sample Ruby code using Sinatra and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/shippableSamples/sample-ruby-mysql-beanstalk>`_.
 
 Python
 ^^^^^^
@@ -497,7 +497,7 @@ As Python projects are already run in ``virtualenv`` on Shippable minions, chang
     - export PATH=$PATH:$EB_TOOLS/eb/linux/python2.7/ && pip install boto==2.14.0 && eb push
 
 Elastic Beanstalk runtime expects that the entry point of your application will be found in ``application.py`` file. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_Python_flask.html>`_ for details.
-Full sample Python code using Flask and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-python-mysql-beanstalk>`_.
+Full sample Python code using Flask and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/shippableSamples/sample-python-mysql-beanstalk>`_.
 
 Node.js
 ^^^^^^^
@@ -513,7 +513,7 @@ Node.js
   });
 
 Elastic Beanstalk expects that the entry point of your application will be found in `app.js` or `server.js` file in the repository root. See `Amazon documentation <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html>`_ for details.
-Full sample Node.js code using Express and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/Shippable/sample-nodejs-mysql-beanstalk>`_.
+Full sample Node.js code using Express and MySQL on Elastic Beanstalk is available `on GitHub <https://github.com/shippableSamples/sample-nodejs-mysql-beanstalk>`_.
 
 Java
 ^^^^
@@ -551,7 +551,7 @@ Finally, Elastic Beanstalk `expects exploded WAR <https://forums.aws.amazon.com/
     - $EB_TOOLS/AWSDevTools/Linux/AWSDevTools-RepositorySetup.sh
     - export PATH=$PATH:$EB_TOOLS/eb/linux/python2.7/ && pip install boto==2.14.0 && eb push
 
-See the full sample of Java web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-java-mysql-beanstalk>`_ for details.
+See the full sample of Java web application featuring MySQL connection `on GitHub <https://github.com/shippableSamples/sample-java-mysql-beanstalk>`_ for details.
 
 Scala
 ^^^^^
@@ -694,7 +694,7 @@ During tests on Shippable, we need to provide similar file to simulate productio
   }
 
   // ...rest of the file omitted for brevity, you can access it at
-  // https://github.com/Shippable/sample-php-mysql-opsworks/blob/master/test-config/opsworks.php
+  // https://github.com/shippableSamples/sample-php-mysql-opsworks/blob/master/test-config/opsworks.php
 
 Then, in ``before_script`` step of your build, copy this file to the location required by your application code:
 
@@ -703,7 +703,7 @@ Then, in ``before_script`` step of your build, copy this file to the location re
   before_script: 
     - cp test-config/opsworks.php .
 
-See the full sample of PHP web application featuring MySQL connection `on GitHub <https://github.com/Shippable/sample-php-mysql-opsworks>`_ for details.
+See the full sample of PHP web application featuring MySQL connection `on GitHub <https://github.com/shippableSamples/sample-php-mysql-opsworks>`_ for details.
 
 General information on using Amazon DynamoDB
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -894,7 +894,7 @@ This client can be then used to interact with DynamoDB, for example as follows:
   ));
 
 Refer to the `DynamoDB client documentation <http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-dynamodb.html>`_
-and `the full sample <https://github.com/Shippable/sample-php-dynamo-opsworks>`_ on our GitHub account for details.
+and `the full sample <https://github.com/shippableSamples/sample-php-dynamo-opsworks>`_ on our GitHub account for details.
 
 Using DynamoDB with Node.js
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -969,7 +969,7 @@ Next, the client can be used to interact with DynamoDB, for example as follows:
   db.putItem(params, callback);
 
 Refer to the `DynamoDB client documentation <http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html>`_
-and `the full sample <https://github.com/Shippable/sample-nodejs-dynamo-opsworks>`_ on our GitHub account for details.
+and `the full sample <https://github.com/shippableSamples/sample-nodejs-dynamo-opsworks>`_ on our GitHub account for details.
 
 -----------------------
 
@@ -1182,7 +1182,7 @@ You can then encrypt it as Shippable secure variable and use in your ``after_suc
   As this functionality is not yet in its final form, it is not discussed here. Please refer to
   `the GAE documentation <https://developers.google.com/cloud/devtools/repo/push-to-deploy>`_ to track its progress.
 
-Full sample of Python+Datastore application can be found on `our Github account <https://github.com/Shippable/sample-python-datastore-appengine>`_.
+Full sample of Python+Datastore application can be found on `our Github account <https://github.com/shippableSamples/sample-python-datastore-appengine>`_.
 
 Using Cloud SQL from Python
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1392,7 +1392,7 @@ can then run the tests with the following ``script`` build step:
     - python manage.py test
 
 See the sample of Django+Cloud SQL application on
-`our GitHub account <https://github.com/Shippable/sample-django-cloudsql-appengine>`_ for the details.
+`our GitHub account <https://github.com/shippableSamples/sample-django-cloudsql-appengine>`_ for the details.
 
 Deployment of a Django application
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1456,7 +1456,7 @@ application in the ``after_success`` step would then look like follows:
   after_success:
     - echo "$GAE_PASSWORD" | $GAE_DIR/google_appengine/appcfg.py -e "$EMAIL" --passin update .
 
-Full sample of Django+Cloud SQL application can be found on `our GitHub account <https://github.com/Shippable/sample-django-cloudsql-appengine>`_.
+Full sample of Django+Cloud SQL application can be found on `our GitHub account <https://github.com/shippableSamples/sample-django-cloudsql-appengine>`_.
 
 Using Datastore from Go
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1556,7 +1556,7 @@ is to name your packages according to the following pattern:
 
   github.com/<GitHub username>/<repository name>/<package name, probably nested>
 
-For example, the package that houses the main HTTP handler in `our Go sample <https://github.com/Shippable/sample-go-datastore-appengine>`_
+For example, the package that houses the main HTTP handler in `our Go sample <https://github.com/shippableSamples/sample-go-datastore-appengine>`_
 is called ``github.com/Shippable/sample-go-datastore-appengine/hello``. It follows that in your development environment the contents of
 the sample repository would be stored in the ``$GOPATH/src/github.com/Shippable/sample-go-datastore-appengine`` path.
 
@@ -1780,7 +1780,7 @@ during the deployment):
     - mvn clean cobertura:cobertura
     - mvn test -Parq-jbossas-managed
 
-Please refer to the `application sample <https://github.com/Shippable/sample-java-mysql-openshift>`_ for an example Arquillian test
+Please refer to the `application sample <https://github.com/shippableSamples/sample-java-mysql-openshift>`_ for an example Arquillian test
 of a RESTful webservice.
 
 Using MySQL
@@ -1877,5 +1877,5 @@ Then, include it in your Arquillian test archive as ``persistence.xml``:
     .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
 
 We invite you to explore our JavaEE+MySQL sample for OpenShift on the
-`Shippable GitHub account <https://github.com/Shippable/sample-java-mysql-openshift>`_.
+`Shippable GitHub account <https://github.com/shippableSamples/sample-java-mysql-openshift>`_.
 
