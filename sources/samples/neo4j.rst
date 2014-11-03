@@ -9,11 +9,11 @@ neo4j-samples
 
 These samples will help you get started with Shippable.
 
-`Ruby Sample with Neo4j <https://github.com/Shippable/sample_ruby_neo4j>`_
+`Ruby Sample with Neo4j <https://github.com/shippableSamples/sample_ruby_neo4j>`_
 
-`Node Sample with Neo4j <https://github.com/Shippable/sample_node_neo4j>`_
+`Node Sample with Neo4j <https://github.com/shippableSamples/sample_node_neo4j>`_
 
-`Python Sample with Neo4j <https://github.com/Shippable/sample_python_neo4j>`_
+`Python Sample with Neo4j <https://github.com/shippableSamples/sample_python_neo4j>`_
 
 We need the yml file to analyze the project details. Add the shippable.yml file to the root of your repo by specifying:
 

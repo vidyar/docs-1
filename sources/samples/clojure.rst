@@ -5,16 +5,16 @@
 .. _clojure:
 
 clojure-samples
-=================
+==================
  
 This sample will help you get started with Shippable. The testing framework used here is
 `Clojure.test <http://richhickey.github.io/clojure/clojure.test-api.html>`_ .
 
-`Clojure Sample <https://github.com/Shippable/sample_clojure>`_
+`Clojure Sample <https://github.com/shippableSamples/sample_clojure>`_
 
-`Clojure Sample with MongoDB <https://github.com/Shippable/sample_clojure_mongodb>`_
+`Clojure Sample with MongoDB <https://github.com/shippableSamples/sample_clojure_mongodb>`_
 
-`Clojure Sample with PostgreSQL <https://github.com/Shippable/sample_clojure_postgres>`_
+`Clojure Sample with PostgreSQL <https://github.com/shippableSamples/sample_clojure_postgres>`_
 
 Copy the test and code coverage output into the special folders Shippable/testresults and Shippable/codecoverage to get the reports parsed. The test report must be in the JUnit XML format and code coverage report in the Cobertura XML format.
 

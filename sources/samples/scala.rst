@@ -10,11 +10,11 @@ scala-sample
 This sample will help you get started with Shippable. Testing framework used here is
 `ScalaTest <http://scalatest.org/>`_ .
 
-`Scala Sample <https://github.com/Shippable/sample_scala>`_
+`Scala Sample <https://github.com/shippableSamples/sample_scala>`_
 
-`Scala Sample with MongoDB <https://github.com/Shippable/sample_scala_mongo>`_
+`Scala Sample with MongoDB <https://github.com/shippableSamples/sample_scala_mongo>`_
 
-`Scala Sample with PostgreSQL <https://github.com/Shippable/sample_scala_postgres>`_
+`Scala Sample with PostgreSQL <https://github.com/shippableSamples/sample_scala_postgres>`_
 
 Keep the test and code coverage output in the special folders Shippable/testresults and Shippable/codecoverage to get the reports parsed. The test report must be in Junit format.
 
