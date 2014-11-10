@@ -762,10 +762,10 @@ To rerun a pull request build, go to your project's page -> Pull Request tab and
 **Permissions**
 ------------------
 
-We will automatically add your collaborators when you login to shippable and it will be updated in the user-interface. Go to the org dashboard and click on the **Permissions** button on the right side of the page to view your collaborators. 
+We will automatically add your collaborators when you login to shippable and it will be updated in the user-interface. Go to the project's page and click on the **Permissions** button on the right side of the page to view your collaborators. 
 
 
-There are two types of roles that users can have for an organisation-
+There are two types of roles that users can have -
 
 **Owner :** 
 Owner is the highest role. This role permits users to create, run and delete a project. 
