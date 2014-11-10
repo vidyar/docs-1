@@ -9,11 +9,6 @@ Scala
 
 This section helps you specify the build environment and other configuration specific to Scala projects.
 
-- Tell us what your build environment is. This is an optional setting and if omitted Ubuntu 12.04 is used as the default.
-    .. code-block:: python
-        
-        # Build Environment
-        build_environment: ubuntu1204
 
 - Set the appropriate language and version number. You can test against multiple versions for a single push by adding more entries. Scala minions use ``scala`` by default to set the version.
   

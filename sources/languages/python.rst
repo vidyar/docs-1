@@ -11,14 +11,6 @@ This section helps you to configure the yml file for your python project.
 
 **Choosing Python versions to test against**
 
-- Tell us what your build environment is. This is an optional setting and if omitted Ubuntu 12.04 is used as the default.
-    .. code-block:: bash
-    
-        # Build Environment
-              build_environment: ubuntu1204
-
-**Python versions for testing** :
-
 - Set the appropriate language and the version number. You can test against multiple versions for a single push by adding more entries. Python minions use ``python`` by default to set the version.
       .. code-block:: python
         
