@@ -366,10 +366,10 @@ Refer `sample_ubuntu1204_php <https://github.com/shippableSamples/sample_ubuntu1
 
 The build images available for scala:
 
-1. `shippableimages/ubuntu1204_scala <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_scala>`_(`Dockerfile <https://github.com/shippableImages/ubuntu1204_scala/blob/master/Dockerfile>`_)
+1. `shippableimages/ubuntu1204_scala <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_scala>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_scala/blob/master/Dockerfile>`_)
 
 
-2. `shippableimages/ubuntu1404_scala <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_scala>`_(`Dockerfile <https://github.com/shippableImages/ubuntu1404_scala/blob/master/Dockerfile>`_)
+2. `shippableimages/ubuntu1404_scala <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_scala>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_scala/blob/master/Dockerfile>`_)
 
 
 The scala version available in the image is 2.11.2
