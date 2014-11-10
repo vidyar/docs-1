@@ -6,15 +6,11 @@
 
 Java 
 ======
+
 This section helps you to create a shippable.yml file for your Java project.
 
-- Tell us what your build environment is. This is an optional setting and if omitted Ubuntu 12.04 is used as a default.
-    .. code-block:: python
-        
-        # Build Environment
-        build_environment: ubuntu1204
 
-- Set the appropriate language and the version number. You can test against Openjdk6, Openjdk7, Oraclejdk7 and Oraclejdk8 for a single push by adding more entries. Java minions use ``jdk`` by default to set the runtime platform.
+- Set the appropriate language and the jdk. You can test against Openjdk6, Openjdk7, Oraclejdk7 and Oraclejdk8 for a single push by adding more entries. Java minions use ``jdk`` by default to set the runtime platform.
 	.. code-block:: python
 	
      		# language setting

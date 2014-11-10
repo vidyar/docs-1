@@ -9,11 +9,6 @@ GO
 
 This section helps you to create a shippable.yml file for your GO project.
 
-- Tell us what your build environment is. This is an optional setting and if omitted Ubuntu 12.04 is used as a default.
-    .. code-block:: python
-        
-        # Build Environment
-        build_environment: ubuntu1204
 
 - Set the appropriate language and the version number. You can test against multiple versions for a single push by adding more entries. GO minions use ``go`` by default to set the runtime platform.
 	.. code-block:: python

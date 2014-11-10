@@ -14,6 +14,7 @@ This documentation has the following resources:
    start
    config
    continuous_deployment
+   custom_images
    languages/index
    samples/index
    glossary

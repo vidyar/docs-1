@@ -11,11 +11,6 @@ This section helps you to configure the yml file for your node_js project.
 
 **Node_js versions for testing** :
 
-- Tell us what your build environment is. This is an optional setting and if omitted Ubuntu 12.04 is used as the default.
-    .. code-block:: bash
-    
-        # Build Environment
-              build_environment: ubuntu1204
 
 - Set the appropriate language and the version number. You can test against multiple versions for a single push by adding more entries. node_js minions use ``node_js`` by default to set the version.
     .. code-block:: bash
