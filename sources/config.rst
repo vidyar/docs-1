@@ -55,7 +55,7 @@ A set of common tools are available on all minions. The following is a list of a
   
   - MySQL
   - Postgre
-  - SQLLite
+  - SQLite
   - MongoDB
   - Redis
   - ElasticSearch
