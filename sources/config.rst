@@ -129,7 +129,7 @@ Build Flow
 
 When we receive a build trigger through a webhook or manual run, we execute the following steps - 
 
-1. Clone/Pull the project from Github. This depends on whether the minion is in pristine state or not
+1. Clone/Pull the project from Github or Bitbucket. This depends on whether the minion is in pristine state or not
 2. ``cd`` into the workspace
 3. Checkout the commit that is getting built
 4. Run the ``before_install`` section. This is typically used to prep your minion and update any packages
