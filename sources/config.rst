@@ -593,27 +593,6 @@ RabbitMQ
 Sample python code using `RabbitMQ <https://github.com/shippableSamples/sample_python_rabbitmq>`_ .
 
 
-Selenium
-.........
-
-Selenium is not started on boot. You will have to enable it using **services** tag and start xvfb (X Virtual Framebuffer) on display port 99.0, so that all your test suites will run on the server without a display. Configure your yml file as shown below to start selenium on firefox.
-
-.. code-block:: bash
-   
-     addons:
-        firefox: "23.0"
-     services:
-       - selenium
-     before_script:
-       - "export DISPLAY=:99.0"
-       - "/etc/init.d/xvfb start"
-     after_script:
-       - "/etc/init.d/xvfb stop"
-
-     
-Sample javascript code using `Selenium <https://github.com/shippableSamples/sample_node_selenium>`_ .
-
-
 --------
 
 **Addons**
@@ -663,6 +642,63 @@ We support PostgreSQL 9.1, 9.2 and 9.3 versions and by default, version 9.2 is i
            postgresql : "9.3"
   
 PostGIS 2.1 packages are pre-installed in our minions along with the PostgreSQL versions 9.1, 9.2 and 9.3.
+
+
+Selenium
+...........
+
+
+Selenium is not started on boot. You will have to enable it using **services** tag and start xvfb (X Virtual Framebuffer) on display port 99.0, so that all your test suites will run on the server without a display. Configure your yml file as shown below to start selenium server on firefox.
+
+.. code-block:: bash
+   
+     addons:
+       firefox: "23.0"
+
+     services:
+       - selenium
+
+     before_script:
+       - "export DISPLAY=:99.0"
+       - "/etc/init.d/xvfb start"
+     
+Selenium **2.40** is started by default. You can also select a different version of selenium using **addons** tag. The following versions are supported:
+ 
+- 2.39
+- 2.40
+- 2.41
+- 2.42
+- 2.43
+- 2.44 
+
+Choose the required version and add it to your shippable.yml file as shown below  
+
+.. code-block:: bash
+
+          addons:
+            selenium: "2.43"
+
+This will download the required version. You will have to include **services** tag in your yml file to start the selenium server using the downloaded version. Configure your yml file as shown below to start selenium server **2.43** on firefox.
+      
+.. code-block:: bash
+ 
+    #specify required selenium and firefox version
+    addons:
+      selenium: "2.43"
+      firefox: "27.0"
+     
+    #start the selenium server  
+    services:
+      - selenium
+
+    before_script:
+      - "export DISPLAY=:99.0"
+      - "/etc/init.d/xvfb start"
+  
+
+
+Sample javascript code using `Selenium <https://github.com/shippableSamples/sample_node_selenium>`_ .
+
 
 
 ----------
