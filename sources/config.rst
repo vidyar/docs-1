@@ -1097,7 +1097,7 @@ Shippable allows you to run builds using your own host machine. To use this feat
 
    build_image: <docker_hub_username>/<image_name>
 
-You can also specify **privileged** and **network** options in your yml file. The following network modes are supported:
+You can also specify docker run options like **privileged** and **network** in your yml file. The following network modes are supported:
  
 - bridge - ( default) connect the container to the bridge 
 
