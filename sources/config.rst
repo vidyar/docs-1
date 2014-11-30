@@ -1084,3 +1084,32 @@ Shippable does not cache dependencies between builds. Each build will run on a f
 Before the build, we will check for the flag **cache: true** and if it exists, the minion will be cached after the build runs and the cached minion will be reused for further builds.  
 
 You can use the **[reset_minion]** tag in commit message to reset the minion. We will clear all the cached dependencies and packages, when we see a [reset_minion] tag and your build will run on a fresh minion. Once this build finishes execution, we will cache the minion once again so that further builds can run using the cached minion.
+
+
+---------
+
+**Dedicated hosts**
+------------------------
+
+Shippable allows you to run builds using your own host machine. To use this feature, follow the steps mentioned `here <http://blog.shippable.com/dedicated-hosts->`_ and then update the **build_image** tag in your shippable.yml file with the path of your docker image. 
+
+.. code-block:: python
+
+   build_image: <docker_hub_username>/<image_name>
+
+You can also specify docker run options like **privileged** and **network** in your yml file. The following network modes are supported:
+ 
+- bridge - ( default) connect the container to the bridge 
+
+- host - use the host's network stack inside the container 
+
+Privileged is set to false by default. If you want to access all devices on the host, then you need to enable it using  **privileged: true** tag in your yml file. Configure your yml file as shown below to use host's network mode. 
+
+.. code-block:: python
+
+   build_image:
+     name: <docker_hub_username>/<image_name>
+     net: host
+     privileged: true
+  
+ 
