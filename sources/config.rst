@@ -160,6 +160,14 @@ You can run any script file as part of your configuration, as long as it has a v
         script: ./minions/do_something.sh 
 
 
+If you want to prevent shippable from using the default build command you can add following:
+
+.. code-block:: python
+        
+        # script file 
+        script: 
+        - true #or any custom command
+
 
 command collections
 ...................
