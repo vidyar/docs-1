@@ -23,6 +23,7 @@ Below section will give you more details on specific images:
 .. note::
  If you want to run builds using your own images, then you will have to enable `Dedicated hosts <http://blog.shippable.com/dedicated-hosts->`_  and you should also update **build_image** tag in shippable.yml file with the path of the image. 
    
+-----
 
 **Clojure**
 --------------- 
@@ -56,6 +57,7 @@ A sample yml that helps you getting started with clojure image:
 
 Refer `sample_ubuntu1204_clojure <https://github.com/shippableSamples/sample_ubuntu1204_clojure>`_  on github for more details.
 
+----
 
 **GO**
 -------- 
@@ -115,6 +117,8 @@ A sample yml that helps you getting started with go image:
 Refer `sample_ubuntu1204_go <https://github.com/shippableSamples/sample_ubuntu1204_go>`_  on github for more details.
 
 
+----
+
 **Java**
 ---------
 
@@ -167,6 +171,7 @@ A sample yml that helps you getting started with java image:
 
 Refer `sample_ubuntu1204_java <https://github.com/shippableSamples/sample_ubuntu1204_java>`_  on github for more details.
 
+-----
 
 **Node.js**
 -----------
@@ -215,8 +220,53 @@ A sample yml that helps you getting started with node.js image:
 
 Refer `sample_ubuntu1204_nodejs <https://github.com/shippableSamples/sample_ubuntu1204_nodejs>`_  on github for more details.
 
+----
+
+**PHP**
+--------------- 
+
+The following build images are available for php 
+
+1. `shippableimages/ubuntu1204_php <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_php>`_  (`Dockerfile <https://github.com/shippableImages/ubuntu1204_php/blob/master/Dockerfile>`_)
+2. `shippableimages/ubuntu1404_php <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_php>`_  (`Dockerfile <https://github.com/shippableImages/ubuntu1404_php/blob/master/Dockerfile>`_)
 
 
+The php versions available in these images are
+
+-  5.3
+-  5.4
+-  5.5
+-  5.6
+
+You can use these images to run php builds. Add **build_image** tag to your shippable.yml file and activate the required version in before_install section to run your build against the correct version of php. 
+
+
+A sample yml that helps you getting started with php image:
+
+.. code-block:: bash
+
+  language: php
+  
+  php:
+    - 5.3
+    
+  #specify the build_image 
+  build_image: shippableimages/ubuntu1204_php
+
+  # Activate the required php version
+  before_install:
+    - export PATH=$HOME/.phpenv/bin:$HOME/.phpenv/extensions:$PATH && eval "$(phpenv init -)"
+    - phpenv global $SHIPPABLE_PHP_VERSION
+    - php --version
+
+  script:
+    - phpunit  tests/calculator_test.php
+  
+
+Refer `sample_ubuntu1204_php <https://github.com/shippableSamples/sample_ubuntu1204_php>`_  on github for more details.
+
+
+------
 
 **Python**
 --------------- 
@@ -267,11 +317,11 @@ A sample yml that helps you getting started with python image:
 
 Refer `sample_ubuntu1204_python <https://github.com/shippableSamples/sample_ubuntu1204_python>`_  on github for more details.
 
+----
 
 **Ruby**
 ---------
 
- 
 The following build images are available for ruby:
 
 1. `shippableimages/ubuntu1204_ruby <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_ruby>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_ruby/blob/master/Dockerfile>`_)
@@ -320,46 +370,7 @@ A sample yml that helps you getting started with ruby image:
 Refer `sample_ubuntu1204_ruby <https://github.com/shippableSamples/sample_ubuntu1204_ruby>`_ on github for more details.
 
 
-
-**PHP**
---------------- 
-The build image available for php is `shippableimages/ubuntu1204_php <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_php>`_  (`Dockerfile <https://github.com/shippableImages/ubuntu1204_php/blob/master/Dockerfile>`_)
-
-
-The php versions available in this image:
-
--  5.3
--  5.4
--  5.5
--  5.6
-
-You can use this image to run php builds. Add **build_image** tag to your shippable.yml file and activate the required version in before_install section to run your build against the correct version of php. 
-
-
-A sample yml that helps you getting started with php image:
-
-.. code-block:: bash
-
-  language: php
-  
-  php:
-    - 5.3
-    
-  #specify the build_image 
-  build_image: shippableimages/ubuntu1204_php
-
-  # Activate the required php version
-  before_install:
-    - export PATH=$HOME/.phpenv/bin:$HOME/.phpenv/extensions:$PATH && eval "$(phpenv init -)"
-    - phpenv global $SHIPPABLE_PHP_VERSION
-    - php --version
-
-  script:
-    - phpunit  tests/calculator_test.php
-  
-
-Refer `sample_ubuntu1204_php <https://github.com/shippableSamples/sample_ubuntu1204_php>`_  on github for more details.
-	
+------	
 
 **Scala**
 --------------- 

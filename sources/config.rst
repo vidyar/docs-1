@@ -234,9 +234,11 @@ The following environment variables are available for every build. You can use t
 
 - BRANCH : Name of branch being built
 
+- BASE_BRANCH : Name of the target branch into which the pull request changes will be merged 
+
 - BUILD_NUMBER : Build number for current build
 
-- BUILD_URL : Direct URL link to the Build Output
+- BUILD_URL : Direct URL link to the build output
 
 - CI : true
 
@@ -247,6 +249,8 @@ The following environment variables are available for every build. You can use t
 - COMPARE_URL : A link to GitHub/BitBucket's comparision view for the push
  
 - DEBIAN_FRONTEND : noninteractive
+
+- HEAD_BRANCH: Name of the most recently committed branch
 
 - JOB_ID : id of job in Shippable
 
