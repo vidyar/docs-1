@@ -79,7 +79,7 @@ Next, create your Heroku application using Web GUI or ``heroku`` command install
 
   after_success:
     - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
-    - git remote -v | grep ^heroku || heroku git:remote --app $APP_NAME
+    - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME
     - git push -f heroku master
 
 * First we generate public SSH key out of the private one to a file with a custom name. We then authorize this key with Heroku. Using custom name for the file allows us to skip this step on subsequent builds.
@@ -349,7 +349,7 @@ You can also execute Rake tasks in your ``after_success`` step using Heroku tool
 
   after_success:
     - test -f ~/.ssh/id_rsa.heroku || ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.heroku && heroku keys:add ~/.ssh/id_rsa.heroku
-    - git remote -v | grep ^heroku || heroku git:remote --app $APP_NAME
+    - git remote -v | grep ^heroku || heroku git:remote --ssh-git --app $APP_NAME
     - git push -f heroku $BRANCH:master
     - heroku run rake db:migrate
 
