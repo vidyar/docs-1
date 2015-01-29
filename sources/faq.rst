@@ -8,8 +8,8 @@ FAQ
 ===
 Having trouble with your builds? Here is a list of frequently asked questions.... hope this helps!
 
-**Linking accounts**
----------------------
+**Why can't I see my BitBucket repos in my Shippable account?**
+Shippable only supports git based repositories, so if you have mercurial repositories in your BitBucket account, you will not see them in the Shippable repository list. If you cannot see git based repos, please open an issue on our [GitHub Support repo](https://github.com/Shippable/support).
 
 **How do I link my github and bitbucket accounts?**
 
@@ -19,18 +19,11 @@ For example: Sign in to shippable with your github account and click on the bitb
 
 If you have already logged in to shippable with both the service providers account separately, then it will not allow you to link the accounts. You have to delete one of your shippable account and then click on the respective service provider icon from the other account. Deleting the account will also remove all its associated projects and builds, so first you need to decide which account you want to delete and then delete the account from the profile dropdown.
 
-**Account deletion**
-----------------------
-
-**Why am I not able to see bitbucket org repos after recreating my account?**
+**Why am I not able to see BitBucket org repos after deleting and recreating my account on Shippable?**
  
 Deleting the shippable account will also delete all the permissions associated with the account. If you recreate your account, bitbucket will not allow us to pull all the permissions you have, unless the owner of that organization logs in back to shippable and then click on the sync repos button to see the repos. 
 
-
-**Setting timezone**
----------------------
-
-**How to set desired timezones inside the minions?**
+**How do I set desired timezones inside the minions?**
 
 By default, our minions are configured with ETC/UTC timezone which is set in /etc/timezone file for ubuntu minions. However, we allow you to set a specific time zone for the minion in before_script section of your yml file . For example, 
 
