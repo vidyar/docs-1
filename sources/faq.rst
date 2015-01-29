@@ -9,6 +9,7 @@ FAQs
 Having trouble with your builds? Here is a list of frequently asked questions.... hope this helps!
 
 **Why can't I see my BitBucket repos in my Shippable account?**
+---------------------------------------------------------------
 Shippable only supports git based repositories, so if you have mercurial repositories in your BitBucket account, you will not see them in the Shippable repository list. If you cannot see git based repos, please open an issue on our [GitHub Support repo](https://github.com/Shippable/support).
 
 **How do I link my github and bitbucket accounts?**
