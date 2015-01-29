@@ -4,8 +4,8 @@
 
 .. _faq:
 
-FAQ
-===
+FAQs
+====
 Having trouble with your builds? Here is a list of frequently asked questions.... hope this helps!
 
 **Why can't I see my BitBucket repos in my Shippable account?**
