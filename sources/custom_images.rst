@@ -3,26 +3,30 @@
 :keywords: custom images, dedicated hosts, shippable images
 
 
-Custom images
-==============
+Language specific images
+========================
 
-Custom images are open source projects and it is available for all the supported languages. These images are not pre-installed with any tools, addons or services. You will have to customize your shippable.yml file to install it based on the project requirements. Build image from Docker Hub are available at https://registry.hub.docker.com/repos/shippableimages/ . 
+Our default image, minv2, comes installed with popular versions of all supported languages, tools and services. This is the image that is used if nothing is specified in your shippable.yml with a **build_image** tag. 
 
-The syntax to use custom images:
+However, you might prefer starting with a small image that only has versions of your language installed. To help with this, we have open sourced basic images for all supported languages. These images only come with popular versions of a language and are NOT pre-installed with any tools, addons or services. You will have to customize your shippable.yml file to install these based on the project requirements. You can then enable caching to make sure your pre-requisites are not installed for each build.
+
+Build images are available on Docker Hub at https://registry.hub.docker.com/repos/shippableimages/ . Dockerfiles for these images are at https://github.com/shippableImages
+
+The syntax to use language specific images is:
 
 .. code-block:: bash
 
   build_image: <docker_hub_username>/<image_name>
 
 .. note::
-   If you would need pre-installed tools, addons or services, then you can use shippable/minv2 image.
+As mentioned above, our language specific images do not come with any tools, addons, or services pre-installed. If you need pre-installed tools, addons or services, then you should use shippable/minv2 image.
 
-
-Below section will give you more details on specific images:
 
 .. note::
- If you want to run builds using your own images, then you will have to enable `Dedicated hosts <http://blog.shippable.com/dedicated-hosts->`_  and you should also update **build_image** tag in shippable.yml file with the path of the image. 
-   
+ If you want to run builds using your own custom images, then you will have to enable `Dedicated hosts <http://blog.shippable.com/dedicated-hosts->`_  You will need the **build_image** tag in shippable.yml file with the path of the image. 
+
+The section will give you more details on specific images.
+
 -----
 
 **Clojure**
