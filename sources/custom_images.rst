@@ -1,6 +1,6 @@
-:title: Custom_images
-:description: A brief description about custom_images
-:keywords: custom images, dedicated hosts, shippable images
+:title: Language_specific_images
+:description: A brief description about how to use language specific docker images
+:keywords: custom images, dedicated hosts, shippable images, language specific docker images
 
 
 Language specific images
@@ -18,12 +18,16 @@ The syntax to use language specific images is:
 
   build_image: <docker_hub_username>/<image_name>
 
+
+
 .. note::
 As mentioned above, our language specific images do not come with any tools, addons, or services pre-installed. If you need pre-installed tools, addons or services, then you should use shippable/minv2 image.
 
 
+
 .. note::
  If you want to run builds using your own custom images, then you will have to enable `Dedicated hosts <http://blog.shippable.com/dedicated-hosts->`_  You will need the **build_image** tag in shippable.yml file with the path of the image. 
+
 
 The section will give you more details on specific images.
 
