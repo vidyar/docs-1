@@ -7,7 +7,7 @@
 A bit deeper
 ============
 
-Build Minions and Build configuration are two things that you should care the most about when using Shippable. The sections below talk about these in greater detail.
+Build Minions and Build Configuration are two things that you should care the most about when using Shippable. The sections below talk about these in greater detail.
 
 
 **Minions**
@@ -15,7 +15,7 @@ Build Minions and Build configuration are two things that you should care the mo
 
 Minions are Docker based containers that run your builds and tests. You can think of them as Build VMs. Each minion runs one build at a time, so the more minions you have, the more concurrency you will get.  
 
-Minions are automatically provisioned whenever a build is triggered and it will get deleted after the build finishes execution. We will automatically add additional minions if you are upgrading your subscription plan.
+Minions are automatically provisioned whenever a build is triggered and it will get deleted after the build finishes execution. We will automatically add additional minions, as appropriate, based on your subscription plan.
 
 Each minion starts from a base image and can be customized by specifying ``before_install`` scripts in the YML file. A minion can be configured to run any package, library, or service that your application requires. There are some preinstalled tools and services that you can use to customize your minions even further. 
 
