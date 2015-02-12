@@ -11,16 +11,16 @@ Getting Started
 **Step 1** : Sign Up
 --------------------
 
-To sign up with shippable, you should have either Github or Bitbucket account. Go to `Shippable.com <https://www.shippable.com>`_  and click on the 'Login' button on the top menu which will give you an option to sign in with either Github or Bitbucket credentials.
+To sign up with Shippable, you should have either a Github or Bitbucket account. Go to `Shippable.com <https://www.shippable.com>`_  and click on the 'Login' button on the top menu which will give you an option to sign in with either Github or Bitbucket credentials.
 
-Click on the login button and choose the service provider that you would like to login with. After entering credentials, it will take you to the standard app authorization page and requests you to give access to Shippable.      
+Click on the Login button and choose the service provider that you would like to log in with. After entering credentials, it will take you to the standard app authorization page and prompt you to give access to Shippable.      
 
 .. note::
     We realize that most people do not want to give write access to their repo. However, we need write permissions to add deploy keys to your repos so that webhooks work. We do not touch anything else in the repo.
 
 After authorization, you will be authenticated by the service provider and redirected back to Shippable. You are now ready to set up CI! 
 
-Shippable allows you to connect both github and bitbucket service providers. To link both accounts, go to the dashboard page and click on the Bitbucket or Github icon on the top right that you would like to connect.
+Shippable allows you to connect both GitHub and Bitbucket service providers. To link both accounts, go to the dashboard page and click on the Bitbucket or GitHub icon on the top right that you would like to connect.
 
 -------
 
