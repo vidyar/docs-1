@@ -333,7 +333,7 @@ In this setting **4 individual builds** are triggered in a build group
 Secure environment variables
 .............................
 
-Shippable allows you to encrypt the environment variable definitions and keep your configurations private using **secure** tag. Go to the org dashboard  or individual dasboard page from where you have enabled your project and click on **ENCRYPT ENV VARIABLE** button on the top right corner of the page. Enter the env variable and its value in the text box as shown below. 
+Shippable allows you to encrypt the environment variable definitions and keep your configurations private using **secure** tag. Go to the org dashboard  or individual dashboard page from where you have enabled your project and click on **ENCRYPT ENV VARIABLE** button on the top right corner of the page. Enter the env variable and its value in the text box as shown below. 
 
 .. code-block:: python
 

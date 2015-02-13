@@ -21,7 +21,7 @@ The syntax to use language specific images is:
 
 
 .. note::
-As mentioned above, our language specific images do not come with any tools, addons, or services pre-installed. If you need pre-installed tools, addons or services, then you should use shippable/minv2 image.
+ As mentioned above, our language specific images do not come with any tools, addons, or services pre-installed. If you need pre-installed tools, addons or services, then you should use shippable/minv2 image.
 
 
 
@@ -36,7 +36,7 @@ The section will give you more details on specific images.
 **Clojure**
 --------------- 
 
-The build image available for clojure is `shippableimages/ubuntu1204_clojure <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_clojure>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_clojure/blob/master/Dockerfile>`_)
+The build image available for clojure is `shippableimages/ubuntu1204_clojure <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_clojure>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_clojure/blob/master/Dockerfile>`__)
 
 The lein version available in this image is lein2
 
@@ -72,10 +72,10 @@ Refer `sample_ubuntu1204_clojure <https://github.com/shippableSamples/sample_ubu
 
 The following build images are available for GOLANG :
 
-1. `shippableimages/ubuntu1204_go <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_go>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_go/blob/master/Dockerfile>`_)
+1. `shippableimages/ubuntu1204_go <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_go>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_go/blob/master/Dockerfile>`__)
 
 
-2. `shippableimages/ubuntu1404_go <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_go>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_go/blob/master/Dockerfile>`_)
+2. `shippableimages/ubuntu1404_go <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_go>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_go/blob/master/Dockerfile>`__)
 
 
 The go versions available in these images are
@@ -83,7 +83,6 @@ The go versions available in these images are
 -  1.1
 -  1.2
 -  1.3
--  tip
 -  release
 
 You can use these images to run go builds. Add **build_image** tag to your shippable.yml file and activate gvm in before_install section to run your build against the correct version of go. 
@@ -103,11 +102,9 @@ A sample yml that helps you getting started with go image:
 
   before_install:
     - source $HOME/.gvm/scripts/gvm;
-    - if [[ $SHIPPABLE_GO_VERSION == "tip" ]]; then gvm install tip; gvm use tip; fi
     - if [[ $SHIPPABLE_GO_VERSION == *release* ]]; then gvm install release; gvm use release; fi
     - if [[ $SHIPPABLE_GO_VERSION =~ [0-9].[0-9] ]]; then gvm install go$SHIPPABLE_GO_VERSION; gvm use go$SHIPPABLE_GO_VERSION; fi
     - export GOPATH=$SHIPPABLE_GOPATH
-
     - go get github.com/t-yuki/gocover-cobertura
     - go get github.com/onsi/gomega
     - go get github.com/onsi/ginkgo
@@ -132,9 +129,9 @@ Refer `sample_ubuntu1204_go <https://github.com/shippableSamples/sample_ubuntu12
 
 The following build images are available for Java:
 
-1. `shippableimages/ubuntu1204_java <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_java>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_java/blob/master/Dockerfile>`_)
+1. `shippableimages/ubuntu1204_java <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_java>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_java/blob/master/Dockerfile>`__)
 
-2. `shippableimages/ubuntu1404_java <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_java>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_java/blob/master/Dockerfile>`_)
+2. `shippableimages/ubuntu1404_java <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_java>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_java/blob/master/Dockerfile>`__)
 
 
 The JDK's available in these images are
@@ -186,9 +183,9 @@ Refer `sample_ubuntu1204_java <https://github.com/shippableSamples/sample_ubuntu
 
 The following build images are available for node.js:
 
-1. `shippableimages/ubuntu1204_nodejs <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_nodejs>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_nodejs/blob/master/Dockerfile>`_)
+1. `shippableimages/ubuntu1204_nodejs <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_nodejs>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_nodejs/blob/master/Dockerfile>`__)
 
-2. `shippableimages/ubuntu1404_nodejs <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_nodejs>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_nodejs/blob/master/Dockerfile>`_)
+2. `shippableimages/ubuntu1404_nodejs <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_nodejs>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_nodejs/blob/master/Dockerfile>`__)
 
 
 The node.js versions available in these images are
@@ -235,8 +232,8 @@ Refer `sample_ubuntu1204_nodejs <https://github.com/shippableSamples/sample_ubun
 
 The following build images are available for php 
 
-1. `shippableimages/ubuntu1204_php <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_php>`_  (`Dockerfile <https://github.com/shippableImages/ubuntu1204_php/blob/master/Dockerfile>`_)
-2. `shippableimages/ubuntu1404_php <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_php>`_  (`Dockerfile <https://github.com/shippableImages/ubuntu1404_php/blob/master/Dockerfile>`_)
+1. `shippableimages/ubuntu1204_php <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_php>`_  (`Dockerfile <https://github.com/shippableImages/ubuntu1204_php/blob/master/Dockerfile>`__)
+2. `shippableimages/ubuntu1404_php <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_php>`_  (`Dockerfile <https://github.com/shippableImages/ubuntu1404_php/blob/master/Dockerfile>`__)
 
 
 The php versions available in these images are
@@ -281,9 +278,9 @@ Refer `sample_ubuntu1204_php <https://github.com/shippableSamples/sample_ubuntu1
 
 The following build images are available for python :
 
-1. `shippableimages/ubuntu1204_python <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_python>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_python/blob/master/Dockerfile>`_)
+1. `shippableimages/ubuntu1204_python <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_python>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_python/blob/master/Dockerfile>`__)
 
-2. `shippableimages/ubuntu1404_python <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_python>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_python/blob/master/Dockerfile>`_)
+2. `shippableimages/ubuntu1404_python <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_python>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_python/blob/master/Dockerfile>`__)
 
 
 
@@ -332,9 +329,9 @@ Refer `sample_ubuntu1204_python <https://github.com/shippableSamples/sample_ubun
 
 The following build images are available for ruby:
 
-1. `shippableimages/ubuntu1204_ruby <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_ruby>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_ruby/blob/master/Dockerfile>`_)
+1. `shippableimages/ubuntu1204_ruby <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_ruby>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_ruby/blob/master/Dockerfile>`__)
 
-2. `shippableimages/ubuntu1404_ruby <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_ruby>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_ruby/blob/master/Dockerfile>`_)
+2. `shippableimages/ubuntu1404_ruby <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_ruby>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_ruby/blob/master/Dockerfile>`__)
  
 
 The ruby versions available in these images are
@@ -385,10 +382,10 @@ Refer `sample_ubuntu1204_ruby <https://github.com/shippableSamples/sample_ubuntu
 
 The build images available for scala:
 
-1. `shippableimages/ubuntu1204_scala <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_scala>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_scala/blob/master/Dockerfile>`_)
+1. `shippableimages/ubuntu1204_scala <https://registry.hub.docker.com/u/shippableimages/ubuntu1204_scala>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1204_scala/blob/master/Dockerfile>`__)
 
 
-2. `shippableimages/ubuntu1404_scala <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_scala>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_scala/blob/master/Dockerfile>`_)
+2. `shippableimages/ubuntu1404_scala <https://registry.hub.docker.com/u/shippableimages/ubuntu1404_scala>`_ (`Dockerfile <https://github.com/shippableImages/ubuntu1404_scala/blob/master/Dockerfile>`__)
 
 
 The scala version available in the image is 2.11.2
@@ -402,6 +399,9 @@ A sample yml that helps you getting started with scala image:
 
   language: scala
   
+  scala:
+    - 2.11.2
+
   #specify the build_image 
   build_image: shippableimages/ubuntu1204_scala
  
