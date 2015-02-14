@@ -390,7 +390,8 @@ To encrypt multiple environment variables separately, configure your yml file as
 include & exclude branches
 ..........................
 
-You can build specific branches or exclude them if needed. 
+You can build specific branches or exclude them if needed. Ensure that branch exclude/include configuration is available in all branches and not only in master branch. 
+For eg., If a branch, may be excluded in master shippable.yml, does not contain branch exclude information in its own version of shippable.yml, any check-in that branch will trigger a build.
 
 .. code-block:: python
 
