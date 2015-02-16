@@ -390,8 +390,13 @@ To encrypt multiple environment variables separately, configure your yml file as
 include & exclude branches
 ..........................
 
-You can build specific branches or exclude them if needed. Ensure that branch exclude/include configuration is available in all branches and not only in master branch. 
-For eg., If a branch, may be excluded in master shippable.yml, does not contain branch exclude information in its own version of shippable.yml, any check-in that branch will trigger a build.
+By default, Shippable builds all branches for enabled repositories as long as they have a shippable.yml at the root. 
+
+You can change this build only specific branches using the include and exclude sections in your yml. The specific branch that is being included or excluded needs to have this configuration, and not just the master branch. 
+
+This is because Shippable works as follows - we get a webhook for an enabled repository letting us know something has changed in a specific branch. We read the shippable.yml from that branch and then trigger a build based on that. So if your shippable.yml in the develop branch does not contain the exclude section, we will trigger a build irrespective of what's in the yml in master branch.
+
+Here is a sample of the include/exclude config - 
 
 .. code-block:: python
 
