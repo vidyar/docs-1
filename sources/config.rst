@@ -763,14 +763,17 @@ Examples for other languages can be found in our :ref:`Code Samples <samplesref>
 
 **Notifications**
 -----------------
-Shippable can notify you about the status of your build. If you want to get notified about the build status (success, failure or unstable), you need to follow the rules below to configure your yml file. Shippable will send the consolidated build reports in individual emails for matrix build projects. If there are any changes in the build status, then we will send email notification to the last committer by default.
+Shippable primarily supports email notifications and these can can be configured through the yml. To send Slack notifications, please check out our `blog post <http://blog.shippable.com/devops-chat-a-simple-way-to-use-slack-notifications-with-shippable>`_.  To send HipChat notifications, check out our `sample project for hipchat notifications <https://github.com/shippableSamples/sample-hipchat-notifications>`_.
 
+By default, we send email notifications to the last committer when a build fails, or the status changes from failed to passed.
+
+You can change the default settings for email notifications by configuring the notifications section of your yml. You can specify the email address(es) where you want to receive notification as well as the criteria for when you want notifications to be sent. 
 
 Email notification
 ..................
 
 
-You can configure the email notification by specifying the recipients id in ``shippable.yml`` file.
+To send notifications to specific email addresses, replace the sample email addresses below with the recipients' email ids in your ``shippable.yml`` file.
 
 .. code-block:: bash
 
@@ -780,7 +783,7 @@ You can configure the email notification by specifying the recipients id in ``sh
           - exampletwo@org.com
 
 
-You can also specify when you want to get notified using change|always|never. Change means you want to be notified only when the build status changes on the given branch. Always and never mean you want to be notified always or never respectively.
+You can also specify when you want to get notified by setting the values for on_success and on_failure keys to change|always|never. Change means you want to be notified only when the build status changes on the given branch. Always and never mean you want to be notified always or never respectively.
 
 
 .. code-block:: bash
@@ -794,7 +797,7 @@ You can also specify when you want to get notified using change|always|never. Ch
            on_failure: always
 
 
-If you do not want to get notified, you can configure email notifications to false.
+If you do not want to get notified for any reason, you can configure email notifications to false.
 
 .. code-block:: bash
 
