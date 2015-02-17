@@ -8,6 +8,19 @@ FAQs
 ====
 Having trouble with your builds? Here is a list of frequently asked questions.... hope this helps!
 
+**Why can't I see some of my repositories in my Shippable account?**
+--------------------------------------------------------------------
+This happens due to one of the following reasons -
+- You haven't enabled private repositories in your Shippable account. If this is the reason, please click on the 'Private repos off' icon on your dashboard and give us permissions to access your private repositories.
+- Your account hasn't yet been synced with the latest permissions from GitHub. To fix this, please click on the 'Sync account' icon on your dashboard.
+- You're a BitBucket user and you have mercurial repositories. We do not support mercurial at this time, so you will need to convert them to git or use another platform for CI.
+
+**I have enabled my repository and committed code, but my build doesn't start. What could be wrong?**
+-----------------------------------------------------------------------------------------------------
+Please check the 'Notifications' tab on your repository page on Shippable. If it shows any errors, fix those and try again.
+
+If the error shows a parsing failure for the yml, you can validate the file at `YAML Lint <http://www.yamllint.com/>`_.
+
 **Why can't I see my BitBucket repos in my Shippable account?**
 ---------------------------------------------------------------
 Shippable only supports git based repositories, so if you have mercurial repositories in your BitBucket account, you will not see them in the Shippable repository list. If you cannot see git based repos, please open an issue on our [GitHub Support repo](https://github.com/Shippable/support).
