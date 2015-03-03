@@ -4,6 +4,8 @@
 
 .. _docker_build
 
+.. warning::
+  Docker Build Support is for dedicates hosts only!
 
 Docker Build Support
 ==========================
