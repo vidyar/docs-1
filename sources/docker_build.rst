@@ -29,7 +29,7 @@ In order for your build to run succesfully, you must properly "dockerize" your
 application. Details on this can be found in Docker's official documentation `Docker's official documentation <https://docs.dockerhub.com>`_.
 You can also look at our `Docker build sample app <https://github.com/cadbot/dockerized-nodejs`
 
-**Step 3** : Enable Docker Build for your Project
+**Step 3** : Enable Docker Build for your Project and Set Configurations
 Finally, you must configure your app to use Docker Build through the Shippable
 Project Dashboard. To do this, go to the setting settings tab on your project's page.
 From here, expand the Project settings option. On the Build image dropdown menu,
