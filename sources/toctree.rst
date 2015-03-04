@@ -15,6 +15,7 @@ This documentation has the following resources:
    config
    continuous_deployment
    custom_images
+   api
    languages/index
    samples/index
    glossary
