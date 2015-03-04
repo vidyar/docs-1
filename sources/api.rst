@@ -5,6 +5,10 @@
 
 .. _api: 
 
+.. note::
+
+  You must be on the Startup or Custom plan to use our API 
+
 API
 ===========================
 
@@ -23,7 +27,10 @@ The main endpoint for interacting with our API is https://api.shippable.com
 Authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 Using our API requires authenticating with one of your Shippable API
-tokens. These tokens must be placed in the header of your HTTP request.
+tokens. Shippable API tokens can be generated from your account settings
+page.
+
+These tokens must be placed in the header of your HTTP request.
 For example, if your API token has the value 10010, you would authenticate
 this way with curl:
 
@@ -102,6 +109,3 @@ Could return a result such as this:
 One of the more useful attributes is the id attribute. Knowing this attribute
 will allow you configure your project, initiate workflows for your project, and
 git more information about it
-
-**POST /workflow/triggerBuild**
-// NOT REALLY LINKG THIS ROUTE... WILL DISCUSS 
