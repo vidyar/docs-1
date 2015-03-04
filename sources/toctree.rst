@@ -15,6 +15,8 @@ This documentation has the following resources:
    config
    continuous_deployment
    custom_images
+   docker_build
+   api
    languages/index
    samples/index
    glossary
