@@ -4,7 +4,7 @@
 
 .. _docker_build
 
-.. warning::
+.. note::
   Docker Build Support is for dedicates hosts only!
 
 Docker Build Support
@@ -27,7 +27,7 @@ Github repo.
 
 In order for your build to run succesfully, you must properly "dockerize" your
 application. Details on this can be found in Docker's official documentation `Docker's official documentation <https://docs.dockerhub.com>`_.
-You can also look at our `Docker build sample app <https://github.com/cadbot/dockerized-nodejs`
+You can also look at our `Docker build sample app <https://github.com/cadbot/dockerized-nodejs>`_.
 
 **Step 3** : Enable Docker Build for your Project and Set Configurations
 Finally, you must configure your app to use Docker Build through the Shippable
