@@ -32,7 +32,9 @@ You can also look at our `Docker build sample app <https://github.com/cadbot/doc
 **Step 3** : Enable Docker Build for your Project and Set Configurations
 Finally, you must configure your app to use Docker Build through the Shippable
 Project Dashboard. 
-To do this:
+
+To do this-
+
 * Go to the Settings tab on your project's page and expand the Project settings option
 * On the Build image dropdown menu, select 'Custom image'
 * Select 'Build' on the Custom image action dropdown
