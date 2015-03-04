@@ -21,11 +21,11 @@ feature you must first setup at least one dedicated host for your account.
 
 **Step 2** : Dockerfile and App Dockerization
 To use Docker Build with your builds, you must include a Dockerfile in the root
-directory of your app. Furthermore, this Dockerfile must be commited to the
+directory of your app. Furthermore, this Dockerfile must be committed to the
 repo that you have configured Shippable to pull from, such as your team's
 Github repo.
 
-In order for your build to run succesfully, you must properly "dockerize" your
+In order for your build to run successfully, you must properly "dockerize" your
 application. Details on this can be found in Docker's official documentation `Docker's official documentation <https://docs.dockerhub.com>`_.
 You can also look at our `Docker build sample app <https://github.com/cadbot/dockerized-nodejs>`_.
 
