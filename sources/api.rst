@@ -1,5 +1,5 @@
 :title: Shippable API
-:description: How to interface with Shppable's API
+:description: How to interface with Shippable's API
 :keywords: shippable, API, HTTP
 
 
@@ -15,7 +15,7 @@ API
 ** Overview and Purpose **
 ---------------------------
 
-The Shppable API allows you to do anything through HTTP requests,
+The Shippable API allows you to do anything through HTTP requests,
 that you would normally need to use the Shippable dashboard for. Our
 API is RESTful, and can be interfaced through curl, third party tools,
 your own wrapper libraries, or any form of HTTPS communication.
@@ -44,9 +44,9 @@ For example, if we saved our token to the environment variable apiToken:
 .. code-block:: bash
   curl -H "Authorization: apiToken $apiToken" https://api.shippable.com
 
-This is useful not only because one doesn't have to type tye apiToken in
-repeated times, but also allows for secure automization of API scripts; it
-is dangerous to directly save your apiToken into code.
+This is useful not only because one no longer has to type type apiToken in
+repeated times, but use of an env var allows for secure automization of API 
+scripts; it is dangerous to directly save your apiToken into code.
 
 .. note::
  NEVER commit code containing your API token to a public repository. Doing
@@ -108,4 +108,4 @@ Could return a result such as this:
 
 One of the more useful attributes is the id attribute. Knowing this attribute
 will allow you configure your project, initiate workflows for your project, and
-git more information about it
+get more information about the project.
