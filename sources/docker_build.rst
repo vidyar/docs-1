@@ -38,7 +38,6 @@ To do this-
 * Go to the Settings tab on your project's page and expand the Project settings option
 * On the Build image dropdown menu, select 'Custom image'
 * Select 'Build' on the Custom image action dropdown
-* Specify a Custom image name and your Source code path. If you want to later push your image to Docker Hub, you should refer to the image by name you
-specified here. The source code path specifies where you have installed your app's source code on the running Docker container.
+* Specify a Custom image name and your Source code path. If you want to later push your image to Docker Hub, you should refer to the image by name you specified here. The source code path specifies where you have installed your app's source code on the running Docker container.
 
 And that's it! For every build you run after this point, we will build your custom image from your Dockerfile, run CI, and push the container to Docker Hub.
