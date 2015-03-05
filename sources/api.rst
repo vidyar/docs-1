@@ -15,10 +15,10 @@ API
 ** Overview and Purpose **
 ---------------------------
 
-The Shippable API allows you to do anything through HTTP requests,
-that you would normally need to use the Shippable dashboard for. Our
-API is RESTful, and can be interfaced through curl, third party tools,
-your own wrapper libraries, or any form of HTTPS communication.
+The Shippable API enables you to do anything that you would normally 
+do in the Shippable UI through HTTP requests. Our +API is RESTful, and 
+can be interfaced through curl, third party tools, your own wrapper libraries, 
+or any form of HTTPS communication.
 
 Endpoint
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
