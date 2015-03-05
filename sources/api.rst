@@ -36,6 +36,7 @@ this way with curl:
 
 
 .. code-block:: bash
+
   curl -H "Authorization: apiToken 10010" https://api.shippable.com
 
 A useful pattern is to set an env var with the value of your token.
