@@ -54,7 +54,7 @@ scripts; it is dangerous to directly save your apiToken into code.
  so will compromise the security of your Shippable account. Treat your
  API token like a password
 
-** Routes **
+**Routes**
 -----------------------------
 
 /projects
