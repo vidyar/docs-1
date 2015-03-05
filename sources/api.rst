@@ -60,7 +60,7 @@ scripts; it is dangerous to directly save your apiToken into code.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The /projects route will provide you with information about your projects, 
 such as the projects on your Github or Bit Bucket account, and allow you to
-interact with them.
+retreive infromation about them.
 
 **GET /projects**
 The /projects route will return JSON presenting various info about your
@@ -109,3 +109,36 @@ Could return a result such as this:
 One of the more useful attributes is the id attribute. Knowing this attribute
 will allow you configure your project, initiate workflows for your project, and
 get more information about the project.
+
+GET /projects/:projectId will return even more in-depth information about that
+project.
+
+**/projects/:projectId/RecentBuilds/n**
+For a given projectId, this route will return build information from the last
+n builds for the project.
+
+/workflow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+While /projects/* is used for retreiving info, /workflow/* is forinitiating 
+multi step processes, such as triggering or enabling a build, typically 
+using your projectId as an input parameter.
+
+**POST /workflow/enableRepoBuild**
+This route is used for enabling your projects. It expects a JSON encoded
+ProjectId.
+
+.. code-block:: bash
+  curl -H "Authorization: apiToken $apiToken" \ 
+       -H "Content-Type: application/json" \
+       -d "{\"projectId\": \"011d01\"}"
+       https://api.shippable.com/workflow/enableRepoBuild
+
+**POST /workflow/triggerBuild**
+This route is used for triggering builds of a project. It also expects a
+JSON encojed ProjectId.
+
+.. code-block:: bash
+  curl -H "Authorization: apiToken $apiToken" \ 
+       -H "Content-Type: application/json" \
+       -d "{\"projectId\": \"011d01\"}"
+       https://api.shippable.com/workflow/triggerBuild
