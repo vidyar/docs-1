@@ -12,7 +12,7 @@
 API
 ===========================
 
-** Overview and Purpose **
+**Overview and Purpose**
 ---------------------------
 
 The Shippable API enables you to do anything that you would normally 
