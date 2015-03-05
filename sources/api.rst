@@ -34,7 +34,6 @@ These tokens must be placed in the header of your HTTP request.
 For example, if your API token has the value 10010, you would authenticate
 this way with curl:
 
-
 .. code-block:: bash
 
   curl -H "Authorization: apiToken 10010" https://api.shippable.com
@@ -43,6 +42,7 @@ A useful pattern is to set an env var with the value of your token.
 For example, if we saved our token to the environment variable apiToken:
 
 .. code-block:: bash
+
   curl -H "Authorization: apiToken $apiToken" https://api.shippable.com
 
 This is useful not only because one no longer has to type type apiToken in
@@ -68,12 +68,14 @@ The /projects route will return JSON presenting various info about your
 projects. For example running a GET request such as this through curl
 
 .. code-block:: bash
+
   curl -H "Authorization: apiToken $apiToken" https://api.shippable.com/projects
 
 Could return a result such as this:
 
 
 .. code-block:: javascript
+
   [
     {
       "mostRecentBuild": {
@@ -129,6 +131,7 @@ This route is used for enabling your projects. It expects a JSON encoded
 ProjectId.
 
 .. code-block:: bash
+
   curl -H "Authorization: apiToken $apiToken" \ 
        -H "Content-Type: application/json" \
        -d "{\"projectId\": \"011d01\"}"
@@ -139,6 +142,7 @@ This route is used for triggering builds of a project. It also expects a
 JSON encojed ProjectId.
 
 .. code-block:: bash
+
   curl -H "Authorization: apiToken $apiToken" \ 
        -H "Content-Type: application/json" \
        -d "{\"projectId\": \"011d01\"}"
