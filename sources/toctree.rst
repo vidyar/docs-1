@@ -17,6 +17,7 @@ This documentation has the following resources:
    custom_images
    docker_build
    api
+   upgrade
    languages/index
    samples/index
    glossary
