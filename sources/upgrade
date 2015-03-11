@@ -1,0 +1,17 @@
+:title: Upgrading your org
+:description: A brief description about why and how to upgrade your org
+:keywords: custom images, dedicated hosts, shippable images, language specific docker images, API, 
+
+
+Upgrading your organization
+===========================
+
+Our free plan comes with one free minion that runs your builds. If additional builds are triggered while the minion is still running a build, they are queued and run one at a time. This is enough if you're a small team and your builds complete quickly.
+
+However, as the team grows, you will frequently find yourself waiting for builds to finish before your latest commits are tested. When this happens, you should upgrade to our paid plan which is still very affordable at $12/year for 5 minions. This means that we run up to 5 builds in parallel for your org.
+
+There are many other reasons to upgrade your plan. Some of our advanced features are only available with paid plans, such as Dedicated hosts (BETA) and API access.
+
+You can upgrade your organization by going to the organization page on Shippable and clicking on 'Plans and Billing'. Add your credit card information and click on the Startup plan to upgrade.
+
+Please do not delete card information after the upgrade. We use a third party payment provider that automatically downgrades your plan if you delete card information.
