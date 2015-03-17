@@ -1115,8 +1115,11 @@ You can use the **[reset_minion]** tag in commit message to reset the minion. We
 Shippable allows you to run builds using your own host machine. Build orchestration still happens through the multi-tenant service, but your builds are routed to your own hosts. This gives you complete control on your build system and also keeps your code in your machines. Dedicated hosts can be in the cloud or on premise.
 
 The minimum requirements for a host are -
+
 * 64 bit OS, Ubuntu 12.04 or 14.04
+
 * 30GB HDD
+
 * 2GB RAM
 
 There is no CPU constraint, but builds will run slower on a slower CPU.
