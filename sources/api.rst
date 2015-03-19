@@ -46,7 +46,7 @@ For example, if we saved our token to the environment variable apiToken:
   curl -H "Authorization: apiToken $apiToken" https://api.shippable.com
 
 This is useful not only because one no longer has to type type apiToken in
-repeated times, but use of an env var allows for secure automization of API 
+repeated times, but use of an env var allows for secure automatization of API 
 scripts; it is dangerous to directly save your apiToken into code.
 
 .. note::
@@ -59,20 +59,15 @@ scripts; it is dangerous to directly save your apiToken into code.
 
 /projects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The /projects route will provide you with information about your projects, 
+The /projects endpoint will provide you with information about your projects, 
 such as the projects on your Github or Bit Bucket account, and allow you to
-retreive infromation about them.
+retrieve information about them.
 
 **GET /projects**
-The /projects route will return JSON presenting various info about your
-projects. For example running a GET request such as this through curl
 
-.. code-block:: bash
+Will a return a list projects, and some info about the projects
 
-  curl -H "Authorization: apiToken $apiToken" https://api.shippable.com/projects
-
-Could return a result such as this:
-
+Response
 
 .. code-block:: javascript
 
@@ -106,29 +101,165 @@ Could return a result such as this:
       "fullName": "user/example2",
       "autoBuild": false,
       "id": "54e3c35391426fd6a78cfd41"
-    },
+    }
   ]
+  
+===================  =======      ==========================================================================
+Name                 Type         Description
+===================  =======      ==========================================================================
+mostRecentBuild      object       An object of information about your most recent build, if available
+id                   string       This project's unique id
+language             string       The langauge of the project, as specified by the repo provider
+autoBuild            boolean      States if the project will be auto built on pushes to the containing repo
+fullName             string       The full name of the project, such as org/projectname
+name                 string       A more succinct version of the fullName
+repositoryProvider   string       The source providing the repo, such as Github or BitBucket
+branches             list         A list of branches available to build from the repo
+===================  =======      ==========================================================================
 
-One of the more useful attributes is the id attribute. Knowing this attribute
-will allow you configure your project, initiate workflows for your project, and
-get more information about the project.
+**GET /projects/:projectId**
 
-GET /projects/:projectId will return even more in-depth information about that
-project.
+Will return more in-depth information about the specified project.
 
-**/projects/:projectId/RecentBuilds/n**
-For a given projectId, this route will return build information from the last
-n builds for the project.
+Response
+
+.. code-block:: javascript
+
+  {
+    "id": "54af3b7ld46123jfacaef00c",
+    "branches": [
+      "master",
+      "feature1",
+      "test"
+    ],
+    "autoBuild": true,
+    "deployKey": {
+      "public": "ssh-rsa SECRETE Shippable\n"
+    },
+    "settings": {
+      "imageOptions": {
+        "mounts": [],
+        "ports": []
+      },
+      "environmentVariables": []
+    },
+    "created": "2015-01-09T02:23:49.586Z",
+    "isEnabled": true,
+    "enabledDate": "2015-02-09T06:40:25.463Z",
+    "name": "project",
+    "sourcePushed": "2015-03-17T15:22:00.000Z",
+    "sourceCreated": "2015-01-06T05:05:22.000Z",
+    "sourceUpdated": "2015-03-11T15:33:38.000Z",
+    "language": "ruby",
+    "updatedDate": "2015-03-18T23:29:19.334Z",
+    "subscriptionId": "54af3b77d46935d5fbc1e00d",
+    "sourceId": "28847632",
+    "repositoryProvider": "github",
+    "sourceRepoOwner": {
+      "login": "owner",
+      "starred_url": "https://api.github.com/users/owner/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/owner/subscriptions",
+      "organizations_url": "https://api.github.com/users/owner/orgs",
+      "repos_url": "https://api.github.com/users/owner/repos",
+      "events_url": "https://api.github.com/users/owner/events{/privacy}",
+      "received_events_url": null,
+      "type": "User",
+      "site_admin": false,
+      "gists_url": "https://api.github.com/users/owner/gists{/gist_id}",
+      "following_url": "https://api.github.com/users/owner/following{/other_user}",
+      "followers_url": "https://api.github.com/users/owner/followers",
+      "html_url": "https://github.com/owner",
+      "url": "https://api.github.com/users/owner",
+      "gravatar_id": "",
+      "avatar_url": "https://avatars.githubusercontent.com/u/184391?v=3",
+      "id": 184391
+    },
+    "isFork": false,
+    "isPrivateRepository": true,
+    "sourceDefaultBranch": "master",
+    "repositorySshUrl": "git@github.com:owner/project.git",
+    "repositoryUrl": "https://api.github.com/repos/owner/project",
+    "sourceDescription": "",
+    "fullName": "owner/project"
+  }
+
+
+=====================================  ========      ==========================================================================
+Name                                   Type           Description
+=====================================  ========      ==========================================================================
+id                                     string         This project's unique id
+branches                               list           A list of branches available to build from the repo
+autoBuild                              boolean        States if the project will be auto built on pushes to the containing repo
+deployKey                              string         The ssh key used by shippable for deployments
+settings                               object         Settings info for project, such as images and environment variables 
+created                                string         When the project was created
+isEnabled
+enabledDate                                           The date the project was enabled on shippable for auto builds
+name                                   string         A more succinct version of the fullName
+sourcePushed
+sourceCreated
+sourceUpdated
+language                               string         The langauge of the project, as specified by the repo provider
+updatedDate                            string
+subscriptionId                         string         The subscription id connected to this account
+sourceId
+repositoryProvider                     string         The source providing the repo, such as Github or BitBucket
+sourceRepoOwner                        string         The owner/org that holds this repo
+isFork                                 boolean
+isPrivateRepository                    boolean        Specifies if the project is private or public
+sourceDefaultBranch                    string         Specifies the default branch for the projec
+repositorySshUrl                       string         The ssh url for the repo
+repositoryUrl                          string         The web url for the project
+sourceDescription
+fullName                               string         The full name of the project, such as org/projectname
+=====================================  ========      ==========================================================================
+
+
+**PUT /projects/:projectId/settings**
+
+HOLD OFF
+
+**GET /projects/:projectId/runningBuilds**
+
+Returns a list of objects, where each object is a projection
+of a build that is currently. The projection is similiar to
+/builds/:buildid
+
+**GET /projects/:projectId/runningBuilds/:number**
+
+Returns the specified number of running builds.
+
+**GET /projects/:projectId/queuedBuilds**
+
+Returns a list of builds queued for this project. The
+projection is similiar to /builds/:buildid
+
+
+**GET /projects/:projectId/queuedBuilds/:number**
+
+Returns the specified number of queued builds.
+
+**GET /projects/:projectId/recentBuilds**
+
+Returns a list of recent builds for the project. The 
+projection is similiar to /builds/:buildid
+
+**GET /projects/:projectId/recentBuilds/:number**
+
+Returns the specified number of recent builds
+
 
 /workflow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-While /projects/* is used for retreiving info, /workflow/* is forinitiating 
+While /projects/* is used for retrieving info, /workflow/* is for initiating 
 multi step processes, such as triggering or enabling a build, typically 
 using your projectId as an input parameter.
 
 **POST /workflow/enableRepoBuild**
 This route is used for enabling your projects. It expects a JSON encoded
 ProjectId.
+
+Example Usage
 
 .. code-block:: bash
 
@@ -137,13 +268,77 @@ ProjectId.
        -d "{\"projectId\": \"011d01\"}"
        https://api.shippable.com/workflow/enableRepoBuild
 
+Query Parameters
+
+========= ======== ===================
+Name      Type     Description
+========= ======== ===================
+projectId string   Project's unique ID
+========= ======== ===================
+
+
+**POST /workflow/disableBuild**
+Disable a repo from autobuilding
+
+Query Parameters
+
+========= ======== ===================
+Name      Type     Description
+========= ======== ===================
+projectId string   Project's unique ID
+========= ======== ===================
+
+**POST /workflow/cancelBuild**
+
+Cancels a build currently in progress
+
+Query Parameters
+
+========= ======== ===================
+Name      Type     Description
+========= ======== ===================
+BuildId   string   Build's unique ID
+========= ======== ===================
+
+
 **POST /workflow/triggerBuild**
-This route is used for triggering builds of a project. It also expects a
-JSON encojed ProjectId.
 
-.. code-block:: bash
+This route is used for starting builds of an enabled project
 
-  curl -H "Authorization: apiToken $apiToken" \ 
-       -H "Content-Type: application/json" \
-       -d "{\"projectId\": \"011d01\"}"
-       https://api.shippable.com/workflow/triggerBuild
+Query Parameters
+
+========= ======== ===================
+Name      Type     Description
+========= ======== ===================
+projectId string   Project's unique ID
+========= ======== ===================
+
+Response
+
+.. code-block:: javascript
+
+  {"BuildId": "aefjek3434j"}
+
+
+===================  =======      ==========================================================================
+Name                 Type         Description
+===================  =======      ==========================================================================
+BuildId              string       A build's unique Id
+===================  =======      ==========================================================================
+
+
+
+**POST /workflow/validateDockerHubCredentials**
+
+Verifies a DockerHub account for the authenticated user
+
+Query Parameters
+
+========= ======== ====================
+Name      Type     Description
+========= ======== ====================
+username   string   DockerHub username
+password   string   DockerHub password
+email      string   Dockerhub email
+========= ======== ====================
+
