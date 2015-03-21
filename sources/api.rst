@@ -365,3 +365,93 @@ Coming soon!
 Gets build extensions such as your shippable.yml file
 
 Coming soon!
+
+/accounts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**GET /accounts**
+
+Returns a string list of your account ids
+
+Response
+
+.. code-block:: javascript
+  
+  ["322fasf323f3gw3"]
+
+
+**GET /accounts/:accountId**
+
+.. code-block:: javascript
+
+  {
+    "id": "640e74943999391400416qr0",
+    "lastUsedIdentityId": "640e74943999391400416qr1",
+    "identities": [
+      {
+        "id": "640e74943999391400416qr1",
+        "scopes": [
+          "read:org",
+          "repo",
+          "user:email",
+          "write:repo_hook"
+        ],
+        "enforceScopes": [
+          "read:org",
+          "repo",
+          "user:email",
+          "write:repo_hook"
+        ],
+        "emails": [
+          {
+            "primary": true,
+            "verified": true,
+            "email": "user@gmail.com"
+          }
+        ],
+        "migratedProviderId": true,
+        "providerOwnedPrivateRepos": null,
+        "providerType": "User",
+        "providerId": "2054256",
+        "provider": "github",
+        "avatarId": "",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/RRR4256?v=3",
+        "displayName": "A user",
+        "userName": "user",
+        "email": "",
+        "providerBlog": "",
+        "providerCompany": "",
+        "providerLocation": "",
+        "providerFollowerCount": 3,
+        "providerPrivateGists": null,
+        "providerPublicRepoCount": 48,
+        "providerPublicGistCount": 2,
+        "providerTotalPrivateRepos": null
+      }
+    ],
+    "systemRoles": [
+      "user"
+    ],
+    "created": "2014-09-09T03:31:32.951Z"
+  }
+
+===================================== ======== ===================================
+Name                                  Type     Description
+===================================== ======== ===================================
+id                                    string   Account ID
+lastUsedIdentityId                    string   id of last used identity. 
+identities                            list     A list of this accounts identitiesj
+created                               string   When the account was created
+===================================== ======== ===================================
+
+**DELETE /accounts/:accountId**
+Deletes the specified account
+
+**GET /accounts/:accountId/identities**
+A list of identities associated with this account. Your account can have multiple
+identities. There will always be at least one identity, and that is the identity
+of your linked github or bitbucket account. Another identity your account good take
+is the identity of an organization it belongs to.
+
+**GET /accounts/:accountId/integrations**
+A list of integrations assoicated with this account
