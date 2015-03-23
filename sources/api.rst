@@ -63,7 +63,9 @@ The /projects endpoint will provide you with information about your projects,
 such as the projects on your Github or Bit Bucket account, and allow you to
 retrieve information about them.
 
-**GET /projects**
+GET /projects
+----------------------------------------------------------------
+
 
 Will a return a list projects, and some info about the projects
 
@@ -117,7 +119,8 @@ repositoryProvider   string       The source providing the repo, such as Github 
 branches             list         A list of branches available to build from the repo
 ===================  =======      ==========================================================================
 
-**GET /projects/:projectId**
+GET /projects/:projectId
+----------------------------------------------------------------
 
 Will return more in-depth information about the specified project.
 
@@ -215,39 +218,66 @@ fullName                               string         The full name of the proje
 =====================================  ========      ==========================================================================
 
 
-**PUT /projects/:projectId/settings**
+PUT /projects/:projectId/settings
+----------------------------------------------------------------
 
 Coming soon!
 
-**GET /projects/:projectId/runningBuilds**
+GET /projects/:projectId/runningBuilds
+----------------------------------------------------------------
 
 Returns a list of objects, where each object is a projection
-of a build that is currently. The projection is similiar to
-/builds/:buildid
+of a build that is currently. 
 
-**GET /projects/:projectId/runningBuilds/:number**
+Response
 
-Returns the specified number of running builds.
+A list of :ref:`buildId` objects
 
-**GET /projects/:projectId/queuedBuilds**
+GET /projects/:projectId/runningBuilds/:number
+----------------------------------------------------------------
 
-Returns a list of builds queued for this project. The
-projection is similiar to /builds/:buildid
+Returns a list of up to the specified number of 
+
+Response
+
+A list of :ref:`buildId` objects
+
+GET /projects/:projectId/queuedBuilds
+----------------------------------------------------------------
+
+Returns a list of builds queued for this project.
+
+Response
+
+A list of :ref:`buildId` objects
 
 
-**GET /projects/:projectId/queuedBuilds/:number**
+GET /projects/:projectId/queuedBuilds/:number
+----------------------------------------------------------------
 
-Returns the specified number of queued builds.
+Returns a list of up to the specified number of queued builds.
 
-**GET /projects/:projectId/recentBuilds**
+Response
 
-Returns a list of recent builds for the project. The 
-projection is similiar to /builds/:buildid
+A list of :ref:`buildId` objects
 
-**GET /projects/:projectId/recentBuilds/:number**
+GET /projects/:projectId/recentBuilds
+----------------------------------------------------------------
 
-Returns the specified number of recent builds
+Returns a list of recent builds for the project. 
 
+Response
+
+A list of :ref:`buildId` objects
+
+GET /projects/:projectId/recentBuilds/:number
+----------------------------------------------------------------
+
+Returns a list of up to the specified number of recent builds
+
+Response
+
+A list of :ref:`buildId` objects
 
 /workflow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -255,7 +285,9 @@ While /projects/* is used for retrieving info, /workflow/* is for initiating
 multi step processes, such as triggering or enabling a build, typically 
 using your projectId as an input parameter.
 
-**POST /workflow/enableRepoBuild**
+POST /workflow/enableRepoBuild
+----------------------------------------------------------------
+
 This route is used for enabling your projects. It expects a JSON encoded
 ProjectId.
 
@@ -277,7 +309,9 @@ projectId string   Project's unique ID
 ========= ======== ===================
 
 
-**POST /workflow/disableBuild**
+POST /workflow/disableBuild
+----------------------------------------------------------------
+
 Disable a repo from autobuilding
 
 Query Parameters
@@ -288,7 +322,8 @@ Name      Type     Description
 projectId string   Project's unique ID
 ========= ======== ===================
 
-**POST /workflow/cancelBuild**
+POST /workflow/cancelBuild
+----------------------------------------------------------------
 
 Cancels a build currently in progress
 
@@ -301,7 +336,8 @@ BuildId   string   Build's unique ID
 ========= ======== ===================
 
 
-**POST /workflow/triggerBuild**
+POST /workflow/triggerBuild
+----------------------------------------------------------------
 
 This route is used for starting builds of an enabled project
 
@@ -328,7 +364,8 @@ BuildId              string       A build's unique Id
 
 
 
-**POST /workflow/validateDockerHubCredentials**
+POST /workflow/validateDockerHubCredentials
+----------------------------------------------------------------
 
 Verifies a DockerHub account for the authenticated user
 
@@ -346,14 +383,12 @@ email      string   Dockerhub email
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The builds endpoint allows you to get information from your
 builds
-**/builds/:buildId**
-Returns information about the specified build
 
-Response
+.. _buildId:
 
-Coming soon!
+/builds/:buildId
+----------------------------------------------------------------
 
-**/builds/:buildId**
 Contains information about the individual builds inside the matrix, along
 with associated metadata
 
@@ -361,7 +396,9 @@ Reponse
 Coming soon!
 
 
-**/builds/:buildId/:buildItemNumber/ext**
+/builds/:buildId/:buildItemNumber/ext
+----------------------------------------------------------------
+
 Gets build extensions such as your shippable.yml file
 
 Coming soon!
@@ -369,7 +406,8 @@ Coming soon!
 /accounts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**GET /accounts**
+GET /accounts
+----------------------------------------------------------------
 
 Returns a string list of your account ids
 
@@ -380,7 +418,8 @@ Response
   ["322fasf323f3gw3"]
 
 
-**GET /accounts/:accountId**
+GET /accounts/:accountId
+----------------------------------------------------------------
 
 .. code-block:: javascript
 
@@ -444,14 +483,20 @@ identities                            list     A list of this accounts identitie
 created                               string   When the account was created
 ===================================== ======== ===================================
 
-**DELETE /accounts/:accountId**
+DELETE /accounts/:accountId
+----------------------------------------------------------------
+
 Deletes the specified account
 
-**GET /accounts/:accountId/identities**
+GET /accounts/:accountId/identities
+----------------------------------------------------------------
+
 A list of identities associated with this account. Your account can have multiple
 identities. There will always be at least one identity, and that is the identity
 of your linked github or bitbucket account. Another identity your account could take
 is the identity of an organization it belongs to.
 
-**GET /accounts/:accountId/integrations**
+GET /accounts/:accountId/integrations
+----------------------------------------------------------------
+
 A list of integrations assoicated with this account
