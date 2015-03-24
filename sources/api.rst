@@ -406,13 +406,6 @@ Response
 https://prod-shippable.s3.amazonaws.com/artifacts/subscriptions/.../tar.gz
 
 
-/builds/:buildId/:buildItemNumber/ext
-----------------------------------------------------------------
-
-Gets build extensions such as your shippable.yml file
-
-Coming soon!
-
 /accounts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
