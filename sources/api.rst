@@ -396,6 +396,16 @@ Reponse
 Coming soon!
 
 
+/builds/:buildId/:buildItemNumber/artifacts
+----------------------------------------------------------------
+
+Returns a url to a tarball containing your build artifacts
+
+Response
+
+https://prod-shippable.s3.amazonaws.com/artifacts/subscriptions/.../tar.gz
+
+
 /builds/:buildId/:buildItemNumber/ext
 ----------------------------------------------------------------
 
