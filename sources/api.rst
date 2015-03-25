@@ -809,12 +809,14 @@ Deletes the specified account
 GET /accounts/:accountId/identities
 ----------------------------------------------------------------
 
-A list of identities associated with this account. Your account can have multiple
+A string list of identity ids associated with this account. Your account can have multiple
 identities. There will always be at least one identity, and that is the identity
 of your linked github or bitbucket account. Another identity your account could take
 is the identity of an organization it belongs to.
 
-GET /accounts/:accountId/integrations
-----------------------------------------------------------------
+Response
 
-A list of integrations assoicated with this account
+.. code-block:: javascript
+  
+  ["322fasf323f3gd1", "322fasf323f3gd2"]
+
