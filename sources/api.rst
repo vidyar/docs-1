@@ -384,12 +384,325 @@ builds
 /builds/:buildId
 ----------------------------------------------------------------
 
-Contains information about the individual builds inside the matrix, along
-with associated metadata
+Contains information about the builds inside the specified build group,
+along with associated metadata
 
 Reponse
-Coming soon!
 
+.. code-block:: javascript
+
+  {
+    "id": "55107b832132342fwlfjljf4",
+    "isAutoCommit": false,
+    "isAutoPush": false,
+    "isAutoBuild": true,
+    "isReRun": false,
+    "isPullRequest": false,
+    "isCompleted": true,
+    "emailNotifications": [],
+    "pullRequestNumber": null,
+    "committer": {
+      "avatarUrl": "https://avatars.githubusercontent.com/u/2321123?v=3",
+      "displayName": "The Github User",
+      "login": "github",
+      "email": "user@gmail.com"
+    },
+    "lastAuthor": {
+      "avatarUrl": "https://avatars.githubusercontent.com/u/2313232?v=3",
+      "displayName": "Some githubuser",
+      "login": "someuser",
+      "email": "someuser@gmail.com"
+    },
+    "triggeredBy": {
+      "avatarUrl": "https://avatars.githubusercontent.com/u/2323226?v=3",
+      "email": "user@gmail.com",
+      "displayName": "some user",
+      "login": "user"
+    },
+    "requiresDedicatedHost": false,
+    "builds": [
+      {
+        "id": "5510w323223rfwfb00e9b701",
+        "size": null,
+        "isCompleted": true,
+        "isBuildCompleted": false,
+        "canCommit": false,
+        "matrixValues": [
+          {
+            "id": "55107b84142323f2f0e9b703",
+            "value": "1.9.3",
+            "name": "runtime"
+          },
+          {
+            "id": "5510723f32f5780b00e9b702",
+            "value": "",
+            "name": "env"
+          }
+        ],
+        "queuedDate": "2015-03-23T20:45:56.421Z",
+        "isSubscriptionHost": false,
+        "deprovisionStatusDate": "1970-01-01T00:00:00.000Z",
+        "imageCommitStatusDate": "1970-01-01T00:00:00.000Z",
+        "isFailureAllowed": false,
+        "totalTests": 0,
+        "testsFailed": 0,
+        "testsPassed": 0,
+        "testsSkipped": 0,
+        "sequenceCoveragePercent": 0,
+        "steps": {
+          "commit": {
+            "startTime": null,
+            "duration": null,
+            "endTime": null,
+            "report": []
+          },
+          "upload": {
+            "startTime": null,
+            "duration": null,
+            "endTime": null,
+            "report": []
+          },
+          "purge": {
+            "report": [
+              {
+                "status": 20,
+                "time": "2015-03-23T20:43:36.945Z"
+              },
+              {
+                "status": 30,
+                "time": "2015-03-23T20:43:37.445Z"
+              }
+            ],
+            "duration": 500,
+            "startTime": "2015-03-23T20:43:36.945Z",
+            "endTime": "2015-03-23T20:43:37.445Z"
+          },
+          "push": {
+            "report": [
+              {
+                "status": 20,
+                "time": "2015-03-23T20:43:35.130Z"
+              },
+              {
+                "status": 30,
+                "time": "2015-03-23T20:43:36.654Z"
+              }
+            ],
+            "duration": 1524,
+            "startTime": "2015-03-23T20:43:35.130Z",
+            "endTime": "2015-03-23T20:43:36.654Z"
+          },
+          "cache": {
+            "report": [
+              {
+                "status": 20,
+                "time": "2015-03-23T20:43:34.693Z"
+              },
+              {
+                "status": 30,
+                "time": "2015-03-23T20:43:34.835Z"
+              }
+            ],
+            "duration": 142,
+            "startTime": "2015-03-23T20:43:34.693Z",
+            "endTime": "2015-03-23T20:43:34.835Z"
+          },
+          "report": {
+            "report": [
+              {
+                "status": 20,
+                "time": "2015-03-23T20:46:42.256Z"
+              },
+              {
+                "status": 30,
+                "time": "2015-03-23T20:46:43.694Z"
+              }
+            ],
+            "duration": 1438,
+            "startTime": "2015-03-23T20:46:42.256Z",
+            "endTime": "2015-03-23T20:46:43.694Z"
+          },
+          "boot": {
+            "report": [
+              {
+                "status": 20,
+                "time": "2015-03-23T20:42:56.359Z"
+              },
+              {
+                "status": 30,
+                "time": "2015-03-23T20:43:11.246Z"
+              }
+            ],
+            "duration": 14887,
+            "startTime": "2015-03-23T20:42:56.359Z",
+            "endTime": "2015-03-23T20:43:11.246Z"
+          },
+          "dequeue": {
+            "report": [
+              {
+                "status": 20,
+                "time": "2015-03-23T20:42:47.069Z"
+              },
+              {
+                "status": 30,
+                "time": "2015-03-23T20:42:47.315Z"
+              }
+            ],
+            "duration": 246,
+            "startTime": "2015-03-23T20:42:47.069Z",
+            "endTime": "2015-03-23T20:42:47.315Z"
+          },
+          "pull": {
+            "startTime": "2015-03-23T20:42:47.653Z",
+            "duration": 8358,
+            "endTime": "2015-03-23T20:42:56.011Z",
+            "report": [
+              {
+                "status": 20,
+                "time": "2015-03-23T20:42:47.653Z"
+              },
+              {
+                "status": 30,
+                "time": "2015-03-23T20:42:56.011Z"
+              }
+            ]
+          },
+          "build": {
+            "startTime": "2015-03-23T20:43:11.562Z",
+            "duration": 20764,
+            "endTime": "2015-03-23T20:43:32.326Z",
+            "report": [
+              {
+                "status": 20,
+                "time": "2015-03-23T20:43:11.562Z"
+              },
+              {
+                "status": 30,
+                "time": "2015-03-23T20:43:32.326Z"
+              }
+            ]
+          }
+        },
+        "environment": "",
+        "gemfile": null,
+        "jdk": null,
+        "version": "1.9.3",
+        "status": 30,
+        "buildNumber": 1,
+        "commitTag": "artifact.22.1",
+        "startDate": "2015-03-23T20:45:56.474Z",
+        "hostId": "54ee2d61b6e6dd0d0037a124",
+        "consoleLogLineCount": 351,
+        "consoleLogBytes": 13593,
+        "isArchiveAvailable": true,
+        "endDate": "2015-03-23T20:46:47.189Z",
+        "duration": 50715,
+        "branchCoveragePercent": 0
+      }
+    ],
+    "createdDate": "2015-03-23T20:45:56.421Z",
+    "updatedDate": "2015-03-23T20:45:56.421Z",
+    "repositorySize": 152940,
+    "repositoryFileCount": 1,
+    "shouldArchive": true,
+    "privileged": false,
+    "imageName": "shippable/minv2",
+    "imageId": "540ef25d5e5bad45f3fa6cb7",
+    "settings": {
+      "imageOptions": {
+        "networkMode": "bridge",
+        "privileged": false
+      },
+      "imageId": "540ef25d5e5bad45f3fa6cb7",
+      "runCommand": "",
+      "imageName": "shippable/minv2"
+    },
+    "language": "ruby",
+    "compareUrl": "https://github.com/user/project/compare/0000000000000000000000000000000000000001...1e1616bad7ab7206081cb83d3c97c0e53c9cb365",
+    "beforeCommitSha": "0000000000000000000000000000000000000000",
+    "branch": "artifact",
+    "branchHead": "artifact",
+    "status": 30,
+    "buildGroupNumber": 22,
+    "projectId": "54e846935ab6cc13528d3d62",
+    "lastCommitShortDescription": "artifact",
+    "commitSha": "1e1616bad7ab7206081cb83d3c97c0e53c9cb365",
+    "commitUrl": "https://github.com/user/project/commit/1e1612f23f32f206081cb83d3c97c0e53c9cb365",
+    "createdByAccountId": "540e74943999311130416dd0",
+    "baseCommitRef": "",
+    "runCommand": "",
+    "emailOnSuccess": "change",
+    "emailOnFailure": "always",
+    "timeoutMS": 5400000,
+    "buildRunnerVersion": "1.0.0",
+    "statusMessage": "SUCCESS",
+    "durationCumulative": "50715",
+    "shouldDecryptSecureEnvs": true,
+    "branchCoveragePercent": 0,
+    "sequenceCoveragePercent": 0,
+    "testsSkipped": 0,
+    "testsPassed": 0,
+    "testsFailed": 0,
+    "totalTests": 0,
+    "parallelizedTest": false,
+    "network": "bridge"
+  }
+
+======================   =========      =========================================================================================
+Name                     Type           Description
+======================   =========      =========================================================================================
+id                       string         A build groups unique id
+isAutoCommit             boolean        Set to true if caching is enabled
+isAutoPush               boolean        From the project settings page or commit_container tag. Will do a docker push if true.
+isAutoBuild              boolean        Set to true if this build was triggered by a webhook.
+isReRun                  boolean        Set to true if this is a manually triggered rerun of the build
+isPullRequest            boolean        Set to true if this build was triggered by a pull request
+isCompleted              boolean        Set to true if this build has completed
+emailNotifications       list           A list of emails to notify about the builds
+pullRequestNumber        number         Number of the pull request
+committer                object         An object of information about the commiter
+lastAuthor               object         An object of information about the last author
+triggeredBy              object         An object of information about the triggerer
+requiresDedicatedHost    boolean        Set to true if this build has features that require a dedicated host
+builds                   list           A list of builds that are created by this build group
+createdDate              string         The date the repo was created
+updatedDate              string         The date of the last time the repo was updated
+repositorySize           number         The total size of all the files in the repo
+repositoryFileCount      number         The number of files in the repo
+shouldArchive            boolean        Set to true if bulid archiving is enabled
+privileged               boolean        Set to true if the docker container is running in privileged mode
+imageName                string         The name of the docker image used to run this build
+imageId                  string         The id of the docker image used to run this build
+settings                 object         An object containing the settings for this project
+language                 string         The programming language for this project
+compareUrl               string         A link to the url containing the comparison to the last commit
+beforeCommitSha          string         The SHA of the project before the commit
+branch                   string         The git branch that this build group is based on
+branchHead               string         The head of the branch
+status                   string         Status on the build group, such as if it's finished or failed
+buildGroupNumber         string         The number of this build group
+projectId                string         The id of the project
+lastCommitShortDescri    string         A truncated description of the last commit
+commitSha                string         The computed SHA of the commit that generated this build group derives from
+commitUrl                string         The url where the commit can be found
+createdByAccountId       string         The account that created the project
+baseCommitRef            string         A string for the ref to the base commit
+emailOnSuccess           boolean        Sets if email notifications will be sent on build success
+emailOnFailure           boolean        Sets if email notifications will be sent on build failure
+timeoutMS                number         How long in miliseconds the build runs before timing out.
+buildRunnerVersion       number         The version of the build runner
+statusMessage            string         The current status of the build
+durationCumulative       number         The cumulative duration of all the builds
+shouldDecryptSecureEn    boolean        True if there are encrypted env variables used in the shippableyml file
+branchCoveragePercent    number         The percentage of branches (if/then/else condtions) that are covered by tests
+sequenceCoveragePerce    number         Percentage of lines there are code coverage for
+testsSkipped             number         The number of tests that were skipped
+testsPassed              number         The number of tests that passed
+testsFailed              number         The number of tests that failed
+totalTests               number         The total number of tests.
+parallelizedTest         boolean        Set to true if the test was set to be parallelized
+network                  string         The network settings for the docker container
+======================   =========      =========================================================================================
 
 /builds/:buildId/:buildItemNumber/artifacts
 ----------------------------------------------------------------
