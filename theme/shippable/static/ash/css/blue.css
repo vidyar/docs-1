@@ -156,7 +156,7 @@ ul.iconsList li a:hover, ul.iconsList i {
 ================================================== */
 
 #mainHeader{
-    background-color: white;
+    background-color: #58595b;
 	-webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
 	-moz-box-shadow: 0 1px 10px rgba(0,0,0,.1);
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
@@ -172,6 +172,10 @@ ul.iconsList li a:hover, ul.iconsList i {
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
 	background: #3E6D92;
 	color:#fff;
+}
+
+.navbar-default .navbar-nav>li>a {
+	color: #fff;
 }
 
 /* END MAIN MENU 
