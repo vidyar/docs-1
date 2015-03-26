@@ -455,9 +455,10 @@ border:none}
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
       font-size: 15px;
       font-weight: 400px;
+      line-height: 10px;
 
       /*letter-spacing: 4px;*/
-      padding: 20px 20px;
+      /*padding: 20px 20px;*/
       color: #fff;
       z-index: 1001;
       -webkit-transition: color 0.2s linear;
