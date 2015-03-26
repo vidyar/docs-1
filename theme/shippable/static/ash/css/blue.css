@@ -25,9 +25,9 @@
 ================================================== */
 
 /** tabs **/
-.panel-default>.panel-heading {background:#3E6D92; }
+.panel-default>.panel-heading {background:#b7410e; }
 .panel-default>.panel-heading:hover {background:#fff; }
-.panel-default>.panel-heading:hover a {color:#3E6D92; }
+.panel-default>.panel-heading:hover a {color:#b7410e; }
 .panel-title>a {color:#fff;}
 .panel-title>a:hover {text-decoration: none;}
 
@@ -53,7 +53,7 @@ h2 {
 }
 h2 i {color:#999}
 h2.subTitle:after, h1.noSubtitle:after{
-	background-color:#3E6D92;
+	background-color:#b7410e;
 }
 
 /*** parallax sections ***/
@@ -62,7 +62,7 @@ h2.subTitle:after, h1.noSubtitle:after{
 	color:#fff;
 }
 #home, #paralaxSlice1, #paralaxSlice2, #paralaxSlice3, #paralaxSlice4 {
-	background-color:#3E6D92;
+	background-color:#b7410e;
 }
 #home {
 	background-image:url('../images/theme-pics/paralax-grey-3.jpg');
@@ -90,31 +90,31 @@ h2.subTitle:after, h1.noSubtitle:after{
 ================================================== */
 
 a {
-	color:#3E6D92;
+	color:#b7410e;
 }
 a:hover, .scrollspyNav .active a {
-	color:#3E6D92;
+	color:#b7410e;
 }
 ul.iconsList li a {
 	color:#555
 }
 ul.iconsList li a:hover, ul.iconsList i {
-	color:#3E6D92
+	color:#b7410e
 }
 
 .alert-info
 {
-	background-color: #3E6D92;
+	background-color: #b7410e;
 	color: #fff;
 }
 /*** buttons ***/
 .btn {
-	background:#3E6D92;
+	background:#b7410e;
 	color:#fff;
 	border:2px solid #fff;
 }
 .btn:hover {
-	color:#3E6D92;
+	color:#b7410e;
 	border-color:#eee;
 	text-shadow:none;
 	background:#fff
@@ -170,7 +170,7 @@ ul.iconsList li a:hover, ul.iconsList i {
 	color:#444;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-	background: #3E6D92;
+	background: #b7410e;
 	color:#fff;
 }
 
@@ -198,7 +198,7 @@ p.credits {
 	color:#555;
 }
 p.credits a {
-	color:#3E6D92;
+	color:#b7410e;
 }
 
 /* END FOOTER 
@@ -225,7 +225,7 @@ p.credits a {
 	color:#FFFFFF;
 }
 .flexslider .flex-direction-nav a {
-	background-color:#3E6D92;
+	background-color:#b7410e;
 }
 
 .flexslider .flex-control-paging li a:hover, #sliderWrapper .flex-control-paging li a.flex-active{
@@ -241,7 +241,7 @@ p.credits a {
 }
 .flexslider h1 {
 	color:#fff;
-	background-color:#3E6D92;
+	background-color:#b7410e;
 }
 .flexslider h2 {
 	color:#fff;
@@ -273,7 +273,7 @@ nav#filter a {
 	color:#555;
 }
 nav#filter a:hover, nav#filter a.current {
-	background-color: #3E6D92;
+	background-color: #b7410e;
 	color:#fff;
 }
 li.filterTitle {
@@ -282,7 +282,7 @@ li.filterTitle {
 section#projectDescription {
 	background-color:#F8F8F8
 }
-.mask{background-color: #3E6D92;}
+.mask{background-color: #b7410e;}
 /* END PORTFOLIO
 ================================================== */
 
@@ -327,7 +327,7 @@ section#projectDescription {
 	color:#fff!important;
 }
 .pricingBloc.focusPlan h3 {
-	background-color:#3E6D92;
+	background-color:#b7410e;
 	padding:1.25em;
 	color:#fff!important;
 }
@@ -363,7 +363,7 @@ border:none}
 
 /*** Feature box **/
 
-.boxFeature i{color:#3E6D92;} 
+.boxFeature i{color:#b7410e;} 
 
 /*** slices ***/
 .slice{
@@ -388,16 +388,16 @@ border:none}
 	color:#444;
 }
 .color1 a.btn{color:#fff;}
-.color1 a.btn:hover{color:#3E6D92;}
+.color1 a.btn:hover{color:#b7410e;}
 
 /*color4*/
 .color4, .slice.color4, .bulle.color4, .ctaBox.color4{
 	background-color:#fff;
-	color:#3E6D92;
+	color:#b7410e;
 }
 
 .color4 h1, .color4 h2, .color4 h3, .color4 h4, .color4 blockquotes {
-	color:#3E6D92;
+	color:#b7410e;
 }
 
 .color4 a{
@@ -405,7 +405,7 @@ border:none}
 }
 
 .color4 h2.subTitle:after, .color4 h1.noSubtitle:after {
-	background:#3E6D92;
+	background:#b7410e;
 }
 
 .navbar.ltgray {
