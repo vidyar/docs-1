@@ -428,7 +428,7 @@ border:none}
     font-weight: bold;
     font-size: 30px;
     font-family: Myriad Pro, "Helvetica Neue",Helvetica,Arial,sans-serif;
-    padding-top: 24px; }
+    padding-top: 12px; }
     @media (max-width: 767px) {
       .navbar.ltgray .navbar-header .navbar-brand {
         color: #fff;
@@ -511,10 +511,10 @@ border:none}
 
 
 /*** icons ***/
-.iconRounded {border:2px solid #3E6D92;color:#3E6D92;background-color:#fff;}
-.iconRounded:hover, .color1 .iconRounded:hover{background-color:#3E6D92;color:#fff;}
-.color1 .iconRounded {color:#3E6D92;}
-.color4 .iconRounded {background-color:#FFF;color:#3E6D92;}
+.iconRounded {border:2px solid #b7410e;color:#b7410e;background-color:#fff;}
+.iconRounded:hover, .color1 .iconRounded:hover{background-color:#b7410e;color:#fff;}
+.color1 .iconRounded {color:#b7410e;}
+.color4 .iconRounded {background-color:#FFF;color:#b7410e;}
 
 /* END NEKO CSS FRAMEWORK
 ================================================== */

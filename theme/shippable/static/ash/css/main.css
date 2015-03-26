@@ -362,6 +362,7 @@ input#gsc-i-id1, input#gsc-i-id1:hover, input#gsc-i-id1:focus {
 input.gsc-search-button, input.gsc-search-button:hover, input.gsc-search-button:focus {
   background-image: inherit;
   box-sizing: content-box;
+
 }
 
 td.gsc-search-button {
