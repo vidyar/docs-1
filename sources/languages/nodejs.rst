@@ -57,6 +57,12 @@ This section helps you to configure the yml file for your node_js project.
               node_js:
 	          - "0.10"
 	      before_install: npm install -g grunt-cli
+
+- If you want to build a project with node versions like 0.6, 0.8, 0.10, and 0.11 and want to use the same package.json, add the following line to your yml file, which will upgrade the npm to v.1.4 for node versions 0.6 and 0.8.
+      .. code-block:: python
+
+           if [[ $SHIPPABLE_NODE_VERSION =~ [0].[6-8] ]]; then npm install -g npm@~1.4.6; fi
+
       
 -  Keep the output of test and code coverage generated in the Shippable folders to get the visualization of your reports.
 
