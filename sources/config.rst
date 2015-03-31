@@ -838,8 +838,18 @@ You can also configure yml file to send build notifications to your IRC channels
        - "chat.freenode.net#channel2"
        - "server1#channel3"
 
-- By default, We will always send build notifications to the mentioned channels in yml. `on_success` and `on_failure` are not yet configurable yet.
+- By default, We will always send build notifications to the mentioned channels in yml. **on_success** and **on_failure**  are not yet configurable. 
 
+- IRC notifications are turned off by default for pull request builds. However, you can change the default settings by adding **pull_requests: true** tag in your yml as shown below.
+
+.. code-block:: bash
+
+  notifications:
+    irc:
+     pull_requests: true
+     channels:
+       - "chat.freenode.net#channel1"
+ 
 
 ----------
 
